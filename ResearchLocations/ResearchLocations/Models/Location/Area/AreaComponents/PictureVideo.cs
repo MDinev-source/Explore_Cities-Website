@@ -1,5 +1,6 @@
 ﻿namespace ResearchLocations.Models.Location.Area.AreaComponents
 {
+    using System;
     using ResearchLocations.Models.Enums;
     using System.ComponentModel.DataAnnotations;
 
