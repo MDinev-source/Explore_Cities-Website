@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     using ResearchLocations.Data.Common.Models;
 
@@ -11,16 +10,19 @@
         public City()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Histories = new HashSet<History>();
+            this.Histories = new HashSet<CityHistory>();
             this.Regions = new HashSet<RegionView>();
+            this.Users = new HashSet<ApplicationUser>();
         }
 
         public string Name { get; set; }
 
         public string Location { get; set; }
 
-        public virtual ICollection<History> Histories { get; set; }
+        public virtual ICollection<CityHistory> Histories { get; set; }
 
         public virtual ICollection<RegionView> Regions { get; set; }
+
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }
