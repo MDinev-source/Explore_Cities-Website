@@ -17,10 +17,6 @@
 
         public string Comment { get; set; }
 
-        public string RegionViewId { get; set; }
-
-        public virtual RegionView Region { get; set; }
-
         public StreetLightingRating StreetLighting { get; set; }
 
         public StreetQualityRating StreetQuality { get; set; }
