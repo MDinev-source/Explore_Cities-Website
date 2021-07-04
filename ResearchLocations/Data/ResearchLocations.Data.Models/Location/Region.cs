@@ -12,6 +12,8 @@
             this.Id = Guid.NewGuid().ToString();
 
             this.RegionViews = new HashSet<RegionView>();
+
+            this.Users = new HashSet<ApplicationUser>();
         }
 
         public string Name { get; set; }
@@ -22,8 +24,10 @@
 
         public string CityId { get; set; }
 
-        public City City { get; set; }
+        public virtual City City { get; set; }
 
         public virtual ICollection<RegionView> RegionViews { get; set; }
+
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

@@ -6,9 +6,9 @@
     using ResearchLocations.Data.Common.Models;
     using ResearchLocations.Data.Models.Location.RegionComponents;
 
-    public class History : BaseDeletableModel<string>
+    public class CityHistory : BaseDeletableModel<string>
     {
-        public History()
+        public CityHistory()
         {
             this.Id = Guid.NewGuid().ToString();
 
@@ -23,11 +23,11 @@
 
         public string AddedByUserId { get; set; }
 
-        public ApplicationUser AddedByUser { get; set; }
+        public virtual ApplicationUser AddedByUser { get; set; }
 
         public string CityId { get; set; }
 
-        public City City { get; set; }
+        public virtual City City { get; set; }
 
         public ICollection<PictureVideo> PictureVideos { get; set; }
     }

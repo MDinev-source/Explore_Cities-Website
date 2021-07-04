@@ -6,11 +6,12 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using ResearchLocations.Data.Common.Models;
-    using ResearchLocations.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using ResearchLocations.Data.Common.Models;
+    using ResearchLocations.Data.Models;
+    using ResearchLocations.Data.Models.Location;
+    using ResearchLocations.Data.Models.Location.RegionComponents;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -25,6 +26,48 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<Region> Regions { get; set; }
+
+        public DbSet<RegionView> RegionViews { get; set; }
+
+        public DbSet<CityHistory> CityHistories { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Hospital> Hospitals { get; set; }
+
+        public DbSet<Landmark> Landmarks { get; set; }
+
+        public DbSet<Market> Markets { get; set; }
+
+        public DbSet<NonStop> NonStops { get; set; }
+
+        public DbSet<OtherObject> OtherObjects { get; set; }
+
+        public DbSet<Park> Parks { get; set; }
+
+        public DbSet<Pharmacy> Pharmacies { get; set; }
+
+        public DbSet<PictureVideo> PictureVideos { get; set; }
+
+        public DbSet<PoliceStation> PoliceStations { get; set; }
+
+        public DbSet<RegionDescription> RegionDescriptions { get; set; }
+
+        public DbSet<Restaurant> Restaurants { get; set; }
+
+        public DbSet<RetailPark> RetailParks { get; set; }
+
+        public DbSet<School> Schools { get; set; }
+
+        public DbSet<Shop> Shops { get; set; }
+
+        public DbSet<SportHobby> SportHobbies { get; set; }
+
+        public DbSet<Station> Stations { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

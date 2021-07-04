@@ -27,7 +27,7 @@
             this.Pharmacies = new HashSet<Pharmacy>();
             this.OtherObjects = new HashSet<OtherObject>();
             this.PictureVideos = new HashSet<PictureVideo>();
-            this.Histories = new HashSet<History>();
+            this.Histories = new HashSet<CityHistory>();
             this.Comments = new HashSet<Comment>();
         }
 
@@ -39,15 +39,15 @@
 
         public string RegionDescriptionId { get; set; }
 
-        public RegionDescription Description { get; set; }
+        public virtual RegionDescription Description { get; set; }
 
         public string RegionId { get; set; }
 
-        public Region Region { get; set; }
+        public virtual Region Region { get; set; }
 
         public string AddedByUserId { get; set; }
 
-        public ApplicationUser AddedByUser { get; set; }
+        public virtual ApplicationUser AddedByUser { get; set; }
 
         public virtual ICollection<Park> Parks { get; set; }
 
@@ -79,7 +79,7 @@
 
         public virtual ICollection<PictureVideo> PictureVideos { get; set; }
 
-        public virtual ICollection<History> Histories { get; set; }
+        public virtual ICollection<CityHistory> Histories { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }
