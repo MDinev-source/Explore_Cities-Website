@@ -20,7 +20,7 @@
 
         public string RegionViewId { get; set; }
 
-        public virtual RegionView Region { get; set; }
+        public RegionView Region { get; set; }
 
         public virtual ICollection<PictureVideo> PictureVideos { get; set; }
     }

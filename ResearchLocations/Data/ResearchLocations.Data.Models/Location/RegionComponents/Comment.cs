@@ -15,10 +15,10 @@
 
         public string RegionViewId { get; set; }
 
-        public virtual RegionView Region { get; set; }
+        public RegionView Region { get; set; }
 
         public string AddedByUserId { get; set; }
 
-        public virtual ApplicationUser AddedByUser { get; set; }
+        public ApplicationUser AddedByUser { get; set; }
     }
 }

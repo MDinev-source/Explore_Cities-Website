@@ -18,9 +18,9 @@
 
         public string RegionViewId { get; set; }
 
-        public string Opinion { get; set; }
+        public RegionView Region { get; set; }
 
-        public virtual RegionView Region { get; set; }
+        public string Opinion { get; set; }
 
         public virtual ICollection<PictureVideo> PictureVideos { get; set; }
     }
