@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using ResearchLocations.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using ResearchLocations.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

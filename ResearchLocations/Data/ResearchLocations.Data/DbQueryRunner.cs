@@ -3,9 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using ResearchLocations.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using ResearchLocations.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

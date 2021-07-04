@@ -36,4 +36,8 @@
     <ProjectReference Include="..\ResearchLocations.Web.Infrastructure\ResearchLocations.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\ResearchLocations.Web.ViewModels\ResearchLocations.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Views\Dashboard\" />
+  </ItemGroup>
 </Project>

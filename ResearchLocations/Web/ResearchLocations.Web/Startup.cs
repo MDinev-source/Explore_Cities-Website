@@ -2,17 +2,6 @@
 {
     using System.Reflection;
 
-    using ResearchLocations.Data;
-    using ResearchLocations.Data.Common;
-    using ResearchLocations.Data.Common.Repositories;
-    using ResearchLocations.Data.Models;
-    using ResearchLocations.Data.Repositories;
-    using ResearchLocations.Data.Seeding;
-    using ResearchLocations.Services.Data;
-    using ResearchLocations.Services.Mapping;
-    using ResearchLocations.Services.Messaging;
-    using ResearchLocations.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -21,6 +10,15 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using ResearchLocations.Data;
+    using ResearchLocations.Data.Common;
+    using ResearchLocations.Data.Common.Repositories;
+    using ResearchLocations.Data.Models;
+    using ResearchLocations.Data.Repositories;
+    using ResearchLocations.Data.Seeding;
+    using ResearchLocations.Services.Mapping;
+    using ResearchLocations.Services.Messaging;
+    using ResearchLocations.Web.ViewModels;
 
     public class Startup
     {
@@ -64,7 +62,6 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

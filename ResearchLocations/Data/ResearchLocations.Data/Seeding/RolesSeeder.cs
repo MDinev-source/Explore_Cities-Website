@@ -4,11 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using ResearchLocations.Common;
-    using ResearchLocations.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using ResearchLocations.Common;
+    using ResearchLocations.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {
