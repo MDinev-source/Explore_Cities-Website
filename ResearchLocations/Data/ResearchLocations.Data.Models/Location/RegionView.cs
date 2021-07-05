@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using ResearchLocations.Data.Common.Models;
     using ResearchLocations.Data.Models.Location.RegionComponents;
@@ -26,7 +27,7 @@
             this.Hospitals = new HashSet<Hospital>();
             this.Pharmacies = new HashSet<Pharmacy>();
             this.OtherObjects = new HashSet<OtherObject>();
-            this.PictureVideos = new HashSet<PictureVideo>();
+            this.Pictures = new HashSet<Picture>();
             this.Histories = new HashSet<CityHistory>();
             this.Comments = new HashSet<Comment>();
         }
@@ -37,14 +38,17 @@
 
         public DateTime? YearOfDeparture { get; set; }
 
+        [Required]
         public string RegionDescriptionId { get; set; }
 
         public virtual RegionDescription Description { get; set; }
 
+        [Required]
         public string RegionId { get; set; }
 
         public virtual Region Region { get; set; }
 
+        [Required]
         public string AddedByUserId { get; set; }
 
         public virtual ApplicationUser AddedByUser { get; set; }
@@ -77,7 +81,7 @@
 
         public virtual ICollection<OtherObject> OtherObjects { get; set; }
 
-        public virtual ICollection<PictureVideo> PictureVideos { get; set; }
+        public virtual ICollection<Picture> Pictures { get; set; }
 
         public virtual ICollection<CityHistory> Histories { get; set; }
 

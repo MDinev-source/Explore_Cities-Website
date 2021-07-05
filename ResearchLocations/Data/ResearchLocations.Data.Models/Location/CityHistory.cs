@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using ResearchLocations.Data.Common.Models;
     using ResearchLocations.Data.Models.Location.RegionComponents;
@@ -12,23 +13,29 @@
         {
             this.Id = Guid.NewGuid().ToString();
 
-            this.PictureVideos = new HashSet<PictureVideo>();
+            this.Picture = new HashSet<Picture>();
         }
 
+        [Required]
+        [MaxLength(80)]
         public string Title { get; set; }
 
+        [Required]
+        [MaxLength(500)]
         public string Text { get; set; }
 
         public string MaterialLinks { get; set; }
 
+        [Required]
         public string AddedByUserId { get; set; }
 
         public virtual ApplicationUser AddedByUser { get; set; }
 
+        [Required]
         public string CityId { get; set; }
 
         public virtual City City { get; set; }
 
-        public ICollection<PictureVideo> PictureVideos { get; set; }
+        public ICollection<Picture> Picture { get; set; }
     }
 }

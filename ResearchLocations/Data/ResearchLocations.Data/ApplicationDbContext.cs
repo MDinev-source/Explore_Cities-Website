@@ -49,7 +49,7 @@
 
         public DbSet<Pharmacy> Pharmacies { get; set; }
 
-        public DbSet<PictureVideo> PictureVideos { get; set; }
+        public DbSet<Picture> PictureVideos { get; set; }
 
         public DbSet<PoliceStation> PoliceStations { get; set; }
 

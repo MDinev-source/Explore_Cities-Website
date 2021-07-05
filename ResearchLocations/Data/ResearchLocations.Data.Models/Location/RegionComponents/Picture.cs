@@ -1,23 +1,27 @@
 ﻿namespace ResearchLocations.Data.Models.Location.RegionComponents
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using ResearchLocations.Data.Common.Models;
     using ResearchLocations.Data.Models.Enums;
 
-    public class PictureVideo : BaseDeletableModel<string>
+    public class Picture : BaseDeletableModel<string>
     {
-        public PictureVideo()
+        public Picture()
         {
             this.Id = Guid.NewGuid().ToString();
         }
 
+        [Required]
+        [MaxLength(50)]
         public string ObjectName { get; set; }
 
-        public FotoType Type { get; set; }
-
+        [Required]
         public string Extension { get; set; }
 
+        [Required]
+        [MaxLength(80)]
         public string Comment { get; set; }
 
         public string RegionViewId { get; set; }
