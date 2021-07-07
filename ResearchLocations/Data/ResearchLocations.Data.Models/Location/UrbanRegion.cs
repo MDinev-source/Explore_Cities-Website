@@ -6,9 +6,9 @@
 
     using ResearchLocations.Data.Common.Models;
 
-    public class Region : BaseDeletableModel<string>
+    public class UrbanRegion : BaseDeletableModel<string>
     {
-        public Region()
+        public UrbanRegion()
         {
             this.Id = Guid.NewGuid().ToString();
 
@@ -20,9 +20,6 @@
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
-
-        [Required]
-        public string Location { get; set; }
 
         public int? Rating { get; set; }
 

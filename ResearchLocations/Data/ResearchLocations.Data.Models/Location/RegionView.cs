@@ -46,7 +46,7 @@
         [Required]
         public string RegionId { get; set; }
 
-        public virtual Region Region { get; set; }
+        public virtual UrbanRegion Region { get; set; }
 
         [Required]
         public string AddedByUserId { get; set; }
