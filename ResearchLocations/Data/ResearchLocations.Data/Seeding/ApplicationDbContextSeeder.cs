@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,11 @@
                           {
                               new RolesSeeder(),
                           };
+
+            if (!dbContext.Cities.Any())
+            {
+                seeders.Add(new CitiesSeeder());
+            }
 
             foreach (var seeder in seeders)
             {
