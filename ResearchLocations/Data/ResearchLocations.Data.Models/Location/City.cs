@@ -12,7 +12,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Histories = new HashSet<CityHistory>();
-            this.Regions = new HashSet<UrbanRegion>();
+            this.Regions = new HashSet<RegionView>();
             this.Users = new HashSet<ApplicationUser>();
         }
 
@@ -25,7 +25,7 @@
 
         public virtual ICollection<CityHistory> Histories { get; set; }
 
-        public virtual ICollection<UrbanRegion> Regions { get; set; }
+        public virtual ICollection<RegionView> Regions { get; set; }
 
         public ICollection<ApplicationUser> Users { get; set; }
     }

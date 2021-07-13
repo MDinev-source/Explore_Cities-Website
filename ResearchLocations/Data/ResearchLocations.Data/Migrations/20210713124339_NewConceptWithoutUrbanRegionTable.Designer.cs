@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResearchLocations.Data;
 
 namespace ResearchLocations.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210713124339_NewConceptWithoutUrbanRegionTable")]
+    partial class NewConceptWithoutUrbanRegionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1120,7 +1122,6 @@ namespace ResearchLocations.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CityId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -1525,11 +1526,9 @@ namespace ResearchLocations.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ResearchLocations.Data.Models.Location.City", "City")
+                    b.HasOne("ResearchLocations.Data.Models.Location.City", null)
                         .WithMany("Regions")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
                     b.HasOne("ResearchLocations.Data.Models.Location.RegionComponents.RegionDescription", "Description")
                         .WithMany()
@@ -1538,8 +1537,6 @@ namespace ResearchLocations.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("AddedByUser");
-
-                    b.Navigation("City");
 
                     b.Navigation("Description");
                 });

@@ -32,21 +32,22 @@
             this.Comments = new HashSet<Comment>();
         }
 
-        public string StreetLocation { get; set; }
+        [Required]
+        public string RegionLocation { get; set; }
 
         public DateTime YearOfResidence { get; set; }
 
         public DateTime? YearOfDeparture { get; set; }
 
         [Required]
+        public string CityId { get; set; }
+
+        public City City { get; set; }
+
+        [Required]
         public string RegionDescriptionId { get; set; }
 
         public virtual RegionDescription Description { get; set; }
-
-        [Required]
-        public string RegionId { get; set; }
-
-        public virtual UrbanRegion Region { get; set; }
 
         [Required]
         public string AddedByUserId { get; set; }

@@ -27,8 +27,6 @@
 
         public DbSet<City> Cities { get; set; }
 
-        public DbSet<UrbanRegion> UrbanRegions { get; set; }
-
         public DbSet<RegionView> RegionViews { get; set; }
 
         public DbSet<CityHistory> CityHistories { get; set; }
