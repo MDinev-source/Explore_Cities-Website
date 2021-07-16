@@ -18,9 +18,6 @@
             this.Objects = new HashSet<RegionObject>();
         }
 
-        [Required]
-        public string RegionLocation { get; set; }
-
         public int ArrivalYear { get; set; }
 
         public int? DepartureYear { get; set; }
