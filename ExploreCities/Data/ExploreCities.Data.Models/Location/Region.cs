@@ -16,7 +16,6 @@
 
         [Required]
         [MaxLength(30)]
-        [RegularExpression(@"^\p{Cyrillic}+$")]
         public string Name { get; set; }
 
         [Required]

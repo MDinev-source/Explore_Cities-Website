@@ -15,7 +15,7 @@
             var path = Directory.GetCurrentDirectory()
                 .Replace(@"\Web\", @"\Data\")
                 .Replace(".Web", ".Data")
-                + @"/Seeding/CitiesSeeder/City.json";
+                + @"/Seeding/CitiesSeeder/bg.json";
 
             var jsonString = File.ReadAllText(path);
 
@@ -27,8 +27,8 @@
             {
                 var city = new City
                 {
-                    Name = cityDto.Name,
-                    Region = cityDto.Region,
+                    Name = cityDto.City,
+                    Region = cityDto.Admin_name,
                 };
 
                 cities.Add(city);
