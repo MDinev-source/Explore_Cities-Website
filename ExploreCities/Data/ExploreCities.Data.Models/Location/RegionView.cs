@@ -28,7 +28,7 @@
         public Region Region { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(500)]
         public string Comment { get; set; }
 
         [Required]
@@ -62,15 +62,13 @@
         public PublicTransportRating PublicTransport { get; set; }
 
         [Required]
-        [Range(0.1, 50)]
-        public double BusStationDistance { get; set; }
+        public BusStationDistance BusStationDistance { get; set; }
 
         [Required]
-        [Range(0.1, 50)]
-        public double TrainStationDistance { get; set; }
+        public TrainStationDistance TrainStationDistance { get; set; }
 
-        [Range(0.1, 50)]
-        public double MetroStationDistance { get; set; }
+        [Required]
+        public MetroStationDistance MetroStationDistance { get; set; }
 
         [Required]
         public string AddedByUserId { get; set; }
