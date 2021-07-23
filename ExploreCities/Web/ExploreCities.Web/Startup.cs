@@ -6,9 +6,10 @@
     using ExploreCities.Data.Common;
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models;
+    using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Repositories;
     using ExploreCities.Data.Seeding;
-
+    using ExploreCities.Services.Data;
     using ExploreCities.Services.Mapping;
     using ExploreCities.Services.Messaging;
     using ExploreCities.Web.ViewModels;
@@ -64,6 +65,10 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IGetEnumsDataService, GetEnumsDataService>();
+            services.AddTransient<ICitiesService, CitiesService>();
+            services.AddTransient<IRegionsService, RegionsService>();
+            services.AddTransient<IRegionViewsService, RegionViewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
