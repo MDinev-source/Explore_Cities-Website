@@ -2,8 +2,8 @@
 {
     public enum AirPollutionRating
     {
-        VeryDirty = 1,
-        Dirty = 2,
+        Dirty = 1,
+        Normal = 2,
         Fresh = 3,
     }
 }

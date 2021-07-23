@@ -3,6 +3,7 @@
     public enum PublicTransportRating
     {
         Irregular = 1,
-        Regular = 2,
+        Normal = 2,
+        Regular = 3,
     }
 }

@@ -3,7 +3,7 @@
     public enum NoiseRating
     {
         Low = 1,
-        Moderate = 2,
+        Medium = 2,
         Loud = 3,
     }
 }

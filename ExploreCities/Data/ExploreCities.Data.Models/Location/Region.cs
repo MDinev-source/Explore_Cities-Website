@@ -4,15 +4,15 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Region
+    using ExploreCities.Data.Common.Models;
+
+    public class Region : BaseDeletableModel<string>
     {
         public Region()
         {
             this.Id = Guid.NewGuid().ToString();
             this.RegionViews = new HashSet<RegionView>();
         }
-
-        public string Id { get; set; }
 
         [Required]
         [MaxLength(30)]
