@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\ExploreCities.Data.Common\ExploreCities.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\ExploreCities.Data.Models\ExploreCities.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\ExploreCities.Web.ViewModels\ExploreCities.Web.ViewModels.csproj" />
     <ProjectReference Include="..\ExploreCities.Services.Mapping\ExploreCities.Services.Mapping.csproj" />
   </ItemGroup>
 
