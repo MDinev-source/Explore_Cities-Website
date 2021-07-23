@@ -1,6 +1,6 @@
 ﻿namespace ExploreCities.Data.Models.Enums
 {
-    public enum ParkingSpacesExistense
+    public enum ChildrenPlaygroundsExistence
     {
         Little = 1,
         Medium = 2,

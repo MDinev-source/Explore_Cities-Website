@@ -35,22 +35,10 @@
         public string PictureUrl { get; set; }
 
         [Required]
-        public StreetLightingRating StreetLighting { get; set; }
+        public ParkingSpacesExistence ParkingSpaces { get; set; }
 
         [Required]
-        public StreetQualityRating StreetQuality { get; set; }
-
-        [Required]
-        public StreetPollutionRating StreetPollution { get; set; }
-
-        [Required]
-        public ParkingSpacesExistense ParkingSpaces { get; set; }
-
-        [Required]
-        public BikeAreaExistence BikeArea { get; set; }
-
-        [Required]
-        public ChildrenPlaygroundsExistense ChildrenPlaygrounds { get; set; }
+        public ChildrenPlaygroundsExistence ChildrenPlaygrounds { get; set; }
 
         [Required]
         public AirPollutionRating AirPollution { get; set; }
@@ -60,15 +48,6 @@
 
         [Required]
         public PublicTransportRating PublicTransport { get; set; }
-
-        [Required]
-        public BusStationDistance BusStationDistance { get; set; }
-
-        [Required]
-        public TrainStationDistance TrainStationDistance { get; set; }
-
-        [Required]
-        public MetroStationDistance MetroStationDistance { get; set; }
 
         [Required]
         public string AddedByUserId { get; set; }
