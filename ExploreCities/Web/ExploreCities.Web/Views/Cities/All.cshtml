@@ -1,0 +1,73 @@
+﻿@model ExploreCities.Web.ViewModels.CitiesViews.ListCitiesViewModel
+
+@{
+    ViewData["Title"] = "Cities List";
+}
+
+<h1>Cities List</h1>
+
+<form asp-controller="Cities" asp-action="All">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <p>
+        <div class="row">
+            <div class="col">
+                <label class="form-check-label">Search option: </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Name">
+                    <label class="form-check-label">City Name</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Region">
+                    <label class="form-check-label">Region</label>
+                </div>
+            </div>
+
+            <div class="col">
+                <input type="text" name="SearchString" />
+                <input type="submit" value="Filter" />
+            </div>
+        </div>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">City Name</th>
+            <th scope="col">Region</th>
+            <th scope="col" class="text-center">Districts Count</th>
+            <th scope="col" class="text-center">Users Count</th>
+            <th scope="col" class="text-center">Go To Districts</th>
+            <th scope="col" class="text-center">Histories</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var city in Model.AllCities)
+        {
+            <tr>
+                <td>
+                    @city.Name
+                </td>
+                <td>
+                    @city.Region
+                </td>
+                <td>
+                    @city.RegionsCount
+                </td>
+                <td>
+                    @city.UsersCount
+                </td>
+                <td>
+                    <a class="btn btn-block btn-primary text-white mb-3" href="/Districts/All">All Districts</a>
+                </td>
+                <td>
+                    <a class="btn btn-block btn-primary text-white mb-3" href="/Cities/Histories">All Histories</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
