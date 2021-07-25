@@ -7,6 +7,7 @@
     using ExploreCities.Services.Data;
     using ExploreCities.Web.ViewModels.CitiesViews;
     using Microsoft.AspNetCore.Mvc;
+    using X.PagedList;
 
     public class CitiesController : Controller
     {
@@ -33,7 +34,11 @@
 
             cities = this.citiesService.SortBy(cities.ToArray(), listCitiesViewModel.Sorter);
 
-            listCitiesViewModel.AllCities = cities;
+            var pageNumber = listCitiesViewModel.PageNumber ?? 1;
+            var pageSize = listCitiesViewModel.PageSize ?? 6;
+            var pageCitiesViewModel = cities.ToPagedList(pageNumber, pageSize);
+
+            listCitiesViewModel.AllCities = pageCitiesViewModel;
 
             return this.View(listCitiesViewModel);
         }

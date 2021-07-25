@@ -1,4 +1,5 @@
 ﻿@model ExploreCities.Web.ViewModels.CitiesViews.ListCitiesViewModel
+@using X.PagedList.Web.Common
 
 @{
     ViewData["Title"] = "Cities";
@@ -6,40 +7,57 @@
 
 <h2 class="text-center">Cities Search List</h2>
 
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <form method="get" asp-controller="Cities" asp-action="All">
-
-    <div asp-validation-summary="All" class="text-danger"></div>
-
     <p>
         <div class="row">
-            <div class="col">
+
+            <div class="col text-left">
                 <div class="form-group">
-                    <label class="form-check-label text-primary" >Search option: </label>
+                    <label class="form-check-label text-primary">Filter by: </label>
                     <div class="form-check form-check-inline text-primary">
-                        <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Name">
+                        <input class="form-check-input" id="check" type="radio" checked asp-for="OptionSearch" value="Name">
                         <label class="form-check-label text-primary">City Name</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Region">
+                        <input class="form-check-input" id="check" type="radio" asp-for="OptionSearch" value="Region">
                         <label class="form-check-label text-primary">Region</label>
                     </div>
                 </div>
             </div>
 
-            <div class="col">
-                <div class="form-group">
-                    <input class="btn btn-outline-primary" type="text" name="SearchString" />
-                    <input class="btn btn-outline-primary" type="submit" value="Filter" />
+            <div class="col text-left">
+                <div class="row">
+                    <div class="form-group">
+                        <input class="btn btn-outline-primary" type="text" name="SearchString" />
+                        <input class="btn btn-outline-primary" type="submit" value="Filter" />
+                        <a asp-action="All">Back to List</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="text-primary">Sort by</label>
-                <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
-                    <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">City name</option>
-                    <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Districts count (desc.)</option>
-                    <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
-                </select>
+            <div class="col text-right">
+                <div class="form-group">
+                    <label class="text-primary">Show</label>
+                    <select class="btn btn-outline-primary" name="PageSize" onchange="this.form.submit();">
+                        <option value="6" selected="@(Model.PageSize == 6 ? true : false)">6</option>
+                        <option value="12" selected="@(Model.PageSize == 12 ? true : false)">12</option>
+                        <option value="24" selected="@(Model.PageSize == 24 ? true : false)">24</option>
+                        <option value="48" selected="@(Model.PageSize == 48 ? true : false)">48</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col text-right">
+                <div class="form-group">
+                    <label class="text-primary">Sort by</label>
+                    <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
+                        <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">City name</option>
+                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Districts count (desc.)</option>
+                        <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
+                    </select>
+                </div>
             </div>
 
         </div>
@@ -48,7 +66,7 @@
 
 <table class="table">
     <thead>
-        <tr>
+        <tr class>
             <th scope="col">City Name</th>
             <th scope="col">Region</th>
             <th scope="col" class="text-center">Districts Count</th>
@@ -60,17 +78,17 @@
     <tbody>
         @foreach (var city in Model.AllCities)
         {
-            <tr>
+            <tr class=>
                 <td>
                     @Html.DisplayFor(modelItem => city.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => city.Region)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => city.RegionsCount)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => city.UsersCount)
                 </td>
                 <td>
@@ -85,3 +103,19 @@
     </tbody>
 </table>
 
+<div class="d-flex justify-content-around">
+    @Html.PagedListPager((IPagedList)Model.AllCities,
+        page => Url.Action("All",
+            new
+                {
+                    PageNumber = page,
+                    PageSize = Model.PageSize,
+                    SearchString = Model.SearchString,
+            }),
+        new PagedListRenderOptions
+        {
+            MaximumPageNumbersToDisplay = 5,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+</div>
