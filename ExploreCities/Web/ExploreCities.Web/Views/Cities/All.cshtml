@@ -1,4 +1,4 @@
-﻿@model ExploreCities.Web.ViewModels.CitiesViews.ListCitiesViewModel
+﻿@model ExploreCities.Web.ViewModels.Cities.ListCitiesViewModel
 @using X.PagedList.Web.Common
 
 @{
@@ -32,7 +32,6 @@
                     <div class="form-group">
                         <input class="btn btn-outline-primary" type="text" name="SearchString" />
                         <input class="btn btn-outline-primary" type="submit" value="Filter" />
-                        <a asp-action="All">Back to List</a>
                     </div>
                 </div>
             </div>
@@ -61,12 +60,13 @@
             </div>
 
         </div>
+        <a class="text-primary" asp-action="All">Back to List</a>
     </p>
 </form>
 
 <table class="table">
     <thead>
-        <tr class>
+        <tr>
             <th scope="col">City Name</th>
             <th scope="col">Region</th>
             <th scope="col" class="text-center">Districts Count</th>
@@ -78,7 +78,7 @@
     <tbody>
         @foreach (var city in Model.AllCities)
         {
-            <tr class=>
+            <tr>
                 <td>
                     @Html.DisplayFor(modelItem => city.Name)
                 </td>
