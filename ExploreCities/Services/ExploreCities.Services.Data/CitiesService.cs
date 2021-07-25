@@ -7,7 +7,7 @@
 
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models.Location;
-    using ExploreCities.Web.ViewModels.CitiesViews;
+    using ExploreCities.Web.ViewModels.Cities;
     using ExploreCities.Web.ViewModels.Enums;
     using Microsoft.EntityFrameworkCore;
 

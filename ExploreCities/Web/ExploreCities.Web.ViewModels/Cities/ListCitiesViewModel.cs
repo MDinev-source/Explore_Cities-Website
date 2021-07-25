@@ -1,9 +1,7 @@
-﻿namespace ExploreCities.Web.ViewModels.CitiesViews
+﻿namespace ExploreCities.Web.ViewModels.Cities
 {
-    using X.PagedList;
-
     using ExploreCities.Web.ViewModels.Enums;
-    using System.ComponentModel.DataAnnotations;
+    using X.PagedList;
 
     public class ListCitiesViewModel
     {

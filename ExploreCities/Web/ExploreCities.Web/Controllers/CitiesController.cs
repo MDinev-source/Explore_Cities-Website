@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
 
     using ExploreCities.Services.Data;
-    using ExploreCities.Web.ViewModels.CitiesViews;
+    using ExploreCities.Web.ViewModels.Cities;
     using Microsoft.AspNetCore.Mvc;
     using X.PagedList;
 

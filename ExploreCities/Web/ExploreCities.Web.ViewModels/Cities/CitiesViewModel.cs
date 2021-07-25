@@ -1,4 +1,4 @@
-﻿namespace ExploreCities.Web.ViewModels.CitiesViews
+﻿namespace ExploreCities.Web.ViewModels.Cities
 {
     public class CitiesViewModel
     {
