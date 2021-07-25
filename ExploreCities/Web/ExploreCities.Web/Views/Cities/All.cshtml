@@ -1,33 +1,47 @@
 ﻿@model ExploreCities.Web.ViewModels.CitiesViews.ListCitiesViewModel
 
 @{
-    ViewData["Title"] = "Cities List";
+    ViewData["Title"] = "Cities";
 }
 
-<h1>Cities List</h1>
+<h2 class="text-center">Cities Search List</h2>
 
-<form asp-controller="Cities" asp-action="All">
+<form method="get" asp-controller="Cities" asp-action="All">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <p>
         <div class="row">
             <div class="col">
-                <label class="form-check-label">Search option: </label>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Name">
-                    <label class="form-check-label">City Name</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Region">
-                    <label class="form-check-label">Region</label>
+                <div class="form-group">
+                    <label class="form-check-label text-primary" >Search option: </label>
+                    <div class="form-check form-check-inline text-primary">
+                        <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Name">
+                        <label class="form-check-label text-primary">City Name</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="OptionSearch" value="Region">
+                        <label class="form-check-label text-primary">Region</label>
+                    </div>
                 </div>
             </div>
 
             <div class="col">
-                <input type="text" name="SearchString" />
-                <input type="submit" value="Filter" />
+                <div class="form-group">
+                    <input class="btn btn-outline-primary" type="text" name="SearchString" />
+                    <input class="btn btn-outline-primary" type="submit" value="Filter" />
+                </div>
             </div>
+
+            <div class="form-group">
+                <label class="text-primary">Sort by</label>
+                <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
+                    <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">City name</option>
+                    <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Districts count (desc.)</option>
+                    <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
+                </select>
+            </div>
+
         </div>
     </p>
 </form>
@@ -40,7 +54,7 @@
             <th scope="col" class="text-center">Districts Count</th>
             <th scope="col" class="text-center">Users Count</th>
             <th scope="col" class="text-center">Go To Districts</th>
-            <th scope="col" class="text-center">Histories</th>
+            <th scope="col" class="text-center">Go To Histories</th>
         </tr>
     </thead>
     <tbody>
@@ -48,22 +62,22 @@
         {
             <tr>
                 <td>
-                    @city.Name
+                    @Html.DisplayFor(modelItem => city.Name)
                 </td>
                 <td>
-                    @city.Region
+                    @Html.DisplayFor(modelItem => city.Region)
                 </td>
                 <td>
-                    @city.RegionsCount
+                    @Html.DisplayFor(modelItem => city.RegionsCount)
                 </td>
                 <td>
-                    @city.UsersCount
+                    @Html.DisplayFor(modelItem => city.UsersCount)
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" href="/Districts/All">All Districts</a>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Districts/All">All Districts</a>
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" href="/Cities/Histories">All Histories</a>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Cities/Histories">All Histories</a>
                 </td>
 
             </tr>

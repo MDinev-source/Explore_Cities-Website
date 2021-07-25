@@ -1,6 +1,8 @@
 ﻿namespace ExploreCities.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using ExploreCities.Services.Data;
     using ExploreCities.Web.ViewModels.CitiesViews;
@@ -16,31 +18,24 @@
             this.citiesService = citiesService;
         }
 
-        public IActionResult All(string searchString, string optionSearch)
+        public async Task<IActionResult> All(ListCitiesViewModel listCitiesViewModel)
         {
-            var viewModel = new ListCitiesViewModel();
+            IEnumerable<CitiesViewModel> cities;
 
-            if (searchString == null)
+            if (listCitiesViewModel.SearchString == null)
             {
-                viewModel.AllCities = this.citiesService.GetAll();
+                 cities = await this.citiesService.GetAllCitiesAsync();
             }
             else
             {
-                if (optionSearch == "Name" || optionSearch == null)
-                {
-                    viewModel.AllCities = this.citiesService.GetAll()
-                   .Where(x => x.Name.ToLower()
-                   .Contains(searchString.ToLower()));
-                }
-                else
-                {
-                    viewModel.AllCities = this.citiesService.GetAll()
-                   .Where(x => x.Region.ToLower()
-                   .Contains(searchString.ToLower()));
-                }
+                cities = this.citiesService.GetCitiesFromSearch(listCitiesViewModel.SearchString, listCitiesViewModel.OptionSearch).ToList();
             }
 
-            return this.View(viewModel);
+            cities = this.citiesService.SortBy(cities.ToArray(), listCitiesViewModel.Sorter);
+
+            listCitiesViewModel.AllCities = cities;
+
+            return this.View(listCitiesViewModel);
         }
     }
 }

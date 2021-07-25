@@ -4,11 +4,16 @@
     using System.Threading.Tasks;
 
     using ExploreCities.Web.ViewModels.CitiesViews;
+    using ExploreCities.Web.ViewModels.Enums;
 
     public interface ICitiesService
     {
         IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
 
-        IEnumerable<CitiesViewModel> GetAll();
+        Task<IEnumerable<CitiesViewModel>> GetAllCitiesAsync();
+
+        IEnumerable<CitiesViewModel> SortBy(CitiesViewModel[] cities, CitiesSorter sorter);
+
+        IEnumerable<CitiesViewModel> GetCitiesFromSearch(string searchString, string optionsSearch);
     }
 }

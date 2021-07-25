@@ -1,5 +1,6 @@
 ﻿namespace ExploreCities.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -7,6 +8,8 @@
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.CitiesViews;
+    using ExploreCities.Web.ViewModels.Enums;
+    using Microsoft.EntityFrameworkCore;
 
     public class CitiesService : ICitiesService
     {
@@ -30,9 +33,9 @@
                 .ToList().Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
         }
 
-        public IEnumerable<CitiesViewModel> GetAll()
+        public async Task<IEnumerable<CitiesViewModel>> GetAllCitiesAsync()
         {
-            var listCities = this.citiesRepository
+            var cities = await this.citiesRepository
                   .All()
                   .Select(x => new CitiesViewModel
                   {
@@ -41,9 +44,65 @@
                       RegionsCount = x.Regions.Count,
                       UsersCount = x.Users.Count,
                   })
-                  .ToList();
+                  .ToListAsync();
 
-            return listCities;
+            return cities;
+        }
+
+        public IEnumerable<CitiesViewModel> GetCitiesFromSearch(string searchString, string optionSearch)
+        {
+            IEnumerable<CitiesViewModel> cities = null;
+
+            var escapedSearchTokens = searchString
+                .Split(new char[] { ' ', ',', '.', ':', '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (optionSearch == "Name")
+            {
+                cities = this.citiesRepository
+               .All()
+               .ToList()
+               .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())))
+               .Select(x => new CitiesViewModel
+               {
+                   Name = x.Name,
+                   Region = x.Region,
+                   RegionsCount = x.Regions.Count,
+                   UsersCount = x.Users.Count,
+               })
+               .ToList();
+            }
+            else
+            {
+                cities = this.citiesRepository
+               .All()
+               .ToList()
+               .Where(c => escapedSearchTokens.All(t => c.Region.ToLower().Contains(t.ToLower())))
+               .Select(x => new CitiesViewModel
+               {
+                   Name = x.Name,
+                   Region = x.Region,
+                   RegionsCount = x.Regions.Count,
+                   UsersCount = x.Users.Count,
+               })
+               .ToList();
+            }
+
+            return cities;
+        }
+
+        public IEnumerable<CitiesViewModel> SortBy(CitiesViewModel[] cities, CitiesSorter sorter)
+        {
+            switch (sorter)
+            {
+                case CitiesSorter.CityName:
+                    return cities.OrderBy(c => c.Name).ThenBy(c => c.Region).ToList();
+                case CitiesSorter.RegionsCount:
+                    return cities.OrderByDescending(c => c.RegionsCount).ThenBy(c => c.Name).ToList();
+                case CitiesSorter.UsersCount:
+                    return cities.OrderByDescending(c => c.UsersCount).ThenBy(c => c.Name).ToList();
+                default:
+                    return cities.OrderBy(c => c.Name).ThenBy(c => c.Region).ToList();
+            }
         }
     }
 }
