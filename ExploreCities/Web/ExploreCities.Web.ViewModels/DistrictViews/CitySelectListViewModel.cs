@@ -1,4 +1,4 @@
-﻿namespace ExploreCities.Web.ViewModels.RegionViews
+﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
     public class CitySelectListViewModel
     {

@@ -5,15 +5,19 @@
     using System.ComponentModel.DataAnnotations;
 
     using ExploreCities.Data.Common.Models;
+    using ExploreCities.Data.Models.Enums;
 
-    public class CityHistory : BaseDeletableModel<string>
+    public class CityArticle : BaseDeletableModel<string>
     {
-        public CityHistory()
+        public CityArticle()
         {
             this.Id = Guid.NewGuid().ToString();
 
             this.Picture = new HashSet<Picture>();
         }
+
+        [Required]
+        public ArticleType Type { get; set; }
 
         [Required]
         [MaxLength(80)]

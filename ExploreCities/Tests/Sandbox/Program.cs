@@ -5,14 +5,17 @@
     using System.IO;
     using System.Threading.Tasks;
 
-    using CommandLine;
     using ExploreCities.Data;
     using ExploreCities.Data.Common;
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models;
     using ExploreCities.Data.Repositories;
     using ExploreCities.Data.Seeding;
+    using ExploreCities.Services.Data;
     using ExploreCities.Services.Messaging;
+
+    using CommandLine;
+
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;

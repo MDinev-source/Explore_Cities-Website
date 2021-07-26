@@ -1,12 +1,10 @@
 ﻿@model ExploreCities.Web.ViewModels.Cities.ListCitiesViewModel
-@using X.PagedList.Web.Common
 
 @{
     ViewData["Title"] = "All Cities";
 }
 
 <h1 class="text-center">@this.ViewData["Title"]</h1>
-
 
 <form method="get" asp-controller="Cities" asp-action="All">
     <p>
@@ -68,12 +66,13 @@
         <tr>
             <th scope="col">City Name</th>
             <th scope="col">Area</th>
-            <th scope="col" class="text-center">Regions Count</th>
+            <th scope="col" class="text-center">Districts Count</th>
             <th scope="col" class="text-center">Users Count</th>
-            <th scope="col" class="text-center">Go To Regions</th>
-            <th scope="col" class="text-center">Go To Histories</th>
+            <th scope="col" class="text-center">Districts</th>
+            <th scope="col" class="text-center">Articles</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var city in Model.AllCities)
         {
@@ -85,16 +84,16 @@
                     @Html.DisplayFor(modelItem => city.Area)
                 </td>
                 <td class="text-center">
-                    @Html.DisplayFor(modelItem => city.RegionsCount)
+                    @Html.DisplayFor(modelItem => city.DistrictsCount)
                 </td>
                 <td class="text-center">
                     @Html.DisplayFor(modelItem => city.UsersCount)
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Districts/All">All Regions</a>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Districts/All">All Districts</a>
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Cities/Histories">All Histories</a>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Cities/Histories">All Articles</a>
                 </td>
 
             </tr>

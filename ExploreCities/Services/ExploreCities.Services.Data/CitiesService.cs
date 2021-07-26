@@ -41,7 +41,7 @@
                   {
                       Name = x.Name,
                       Area = x.Area,
-                      RegionsCount = x.Regions.Count,
+                      DistrictsCount = x.Districts.Count,
                       UsersCount = x.Users.Count,
                   })
                   .ToListAsync();
@@ -66,7 +66,7 @@
                {
                    Name = x.Name,
                    Area = x.Area,
-                   RegionsCount = x.Regions.Count,
+                   DistrictsCount = x.Districts.Count,
                    UsersCount = x.Users.Count,
                })
                .ToList();
@@ -81,7 +81,7 @@
                {
                    Name = x.Name,
                    Area = x.Area,
-                   RegionsCount = x.Regions.Count,
+                   DistrictsCount = x.Districts.Count,
                    UsersCount = x.Users.Count,
                })
                .ToList();
@@ -97,7 +97,7 @@
                 case CitiesSorter.CityName:
                     return cities.OrderBy(c => c.Name).ThenBy(c => c.Area).ToList();
                 case CitiesSorter.RegionsCount:
-                    return cities.OrderByDescending(c => c.RegionsCount).ThenBy(c => c.Name).ToList();
+                    return cities.OrderByDescending(c => c.DistrictsCount).ThenBy(c => c.Name).ToList();
                 case CitiesSorter.UsersCount:
                     return cities.OrderByDescending(c => c.UsersCount).ThenBy(c => c.Name).ToList();
                 default:

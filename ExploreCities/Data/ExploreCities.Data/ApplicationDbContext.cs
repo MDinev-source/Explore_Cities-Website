@@ -27,15 +27,15 @@
 
         public DbSet<City> Cities { get; set; }
 
-        public DbSet<CityHistory> CityHistories { get; set; }
+        public DbSet<CityArticle> CityArticles { get; set; }
 
         public DbSet<Picture> Pictures { get; set; }
 
-        public DbSet<Region> Regions { get; set; }
+        public DbSet<District> Districts { get; set; }
 
-        public DbSet<RegionObject> Objects { get; set; }
+        public DbSet<DistrictObject> DistrictObjects { get; set; }
 
-        public DbSet<RegionView> RegionViews { get; set; }
+        public DbSet<DistrictView> DistrictViews { get; set; }
 
         public DbSet<Discussion> Discussions { get; set; }
 
@@ -45,7 +45,7 @@
 
         public DbSet<UserDiscussion> UserDiscussions { get; set; }
 
-        public DbSet<UserRegion> UserRegions { get; set; }
+        public DbSet<UserDistrict> UserDistricts { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -98,7 +98,7 @@
 
             builder.Entity<UserDiscussion>().HasKey(e => new { e.UserId, e.DiscussionId });
 
-            builder.Entity<UserRegion>().HasKey(e => new { e.UserId, e.RegionId });
+            builder.Entity<UserDistrict>().HasKey(e => new { e.UserId, e.DistrictId });
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

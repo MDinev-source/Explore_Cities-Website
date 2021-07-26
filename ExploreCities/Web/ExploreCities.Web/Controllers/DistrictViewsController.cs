@@ -4,29 +4,29 @@
 
     using ExploreCities.Data.Models;
     using ExploreCities.Services.Data;
-    using ExploreCities.Web.ViewModels.RegionViews;
+    using ExploreCities.Web.ViewModels.DistrictViews;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
-    public class RegionViewsController : Controller
+    public class DistrictViewsController : Controller
     {
         private readonly ICitiesService citiesService;
-        private readonly IRegionViewsService regionViewsService;
+        private readonly IDistrictViewsService districtViewsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public RegionViewsController(
+        public DistrictViewsController(
             ICitiesService citiesService,
-            IRegionViewsService regionViewsService,
+            IDistrictViewsService regionViewsService,
             UserManager<ApplicationUser> userManager)
         {
             this.citiesService = citiesService;
-            this.regionViewsService = regionViewsService;
+            this.districtViewsService = regionViewsService;
             this.userManager = userManager;
         }
 
         public IActionResult Create()
         {
-            var viewModel = new CreateRegionViewInputModel();
+            var viewModel = new CreateDistrictViewInputModel();
 
             viewModel.Cities = this.citiesService.GetAllAsKeyValuePairs();
 
@@ -34,7 +34,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRegionViewInputModel input)
+        public async Task<IActionResult> Create(CreateDistrictViewInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -44,7 +44,7 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.regionViewsService.CreateAsync(input, user.Id);
+            await this.districtViewsService.CreateAsync(input, user.Id);
 
             return this.RedirectToAction("/");
         }

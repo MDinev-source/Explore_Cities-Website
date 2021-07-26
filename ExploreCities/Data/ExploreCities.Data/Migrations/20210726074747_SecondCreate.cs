@@ -1,13 +1,15 @@
-﻿namespace ExploreCities.Data.Migrations
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace ExploreCities.Data.Migrations
 {
-    using System;
-
-    using Microsoft.EntityFrameworkCore.Migrations;
-
-    public partial class InitialSetupClean : Migration
+    public partial class SecondCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Settings");
+
             migrationBuilder.AddColumn<string>(
                 name: "CityId",
                 table: "AspNetUsers",
@@ -20,11 +22,11 @@
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,10 +34,11 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "CityHistories",
+                name: "CityArticles",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     MaterialLinks = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -44,19 +47,19 @@
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CityHistories", x => x.Id);
+                    table.PrimaryKey("PK_CityArticles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CityHistories_AspNetUsers_AddedByUserId",
+                        name: "FK_CityArticles_AspNetUsers_AddedByUserId",
                         column: x => x.AddedByUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CityHistories_Cities_CityId",
+                        name: "FK_CityArticles_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
@@ -64,18 +67,22 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Regions",
+                name: "Districts",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     CityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Regions", x => x.Id);
+                    table.PrimaryKey("PK_Districts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Regions_Cities_CityId",
+                        name: "FK_Districts_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
@@ -87,7 +94,7 @@
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,71 +114,63 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "RegionViews",
+                name: "DistrictViews",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RegionLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ArrivalYear = table.Column<int>(type: "int", nullable: false),
                     DepartureYear = table.Column<int>(type: "int", nullable: true),
-                    RegionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    DistrictId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StreetLighting = table.Column<int>(type: "int", nullable: false),
-                    StreetQuality = table.Column<int>(type: "int", nullable: false),
-                    StreetPollution = table.Column<int>(type: "int", nullable: false),
                     ParkingSpaces = table.Column<int>(type: "int", nullable: false),
-                    BikeArea = table.Column<int>(type: "int", nullable: false),
                     ChildrenPlaygrounds = table.Column<int>(type: "int", nullable: false),
                     AirPollution = table.Column<int>(type: "int", nullable: false),
                     Noise = table.Column<int>(type: "int", nullable: false),
                     PublicTransport = table.Column<int>(type: "int", nullable: false),
-                    BusStationDistance = table.Column<double>(type: "float", nullable: false),
-                    TrainStationDistance = table.Column<double>(type: "float", nullable: false),
-                    MetroStationDistance = table.Column<double>(type: "float", nullable: false),
                     AddedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegionViews", x => x.Id);
+                    table.PrimaryKey("PK_DistrictViews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RegionViews_AspNetUsers_AddedByUserId",
+                        name: "FK_DistrictViews_AspNetUsers_AddedByUserId",
                         column: x => x.AddedByUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RegionViews_Regions_RegionId",
-                        column: x => x.RegionId,
-                        principalTable: "Regions",
+                        name: "FK_DistrictViews_Districts_DistrictId",
+                        column: x => x.DistrictId,
+                        principalTable: "Districts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRegions",
+                name: "UserDistricts",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RegionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DistrictId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRegions", x => new { x.UserId, x.RegionId });
+                    table.PrimaryKey("PK_UserDistricts", x => new { x.UserId, x.DistrictId });
                     table.ForeignKey(
-                        name: "FK_UserRegions_AspNetUsers_UserId",
+                        name: "FK_UserDistricts_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRegions_Regions_RegionId",
-                        column: x => x.RegionId,
-                        principalTable: "Regions",
+                        name: "FK_UserDistricts_Districts_DistrictId",
+                        column: x => x.DistrictId,
+                        principalTable: "Districts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -182,40 +181,40 @@
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Topic = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
-                    RegionViewId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DistrictViewId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Discussions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Discussions_RegionViews_RegionViewId",
-                        column: x => x.RegionViewId,
-                        principalTable: "RegionViews",
+                        name: "FK_Discussions_DistrictViews_DistrictViewId",
+                        column: x => x.DistrictViewId,
+                        principalTable: "DistrictViews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Objects",
+                name: "DistrictObjects",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ObjectType = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Opinion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    RegionViewId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DistrictViewId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Objects", x => x.Id);
+                    table.PrimaryKey("PK_DistrictObjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Objects_RegionViews_RegionViewId",
-                        column: x => x.RegionViewId,
-                        principalTable: "RegionViews",
+                        name: "FK_DistrictObjects_DistrictViews_DistrictViewId",
+                        column: x => x.DistrictViewId,
+                        principalTable: "DistrictViews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -226,11 +225,11 @@
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
-                    RegionViewId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DistrictViewId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AddedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DiscussionId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,9 +247,9 @@
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Comments_RegionViews_RegionViewId",
-                        column: x => x.RegionViewId,
-                        principalTable: "RegionViews",
+                        name: "FK_Comments_DistrictViews_DistrictViewId",
+                        column: x => x.DistrictViewId,
+                        principalTable: "DistrictViews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -260,7 +259,7 @@
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DiscussionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DiscussionId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -287,33 +286,33 @@
                     ObjectName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Extension = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
-                    ObjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CityHistoryId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RegionViewId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DistrictObjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CityArticleId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DistrictViewId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pictures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pictures_CityHistories_CityHistoryId",
-                        column: x => x.CityHistoryId,
-                        principalTable: "CityHistories",
+                        name: "FK_Pictures_CityArticles_CityArticleId",
+                        column: x => x.CityArticleId,
+                        principalTable: "CityArticles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Pictures_Objects_ObjectId",
-                        column: x => x.ObjectId,
-                        principalTable: "Objects",
+                        name: "FK_Pictures_DistrictObjects_DistrictObjectId",
+                        column: x => x.DistrictObjectId,
+                        principalTable: "DistrictObjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Pictures_RegionViews_RegionViewId",
-                        column: x => x.RegionViewId,
-                        principalTable: "RegionViews",
+                        name: "FK_Pictures_DistrictViews_DistrictViewId",
+                        column: x => x.DistrictViewId,
+                        principalTable: "DistrictViews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -329,18 +328,18 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CityHistories_AddedByUserId",
-                table: "CityHistories",
+                name: "IX_CityArticles_AddedByUserId",
+                table: "CityArticles",
                 column: "AddedByUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CityHistories_CityId",
-                table: "CityHistories",
+                name: "IX_CityArticles_CityId",
+                table: "CityArticles",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CityHistories_IsDeleted",
-                table: "CityHistories",
+                name: "IX_CityArticles_IsDeleted",
+                table: "CityArticles",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
@@ -354,64 +353,69 @@
                 column: "DiscussionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_RegionViewId",
+                name: "IX_Comments_DistrictViewId",
                 table: "Comments",
-                column: "RegionViewId");
+                column: "DistrictViewId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Discussions_RegionViewId",
+                name: "IX_Discussions_DistrictViewId",
                 table: "Discussions",
-                column: "RegionViewId");
+                column: "DistrictViewId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Objects_IsDeleted",
-                table: "Objects",
+                name: "IX_DistrictObjects_DistrictViewId",
+                table: "DistrictObjects",
+                column: "DistrictViewId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DistrictObjects_IsDeleted",
+                table: "DistrictObjects",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Objects_RegionViewId",
-                table: "Objects",
-                column: "RegionViewId");
+                name: "IX_Districts_CityId",
+                table: "Districts",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pictures_CityHistoryId",
+                name: "IX_Districts_IsDeleted",
+                table: "Districts",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DistrictViews_AddedByUserId",
+                table: "DistrictViews",
+                column: "AddedByUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DistrictViews_DistrictId",
+                table: "DistrictViews",
+                column: "DistrictId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DistrictViews_IsDeleted",
+                table: "DistrictViews",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pictures_CityArticleId",
                 table: "Pictures",
-                column: "CityHistoryId");
+                column: "CityArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pictures_DistrictObjectId",
+                table: "Pictures",
+                column: "DistrictObjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pictures_DistrictViewId",
+                table: "Pictures",
+                column: "DistrictViewId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pictures_IsDeleted",
                 table: "Pictures",
                 column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pictures_ObjectId",
-                table: "Pictures",
-                column: "ObjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pictures_RegionViewId",
-                table: "Pictures",
-                column: "RegionViewId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Regions_CityId",
-                table: "Regions",
-                column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegionViews_AddedByUserId",
-                table: "RegionViews",
-                column: "AddedByUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegionViews_IsDeleted",
-                table: "RegionViews",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegionViews_RegionId",
-                table: "RegionViews",
-                column: "RegionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserCities_CityId",
@@ -424,9 +428,9 @@
                 column: "DiscussionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRegions_RegionId",
-                table: "UserRegions",
-                column: "RegionId");
+                name: "IX_UserDistricts_DistrictId",
+                table: "UserDistricts",
+                column: "DistrictId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Cities_CityId",
@@ -456,22 +460,22 @@
                 name: "UserDiscussions");
 
             migrationBuilder.DropTable(
-                name: "UserRegions");
+                name: "UserDistricts");
 
             migrationBuilder.DropTable(
-                name: "CityHistories");
+                name: "CityArticles");
 
             migrationBuilder.DropTable(
-                name: "Objects");
+                name: "DistrictObjects");
 
             migrationBuilder.DropTable(
                 name: "Discussions");
 
             migrationBuilder.DropTable(
-                name: "RegionViews");
+                name: "DistrictViews");
 
             migrationBuilder.DropTable(
-                name: "Regions");
+                name: "Districts");
 
             migrationBuilder.DropTable(
                 name: "Cities");
@@ -483,6 +487,29 @@
             migrationBuilder.DropColumn(
                 name: "CityId",
                 table: "AspNetUsers");
+
+            migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.Id);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Settings_IsDeleted",
+                table: "Settings",
+                column: "IsDeleted");
         }
     }
 }

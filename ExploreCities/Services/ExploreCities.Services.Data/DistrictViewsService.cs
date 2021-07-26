@@ -6,35 +6,35 @@
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Models.Location;
-    using ExploreCities.Web.ViewModels.RegionViews;
+    using ExploreCities.Web.ViewModels.DistrictViews;
 
-    public class RegionViewsService : IRegionViewsService
+    public class DistrictViewsService : IDistrictViewsService
     {
-        private readonly IDeletableEntityRepository<RegionView> regionViewsRepository;
-        private readonly IRegionsService regionService;
+        private readonly IDeletableEntityRepository<DistrictView> districtViewsRepository;
+        private readonly IDistrictsService districtService;
 
-        public RegionViewsService(
-            IDeletableEntityRepository<RegionView> regionViewsRepository,
-            IRegionsService createRegionService)
+        public DistrictViewsService(
+            IDeletableEntityRepository<DistrictView> regionViewsRepository,
+            IDistrictsService createDistrictService)
         {
-            this.regionViewsRepository = regionViewsRepository;
-            this.regionService = createRegionService;
+            this.districtViewsRepository = regionViewsRepository;
+            this.districtService = createDistrictService;
         }
 
-        public async Task CreateAsync(CreateRegionViewInputModel input, string userId)
+        public async Task CreateAsync(CreateDistrictViewInputModel input, string userId)
         {
-            var regionName = input.RegionName;
+            var regionName = input.DistrictName;
             var cityId = input.CityId;
 
-            await this.regionService.CreateAsync(regionName, cityId);
+            await this.districtService.CreateAsync(regionName, cityId);
 
-            var regionId = this.regionService.GetRegionId(regionName);
+            var districtId = this.districtService.GetDistrictId(regionName);
 
-            var regionView = new RegionView
+            var districtView = new DistrictView
             {
                 ArrivalYear = input.ArrivalYear,
                 DepartureYear = input.DepartureYear != null ? input.DepartureYear : null,
-                RegionId = regionId,
+                DistrictId = districtId,
                 Comment = input.Comment,
                 PictureUrl = input.PictureUrl,
                 ParkingSpaces = Enum.Parse<ParkingSpacesExistence>(input.ParkingSpacesExistence),
@@ -45,8 +45,8 @@
                 AddedByUserId = userId,
             };
 
-            await this.regionViewsRepository.AddAsync(regionView);
-            await this.regionViewsRepository.SaveChangesAsync();
+            await this.districtViewsRepository.AddAsync(districtView);
+            await this.districtViewsRepository.SaveChangesAsync();
         }
     }
 }

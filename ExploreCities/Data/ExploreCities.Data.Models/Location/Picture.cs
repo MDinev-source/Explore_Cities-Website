@@ -24,8 +24,8 @@
         public string Comment { get; set; }
 
         [Required]
-        public string ObjectId { get; set; }
+        public string DistrictObjectId { get; set; }
 
-        public RegionObject Object { get; set; }
+        public DistrictObject DistrictObject { get; set; }
     }
 }

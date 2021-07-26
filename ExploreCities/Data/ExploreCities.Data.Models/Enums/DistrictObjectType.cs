@@ -1,6 +1,6 @@
 ﻿namespace ExploreCities.Data.Models.Enums
 {
-    public enum ObjectType
+    public enum DistrictObjectType
     {
         Park = 1,
         Restaurant = 2,
@@ -11,7 +11,7 @@
         GroceryStore = 7,
         Hospital = 8,
         Pharmacy = 9,
-        SchoolUniversity = 10,
+        School = 10,
         University = 11,
         SportHobby = 12,
         Landmark = 13,

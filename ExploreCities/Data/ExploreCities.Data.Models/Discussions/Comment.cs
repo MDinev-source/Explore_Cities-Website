@@ -18,9 +18,9 @@
         public string Text { get; set; }
 
         [Required]
-        public string RegionViewId { get; set; }
+        public string DistrictViewId { get; set; }
 
-        public virtual RegionView Region { get; set; }
+        public virtual DistrictView DistrictView { get; set; }
 
         [Required]
         public string AddedByUserId { get; set; }

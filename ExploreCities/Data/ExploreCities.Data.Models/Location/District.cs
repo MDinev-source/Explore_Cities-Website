@@ -6,12 +6,12 @@
 
     using ExploreCities.Data.Common.Models;
 
-    public class Region : BaseDeletableModel<string>
+    public class District : BaseDeletableModel<string>
     {
-        public Region()
+        public District()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.RegionViews = new HashSet<RegionView>();
+            this.DistrictViews = new HashSet<DistrictView>();
         }
 
         [Required]
@@ -23,6 +23,6 @@
 
         public City City { get; set; }
 
-        public virtual ICollection<RegionView> RegionViews { get; set; }
+        public virtual ICollection<DistrictView> DistrictViews { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-﻿namespace ExploreCities.Web.ViewModels.RegionViews
+﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class CreateRegionViewInputModel
+    public class CreateDistrictViewInputModel
     {
         [Required]
         [Display(Name ="City name")]
@@ -13,8 +13,8 @@
         [Required]
         [MaxLength(30)]
         [RegularExpression(@"^[A-Z][a-z]+$")]
-        [Display(Name ="Region name")]
-        public string RegionName { get; set; }
+        [Display(Name ="District name")]
+        public string DistrictName { get; set; }
 
         [Range(1930, 2200)]
         [Display(Name ="Arrival year")]

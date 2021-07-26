@@ -2,10 +2,10 @@
 {
     using System.Threading.Tasks;
 
-    public interface IRegionsService
+    public interface IDistrictsService
     {
         Task CreateAsync(string name, string cityId);
 
-        string GetRegionId(string name);
+        string GetDistrictId(string name);
     }
 }

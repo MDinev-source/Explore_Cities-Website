@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExploreCities.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210723145509_RegionColumnChangeStructure")]
-    partial class RegionColumnChangeStructure
+    [Migration("20210726074747_SecondCreate")]
+    partial class SecondCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -161,12 +161,12 @@ namespace ExploreCities.Data.Migrations
                     b.Property<string>("DiscussionId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RegionViewId")
+                    b.Property<string>("DistrictViewId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -179,7 +179,7 @@ namespace ExploreCities.Data.Migrations
 
                     b.HasIndex("DiscussionId");
 
-                    b.HasIndex("RegionViewId");
+                    b.HasIndex("DistrictViewId");
 
                     b.ToTable("Comments");
                 });
@@ -189,7 +189,7 @@ namespace ExploreCities.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RegionViewId")
+                    b.Property<string>("DistrictViewId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Topic")
@@ -199,7 +199,7 @@ namespace ExploreCities.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RegionViewId");
+                    b.HasIndex("DistrictViewId");
 
                     b.ToTable("Discussions");
                 });
@@ -208,6 +208,10 @@ namespace ExploreCities.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Area")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -226,10 +230,6 @@ namespace ExploreCities.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("Region")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
@@ -237,7 +237,7 @@ namespace ExploreCities.Data.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.CityHistory", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.CityArticle", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -275,6 +275,9 @@ namespace ExploreCities.Data.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddedByUserId");
@@ -283,64 +286,10 @@ namespace ExploreCities.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("CityHistories");
+                    b.ToTable("CityArticles");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.Picture", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CityHistoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Extension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ObjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ObjectName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("RegionViewId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityHistoryId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ObjectId");
-
-                    b.HasIndex("RegionViewId");
-
-                    b.ToTable("Pictures");
-                });
-
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.Region", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.District", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -372,10 +321,10 @@ namespace ExploreCities.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Regions");
+                    b.ToTable("Districts");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.RegionObject", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictObject", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -385,6 +334,10 @@ namespace ExploreCities.Data.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("DistrictViewId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -405,20 +358,16 @@ namespace ExploreCities.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("RegionViewId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("DistrictViewId");
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("RegionViewId");
-
-                    b.ToTable("Objects");
+                    b.ToTable("DistrictObjects");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.RegionView", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictView", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -450,6 +399,10 @@ namespace ExploreCities.Data.Migrations
                     b.Property<int?>("DepartureYear")
                         .HasColumnType("int");
 
+                    b.Property<string>("DistrictId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -469,19 +422,69 @@ namespace ExploreCities.Data.Migrations
                     b.Property<int>("PublicTransport")
                         .HasColumnType("int");
 
-                    b.Property<string>("RegionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddedByUserId");
 
+                    b.HasIndex("DistrictId");
+
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("RegionId");
+                    b.ToTable("DistrictViews");
+                });
 
-                    b.ToTable("RegionViews");
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.Picture", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CityArticleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DistrictObjectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DistrictViewId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ObjectName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityArticleId");
+
+                    b.HasIndex("DistrictObjectId");
+
+                    b.HasIndex("DistrictViewId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.UserCity", b =>
@@ -514,19 +517,19 @@ namespace ExploreCities.Data.Migrations
                     b.ToTable("UserDiscussions");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.UserRegion", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.UserDistrict", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RegionId")
+                    b.Property<string>("DistrictId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserId", "RegionId");
+                    b.HasKey("UserId", "DistrictId");
 
-                    b.HasIndex("RegionId");
+                    b.HasIndex("DistrictId");
 
-                    b.ToTable("UserRegions");
+                    b.ToTable("UserDistricts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -652,25 +655,25 @@ namespace ExploreCities.Data.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("DiscussionId");
 
-                    b.HasOne("ExploreCities.Data.Models.Location.RegionView", "Region")
+                    b.HasOne("ExploreCities.Data.Models.Location.DistrictView", "DistrictView")
                         .WithMany()
-                        .HasForeignKey("RegionViewId")
+                        .HasForeignKey("DistrictViewId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AddedByUser");
 
-                    b.Navigation("Region");
+                    b.Navigation("DistrictView");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.Discussions.Discussion", b =>
                 {
-                    b.HasOne("ExploreCities.Data.Models.Location.RegionView", null)
+                    b.HasOne("ExploreCities.Data.Models.Location.DistrictView", null)
                         .WithMany("Discussions")
-                        .HasForeignKey("RegionViewId");
+                        .HasForeignKey("DistrictViewId");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.CityHistory", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.CityArticle", b =>
                 {
                     b.HasOne("ExploreCities.Data.Models.ApplicationUser", "AddedByUser")
                         .WithMany()
@@ -679,7 +682,7 @@ namespace ExploreCities.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("ExploreCities.Data.Models.Location.City", "City")
-                        .WithMany("Histories")
+                        .WithMany("Articles")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -687,66 +690,66 @@ namespace ExploreCities.Data.Migrations
                     b.Navigation("AddedByUser");
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.District", b =>
+                {
+                    b.HasOne("ExploreCities.Data.Models.Location.City", "City")
+                        .WithMany("Districts")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictObject", b =>
+                {
+                    b.HasOne("ExploreCities.Data.Models.Location.DistrictView", "DistrictView")
+                        .WithMany("DistrictObjects")
+                        .HasForeignKey("DistrictViewId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DistrictView");
+                });
+
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictView", b =>
+                {
+                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ExploreCities.Data.Models.Location.District", "District")
+                        .WithMany("DistrictViews")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AddedByUser");
+
+                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.Location.Picture", b =>
                 {
-                    b.HasOne("ExploreCities.Data.Models.Location.CityHistory", null)
+                    b.HasOne("ExploreCities.Data.Models.Location.CityArticle", null)
                         .WithMany("Picture")
-                        .HasForeignKey("CityHistoryId");
+                        .HasForeignKey("CityArticleId");
 
-                    b.HasOne("ExploreCities.Data.Models.Location.RegionObject", "Object")
+                    b.HasOne("ExploreCities.Data.Models.Location.DistrictObject", "DistrictObject")
                         .WithMany("Pictures")
-                        .HasForeignKey("ObjectId")
+                        .HasForeignKey("DistrictObjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ExploreCities.Data.Models.Location.RegionView", null)
+                    b.HasOne("ExploreCities.Data.Models.Location.DistrictView", null)
                         .WithMany("Pictures")
-                        .HasForeignKey("RegionViewId");
+                        .HasForeignKey("DistrictViewId");
 
-                    b.Navigation("Object");
-                });
-
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.Region", b =>
-                {
-                    b.HasOne("ExploreCities.Data.Models.Location.City", "City")
-                        .WithMany("Regions")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("City");
-                });
-
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.RegionObject", b =>
-                {
-                    b.HasOne("ExploreCities.Data.Models.Location.RegionView", "Region")
-                        .WithMany("Objects")
-                        .HasForeignKey("RegionViewId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Region");
-                });
-
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.RegionView", b =>
-                {
-                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "AddedByUser")
-                        .WithMany()
-                        .HasForeignKey("AddedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ExploreCities.Data.Models.Location.Region", "Region")
-                        .WithMany("RegionViews")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AddedByUser");
-
-                    b.Navigation("Region");
+                    b.Navigation("DistrictObject");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.UserCity", b =>
@@ -757,7 +760,7 @@ namespace ExploreCities.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "USer")
+                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -765,7 +768,7 @@ namespace ExploreCities.Data.Migrations
 
                     b.Navigation("City");
 
-                    b.Navigation("USer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.UserDiscussion", b =>
@@ -776,7 +779,7 @@ namespace ExploreCities.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "USer")
+                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -784,26 +787,26 @@ namespace ExploreCities.Data.Migrations
 
                     b.Navigation("Discussion");
 
-                    b.Navigation("USer");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.UserRegion", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.UserDistrict", b =>
                 {
-                    b.HasOne("ExploreCities.Data.Models.Location.Region", "Region")
+                    b.HasOne("ExploreCities.Data.Models.Location.District", "District")
                         .WithMany()
-                        .HasForeignKey("RegionId")
+                        .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "USer")
+                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Region");
+                    b.Navigation("District");
 
-                    b.Navigation("USer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -873,33 +876,33 @@ namespace ExploreCities.Data.Migrations
 
             modelBuilder.Entity("ExploreCities.Data.Models.Location.City", b =>
                 {
-                    b.Navigation("Histories");
+                    b.Navigation("Articles");
 
-                    b.Navigation("Regions");
+                    b.Navigation("Districts");
 
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.CityHistory", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.CityArticle", b =>
                 {
                     b.Navigation("Picture");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.Region", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.District", b =>
                 {
-                    b.Navigation("RegionViews");
+                    b.Navigation("DistrictViews");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.RegionObject", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictObject", b =>
                 {
                     b.Navigation("Pictures");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Location.RegionView", b =>
+            modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictView", b =>
                 {
                     b.Navigation("Discussions");
 
-                    b.Navigation("Objects");
+                    b.Navigation("DistrictObjects");
 
                     b.Navigation("Pictures");
                 });

@@ -6,7 +6,7 @@
 
         public string Area { get; set; }
 
-        public int RegionsCount { get; set; }
+        public int DistrictsCount { get; set; }
 
         public int UsersCount { get; set; }
     }

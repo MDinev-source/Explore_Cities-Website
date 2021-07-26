@@ -2,14 +2,14 @@
 {
     using ExploreCities.Data.Models.Location;
 
-    public class UserRegion
+    public class UserDistrict
     {
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
 
-        public string RegionId { get; set; }
+        public string DistrictId { get; set; }
 
-        public Region Region { get; set; }
+        public District District { get; set; }
     }
 }

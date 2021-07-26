@@ -7,9 +7,9 @@
     using ExploreCities.Data.Common.Models;
     using ExploreCities.Data.Models.Enums;
 
-    public class RegionObject : BaseDeletableModel<string>
+    public class DistrictObject : BaseDeletableModel<string>
     {
-        public RegionObject()
+        public DistrictObject()
         {
             this.Id = Guid.NewGuid().ToString();
 
@@ -17,7 +17,7 @@
         }
 
         [Required]
-        public ObjectType ObjectType { get; set; }
+        public DistrictObjectType ObjectType { get; set; }
 
         [Required]
         [MaxLength(30)]
@@ -28,9 +28,9 @@
         public string Opinion { get; set; }
 
         [Required]
-        public string RegionViewId { get; set; }
+        public string DistrictViewId { get; set; }
 
-        public virtual RegionView Region { get; set; }
+        public virtual DistrictView DistrictView { get; set; }
 
         public virtual ICollection<Picture> Pictures { get; set; }
     }

@@ -8,14 +8,14 @@
     using ExploreCities.Data.Models.Discussions;
     using ExploreCities.Data.Models.Enums;
 
-    public class RegionView : BaseDeletableModel<string>
+    public class DistrictView : BaseDeletableModel<string>
     {
-        public RegionView()
+        public DistrictView()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Pictures = new HashSet<Picture>();
             this.Discussions = new HashSet<Discussion>();
-            this.Objects = new HashSet<RegionObject>();
+            this.DistrictObjects = new HashSet<DistrictObject>();
         }
 
         public int ArrivalYear { get; set; }
@@ -23,9 +23,9 @@
         public int? DepartureYear { get; set; }
 
         [Required]
-        public string RegionId { get; set; }
+        public string DistrictId { get; set; }
 
-        public Region Region { get; set; }
+        public District District { get; set; }
 
         [Required]
         [MaxLength(500)]
@@ -58,6 +58,6 @@
 
         public virtual ICollection<Discussion> Discussions { get; set; }
 
-        public virtual ICollection<RegionObject> Objects { get; set; }
+        public virtual ICollection<DistrictObject> DistrictObjects { get; set; }
     }
 }
