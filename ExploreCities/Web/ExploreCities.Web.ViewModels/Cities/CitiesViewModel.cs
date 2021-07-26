@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
 
-        public string Region { get; set; }
+        public string Area { get; set; }
 
         public int RegionsCount { get; set; }
 

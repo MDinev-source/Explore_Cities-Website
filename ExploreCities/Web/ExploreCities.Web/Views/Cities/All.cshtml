@@ -2,12 +2,11 @@
 @using X.PagedList.Web.Common
 
 @{
-    ViewData["Title"] = "Cities";
+    ViewData["Title"] = "All Cities";
 }
 
-<h2 class="text-center">Cities Search List</h2>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
 
-<div asp-validation-summary="All" class="text-danger"></div>
 
 <form method="get" asp-controller="Cities" asp-action="All">
     <p>
@@ -21,8 +20,8 @@
                         <label class="form-check-label text-primary">City Name</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="check" type="radio" asp-for="OptionSearch" value="Region">
-                        <label class="form-check-label text-primary">Region</label>
+                        <input class="form-check-input" id="check" type="radio" asp-for="OptionSearch" value="Area">
+                        <label class="form-check-label text-primary">Area</label>
                     </div>
                 </div>
             </div>
@@ -53,7 +52,7 @@
                     <label class="text-primary">Sort by</label>
                     <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
                         <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">City name</option>
-                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Districts count (desc.)</option>
+                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Regions count (desc.)</option>
                         <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
                     </select>
                 </div>
@@ -68,10 +67,10 @@
     <thead>
         <tr>
             <th scope="col">City Name</th>
-            <th scope="col">Region</th>
-            <th scope="col" class="text-center">Districts Count</th>
+            <th scope="col">Area</th>
+            <th scope="col" class="text-center">Regions Count</th>
             <th scope="col" class="text-center">Users Count</th>
-            <th scope="col" class="text-center">Go To Districts</th>
+            <th scope="col" class="text-center">Go To Regions</th>
             <th scope="col" class="text-center">Go To Histories</th>
         </tr>
     </thead>
@@ -83,7 +82,7 @@
                     @Html.DisplayFor(modelItem => city.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => city.Region)
+                    @Html.DisplayFor(modelItem => city.Area)
                 </td>
                 <td class="text-center">
                     @Html.DisplayFor(modelItem => city.RegionsCount)
@@ -92,7 +91,7 @@
                     @Html.DisplayFor(modelItem => city.UsersCount)
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Districts/All">All Districts</a>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Districts/All">All Regions</a>
                 </td>
                 <td>
                     <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Cities/Histories">All Histories</a>
@@ -119,3 +118,5 @@
             PageClasses = new string[] { "page-link" }
         })
 </div>
+
+

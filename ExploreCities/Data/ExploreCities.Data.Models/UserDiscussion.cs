@@ -6,7 +6,7 @@
     {
         public string UserId { get; set; }
 
-        public ApplicationUser USer { get; set; }
+        public ApplicationUser User { get; set; }
 
         public string DiscussionId { get; set; }
 

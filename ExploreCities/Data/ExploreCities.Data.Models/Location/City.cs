@@ -21,7 +21,7 @@
         public string Name { get; set; }
 
         [Required]
-        public string Region { get; set; }
+        public string Area { get; set; }
 
         public virtual ICollection<CityHistory> Histories { get; set; }
 

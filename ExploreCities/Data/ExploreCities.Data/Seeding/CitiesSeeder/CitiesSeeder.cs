@@ -28,7 +28,7 @@
                 var city = new City
                 {
                     Name = cityDto.City,
-                    Region = cityDto.Admin_name,
+                    Area = cityDto.Admin_name,
                 };
 
                 cities.Add(city);

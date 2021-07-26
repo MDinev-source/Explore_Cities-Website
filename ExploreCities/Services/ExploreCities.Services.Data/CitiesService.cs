@@ -40,7 +40,7 @@
                   .Select(x => new CitiesViewModel
                   {
                       Name = x.Name,
-                      Region = x.Region,
+                      Area = x.Area,
                       RegionsCount = x.Regions.Count,
                       UsersCount = x.Users.Count,
                   })
@@ -65,7 +65,7 @@
                .Select(x => new CitiesViewModel
                {
                    Name = x.Name,
-                   Region = x.Region,
+                   Area = x.Area,
                    RegionsCount = x.Regions.Count,
                    UsersCount = x.Users.Count,
                })
@@ -76,11 +76,11 @@
                 cities = this.citiesRepository
                .All()
                .ToList()
-               .Where(c => escapedSearchTokens.All(t => c.Region.ToLower().Contains(t.ToLower())))
+               .Where(c => escapedSearchTokens.All(t => c.Area.ToLower().Contains(t.ToLower())))
                .Select(x => new CitiesViewModel
                {
                    Name = x.Name,
-                   Region = x.Region,
+                   Area = x.Area,
                    RegionsCount = x.Regions.Count,
                    UsersCount = x.Users.Count,
                })
@@ -95,13 +95,13 @@
             switch (sorter)
             {
                 case CitiesSorter.CityName:
-                    return cities.OrderBy(c => c.Name).ThenBy(c => c.Region).ToList();
+                    return cities.OrderBy(c => c.Name).ThenBy(c => c.Area).ToList();
                 case CitiesSorter.RegionsCount:
                     return cities.OrderByDescending(c => c.RegionsCount).ThenBy(c => c.Name).ToList();
                 case CitiesSorter.UsersCount:
                     return cities.OrderByDescending(c => c.UsersCount).ThenBy(c => c.Name).ToList();
                 default:
-                    return cities.OrderBy(c => c.Name).ThenBy(c => c.Region).ToList();
+                    return cities.OrderBy(c => c.Name).ThenBy(c => c.Area).ToList();
             }
         }
     }
