@@ -19,6 +19,8 @@
         [MaxLength(30)]
         public string Name { get; set; }
 
+        public int Raiting { get; set; }
+
         [Required]
         public string CityId { get; set; }
 
