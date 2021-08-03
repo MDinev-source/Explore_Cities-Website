@@ -15,5 +15,9 @@
         IEnumerable<CitiesViewModel> SortBy(CitiesViewModel[] cities, CitiesSorter sorter);
 
         IEnumerable<CitiesViewModel> GetCitiesFromSearch(string searchString, string optionsSearch);
+
+        void AddUserToCity(string userId, string citytId);
+
+        string GetCityName(string cityId);
     }
 }

@@ -1,0 +1,98 @@
+﻿@model ExploreCities.Web.ViewModels.Districts.ListDistrictsViewModel
+@{
+    ViewData["Titles"] = "All Districts";
+}
+
+<div class="page-header text-center">
+    <h1 id="tables">Listed districts for: </h1>
+    <h1 class="font-weight-bold font-italic">@Model.CityName</h1>
+</div>
+
+<form method="get" asp-controller="Districts" asp-action="All">
+    <p>
+        <div class="row">
+
+            <div class="col text-left">
+                <div class="row">
+                    <input class="btn btn-outline-primary" type="text" name="SearchString" />
+                    <input class="btn btn-outline-primary" type="submit" value="Filter" />
+                </div>
+            </div>
+
+            <div class="col text-right">
+                <div class="form-group">
+                    <label class="text-primary">Show</label>
+                    <select class="btn btn-outline-primary" name="PageSize" onchange="this.form.submit();">
+                        <option value="6" selected="@(Model.PageSize == 6 ? true : false)">6</option>
+                        <option value="12" selected="@(Model.PageSize == 12 ? true : false)">12</option>
+                        <option value="24" selected="@(Model.PageSize == 24 ? true : false)">24</option>
+                        <option value="48" selected="@(Model.PageSize == 48 ? true : false)">48</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col text-right">
+                <div class="form-group">
+                    <label class="text-primary">Sort by</label>
+                    <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
+                        <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">District name</option>
+                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">District Views count (desc.)</option>
+                        <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <a class="text-primary" asp-action="All">Back to List</a>
+
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">District Name</th>
+            <th scope="col" class="text-center">Districts Views Count</th>
+            <th scope="col" class="text-center">Users Count</th>
+            <th scope="col" class="text-center">District Views</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var district in Model.AllDistricts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => district.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => district.DistrictViewsCount)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => district.UsersCount)
+                </td>
+                <td>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-route-id="/Districts/CityDistricts?cityId=@district.Id">All District Views</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-around">
+    @Html.PagedListPager((IPagedList)Model.AllDistricts,
+        page => Url.Action("All",
+            new
+                {
+                    PageNumber = page,
+                    PageSize = Model.PageSize,
+                    SearchString = Model.SearchString,
+            }),
+        new PagedListRenderOptions
+        {
+            MaximumPageNumbersToDisplay = 5,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+</div>

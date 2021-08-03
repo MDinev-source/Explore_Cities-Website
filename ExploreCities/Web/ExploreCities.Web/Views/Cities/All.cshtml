@@ -50,14 +50,16 @@
                     <label class="text-primary">Sort by</label>
                     <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
                         <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">City name</option>
-                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Regions count (desc.)</option>
+                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Districts count (desc.)</option>
                         <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
                     </select>
                 </div>
             </div>
 
         </div>
+
         <a class="text-primary" asp-action="All">Back to List</a>
+
     </p>
 </form>
 
@@ -90,7 +92,7 @@
                     @Html.DisplayFor(modelItem => city.UsersCount)
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Districts/All">All Districts</a>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-area="" asp-controller="Districts" asp-action="All" asp-route-cityId="@city.Id">All Districts</a>
                 </td>
                 <td>
                     <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Cities/Histories">All Articles</a>

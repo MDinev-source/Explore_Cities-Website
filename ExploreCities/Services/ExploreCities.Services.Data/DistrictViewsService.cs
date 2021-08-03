@@ -11,24 +11,30 @@
     public class DistrictViewsService : IDistrictViewsService
     {
         private readonly IDeletableEntityRepository<DistrictView> districtViewsRepository;
+        private readonly ICitiesService citiesService;
         private readonly IDistrictsService districtService;
 
         public DistrictViewsService(
-            IDeletableEntityRepository<DistrictView> regionViewsRepository,
+            IDeletableEntityRepository<DistrictView> districtViewsRepository,
+            ICitiesService citiesService,
             IDistrictsService createDistrictService)
         {
-            this.districtViewsRepository = regionViewsRepository;
+            this.districtViewsRepository = districtViewsRepository;
+            this.citiesService = citiesService;
             this.districtService = createDistrictService;
         }
 
         public async Task CreateAsync(CreateDistrictViewInputModel input, string userId)
         {
-            var regionName = input.DistrictName;
+            var districtName = input.DistrictName;
             var cityId = input.CityId;
 
-            await this.districtService.CreateAsync(regionName, cityId);
+            await this.districtService.CreateAsync(districtName, cityId);
 
-            var districtId = this.districtService.GetDistrictId(regionName);
+            var districtId = this.districtService.GetDistrictId(districtName);
+
+            this.districtService.AddUserToDistrict(userId, districtId);
+            this.citiesService.AddUserToCity(userId, cityId);
 
             var districtView = new DistrictView
             {

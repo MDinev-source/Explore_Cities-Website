@@ -65,8 +65,8 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IGetEnumsDataService, GetEnumsDataService>();
-            services.AddTransient<ICitiesService, CitiesService>();
             services.AddTransient<IDistrictsService, DistrictsService>();
+            services.AddTransient<ICitiesService, CitiesService>();
             services.AddTransient<IDistrictViewsService, DistrictViewsService>();
         }
 

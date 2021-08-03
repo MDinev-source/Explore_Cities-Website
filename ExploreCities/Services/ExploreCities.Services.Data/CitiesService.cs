@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using ExploreCities.Data.Common.Repositories;
+    using ExploreCities.Data.Models;
     using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.Cities;
     using ExploreCities.Web.ViewModels.Enums;
@@ -14,11 +15,35 @@
     public class CitiesService : ICitiesService
     {
         private readonly IDeletableEntityRepository<City> citiesRepository;
+        private readonly IRepository<UserCity> userCitiesRepository;
 
         public CitiesService(
-            IDeletableEntityRepository<City> citiesRepository)
+            IDeletableEntityRepository<City> citiesRepository,
+            IRepository<UserCity> userCitiesRepository)
         {
             this.citiesRepository = citiesRepository;
+            this.userCitiesRepository = userCitiesRepository;
+        }
+
+        public void AddUserToCity(string userId, string citytId)
+        {
+            var userInCity = this.userCitiesRepository
+            .All()
+            .Any(x => x.UserId == userId && x.CityId == citytId);
+
+            if (userInCity)
+            {
+                return;
+            }
+
+            var userCities = new UserCity
+            {
+                UserId = userId,
+                CityId = citytId,
+            };
+
+            this.userCitiesRepository.AddAsync(userCities);
+            this.citiesRepository.SaveChangesAsync();
         }
 
         public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
@@ -39,10 +64,11 @@
                   .All()
                   .Select(x => new CitiesViewModel
                   {
+                      Id = x.Id,
                       Name = x.Name,
                       Area = x.Area,
                       DistrictsCount = x.Districts.Count,
-                      UsersCount = x.Users.Count,
+                      UsersCount = x.UserCities.Count,
                   })
                   .ToListAsync();
 
@@ -67,7 +93,7 @@
                    Name = x.Name,
                    Area = x.Area,
                    DistrictsCount = x.Districts.Count,
-                   UsersCount = x.Users.Count,
+                   UsersCount = x.UserCities.Count,
                })
                .ToList();
             }
@@ -82,12 +108,23 @@
                    Name = x.Name,
                    Area = x.Area,
                    DistrictsCount = x.Districts.Count,
-                   UsersCount = x.Users.Count,
+                   UsersCount = x.UserCities.Count,
                })
                .ToList();
             }
 
             return cities;
+        }
+
+        public string GetCityName(string cityId)
+        {
+            var cityName = this.citiesRepository
+             .All()
+             .Where(x => x.Id == cityId)
+             .Select(x => x.Name.ToString())
+             .FirstOrDefault();
+
+            return cityName;
         }
 
         public IEnumerable<CitiesViewModel> SortBy(CitiesViewModel[] cities, CitiesSorter sorter)

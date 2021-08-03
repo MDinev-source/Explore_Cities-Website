@@ -16,11 +16,11 @@
 
         public DistrictViewsController(
             ICitiesService citiesService,
-            IDistrictViewsService regionViewsService,
+            IDistrictViewsService districtViewsService,
             UserManager<ApplicationUser> userManager)
         {
             this.citiesService = citiesService;
-            this.districtViewsService = regionViewsService;
+            this.districtViewsService = districtViewsService;
             this.userManager = userManager;
         }
 
