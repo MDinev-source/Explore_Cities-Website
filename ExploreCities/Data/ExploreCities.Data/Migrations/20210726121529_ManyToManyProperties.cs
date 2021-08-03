@@ -1,20 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace ExploreCities.Data.Migrations
+﻿namespace ExploreCities.Data.Migrations
 {
-    public partial class SecondCreate : Migration
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
+    public partial class ManyToManyProperties : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Settings");
-
-            migrationBuilder.AddColumn<string>(
-                name: "CityId",
-                table: "AspNetUsers",
-                type: "nvarchar(450)",
-                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Cities",
@@ -26,7 +21,7 @@ namespace ExploreCities.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -47,7 +42,7 @@ namespace ExploreCities.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -76,7 +71,7 @@ namespace ExploreCities.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -94,7 +89,7 @@ namespace ExploreCities.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -132,7 +127,7 @@ namespace ExploreCities.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -156,7 +151,7 @@ namespace ExploreCities.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DistrictId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    DistrictId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -181,7 +176,7 @@ namespace ExploreCities.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Topic = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
-                    DistrictViewId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    DistrictViewId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -206,7 +201,7 @@ namespace ExploreCities.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -229,7 +224,7 @@ namespace ExploreCities.Data.Migrations
                     AddedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DiscussionId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -259,7 +254,7 @@ namespace ExploreCities.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DiscussionId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    DiscussionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -292,7 +287,7 @@ namespace ExploreCities.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -316,11 +311,6 @@ namespace ExploreCities.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_CityId",
-                table: "AspNetUsers",
-                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_IsDeleted",
@@ -431,22 +421,10 @@ namespace ExploreCities.Data.Migrations
                 name: "IX_UserDistricts_DistrictId",
                 table: "UserDistricts",
                 column: "DistrictId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_Cities_CityId",
-                table: "AspNetUsers",
-                column: "CityId",
-                principalTable: "Cities",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_AspNetUsers_Cities_CityId",
-                table: "AspNetUsers");
-
             migrationBuilder.DropTable(
                 name: "Comments");
 
@@ -480,14 +458,6 @@ namespace ExploreCities.Data.Migrations
             migrationBuilder.DropTable(
                 name: "Cities");
 
-            migrationBuilder.DropIndex(
-                name: "IX_AspNetUsers_CityId",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "CityId",
-                table: "AspNetUsers");
-
             migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
@@ -499,7 +469,7 @@ namespace ExploreCities.Data.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {

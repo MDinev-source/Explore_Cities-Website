@@ -10,6 +10,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
+            this.UserDiscussions = new HashSet<UserDiscussion>();
         }
 
         public string Id { get; set; }
@@ -19,5 +20,7 @@
         public string Topic { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public ICollection<UserDiscussion> UserDiscussions { get; set; }
     }
 }

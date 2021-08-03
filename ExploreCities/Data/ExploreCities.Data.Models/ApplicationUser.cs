@@ -5,7 +5,8 @@ namespace ExploreCities.Data.Models
     using System.Collections.Generic;
 
     using ExploreCities.Data.Common.Models;
-
+    using ExploreCities.Data.Models.Discussions;
+    using ExploreCities.Data.Models.Location;
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -16,6 +17,10 @@ namespace ExploreCities.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+
+            this.UserCities = new HashSet<UserCity>();
+            this.UserDistricts = new HashSet<UserDistrict>();
+            this.UserDiscussions = new HashSet<UserDiscussion>();
         }
 
         // Audit info
@@ -33,5 +38,12 @@ namespace ExploreCities.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        // My properties
+        public virtual ICollection<UserCity> UserCities { get; set; }
+
+        public virtual ICollection<UserDistrict> UserDistricts { get; set; }
+
+        public virtual ICollection<UserDiscussion> UserDiscussions { get; set; }
     }
 }

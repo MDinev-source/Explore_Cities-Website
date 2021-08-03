@@ -12,6 +12,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.DistrictViews = new HashSet<DistrictView>();
+            this.UserDistricts = new HashSet<UserDistrict>();
         }
 
         [Required]
@@ -24,5 +25,7 @@
         public City City { get; set; }
 
         public virtual ICollection<DistrictView> DistrictViews { get; set; }
+
+        public ICollection<UserDistrict> UserDistricts { get; set; }
     }
 }

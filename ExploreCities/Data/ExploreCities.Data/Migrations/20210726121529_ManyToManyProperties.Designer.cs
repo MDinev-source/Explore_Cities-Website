@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExploreCities.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210726074747_SecondCreate")]
-    partial class SecondCreate
+    [Migration("20210726121529_ManyToManyProperties")]
+    partial class ManyToManyProperties
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,9 +70,6 @@ namespace ExploreCities.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("CityId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -130,8 +127,6 @@ namespace ExploreCities.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CityId");
 
                     b.HasIndex("IsDeleted");
 
@@ -636,13 +631,6 @@ namespace ExploreCities.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("ExploreCities.Data.Models.Location.City", null)
-                        .WithMany("Users")
-                        .HasForeignKey("CityId");
-                });
-
             modelBuilder.Entity("ExploreCities.Data.Models.Discussions.Comment", b =>
                 {
                     b.HasOne("ExploreCities.Data.Models.ApplicationUser", "AddedByUser")
@@ -755,13 +743,13 @@ namespace ExploreCities.Data.Migrations
             modelBuilder.Entity("ExploreCities.Data.Models.UserCity", b =>
                 {
                     b.HasOne("ExploreCities.Data.Models.Location.City", "City")
-                        .WithMany()
+                        .WithMany("UserCities")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("UserCities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -774,13 +762,13 @@ namespace ExploreCities.Data.Migrations
             modelBuilder.Entity("ExploreCities.Data.Models.UserDiscussion", b =>
                 {
                     b.HasOne("ExploreCities.Data.Models.Discussions.Discussion", "Discussion")
-                        .WithMany()
+                        .WithMany("UserDiscussions")
                         .HasForeignKey("DiscussionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("UserDiscussions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -793,13 +781,13 @@ namespace ExploreCities.Data.Migrations
             modelBuilder.Entity("ExploreCities.Data.Models.UserDistrict", b =>
                 {
                     b.HasOne("ExploreCities.Data.Models.Location.District", "District")
-                        .WithMany()
+                        .WithMany("UserDistricts")
                         .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("UserDistricts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -867,11 +855,19 @@ namespace ExploreCities.Data.Migrations
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
+
+                    b.Navigation("UserCities");
+
+                    b.Navigation("UserDiscussions");
+
+                    b.Navigation("UserDistricts");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.Discussions.Discussion", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("UserDiscussions");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.Location.City", b =>
@@ -880,7 +876,7 @@ namespace ExploreCities.Data.Migrations
 
                     b.Navigation("Districts");
 
-                    b.Navigation("Users");
+                    b.Navigation("UserCities");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.Location.CityArticle", b =>
@@ -891,6 +887,8 @@ namespace ExploreCities.Data.Migrations
             modelBuilder.Entity("ExploreCities.Data.Models.Location.District", b =>
                 {
                     b.Navigation("DistrictViews");
+
+                    b.Navigation("UserDistricts");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictObject", b =>

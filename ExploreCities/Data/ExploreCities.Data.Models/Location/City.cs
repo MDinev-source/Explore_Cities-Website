@@ -13,7 +13,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.Articles = new HashSet<CityArticle>();
             this.Districts = new HashSet<District>();
-            this.Users = new HashSet<ApplicationUser>();
+            this.UserCities = new HashSet<UserCity>();
         }
 
         [Required]
@@ -27,6 +27,6 @@
 
         public virtual ICollection<District> Districts { get; set; }
 
-        public ICollection<ApplicationUser> Users { get; set; }
+        public ICollection<UserCity> UserCities { get; set; }
     }
 }
