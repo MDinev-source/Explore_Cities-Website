@@ -50,7 +50,7 @@
                     <label class="text-primary">Sort by</label>
                     <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
                         <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">City name</option>
-                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">Districts count (desc.)</option>
+                        <option value="2" selected="@(Model.Sorter.ToString() == "DistrictsCount" ? true : false)">Districts count (desc.)</option>
                         <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
                     </select>
                 </div>

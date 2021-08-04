@@ -133,7 +133,7 @@
             {
                 case CitiesSorter.CityName:
                     return cities.OrderBy(c => c.Name).ThenBy(c => c.Area).ToList();
-                case CitiesSorter.RegionsCount:
+                case CitiesSorter.DistrictsCount:
                     return cities.OrderByDescending(c => c.DistrictsCount).ThenBy(c => c.Name).ToList();
                 case CitiesSorter.UsersCount:
                     return cities.OrderByDescending(c => c.UsersCount).ThenBy(c => c.Name).ToList();
