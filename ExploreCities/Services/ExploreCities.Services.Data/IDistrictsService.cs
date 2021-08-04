@@ -19,5 +19,7 @@
         void AddUserToDistrict(string userId, string districtId);
 
         string GetDistrictId(string name);
+
+        string GetDistrictName(string Id);
     }
 }

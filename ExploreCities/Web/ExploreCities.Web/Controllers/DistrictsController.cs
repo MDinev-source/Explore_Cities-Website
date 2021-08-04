@@ -27,18 +27,14 @@
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> All(ListDistrictsViewModel listDistrictsViewModel)
+        public async Task<IActionResult> All(ListDistrictsViewModel listDistrictsViewModel, string cityId)
         {
-            IEnumerable<DistrictsViewModel> districts;
             var user = await this.userManager.GetUserAsync(this.User);
+            var districts = await this.districtsService.GetAllDistrictsAsync(listDistrictsViewModel.CityId ?? cityId, user.Id);
 
             if (listDistrictsViewModel.SearchString == null)
             {
                 districts = await this.districtsService.GetAllDistrictsAsync(listDistrictsViewModel.CityId, user.Id);
-            }
-            else
-            {
-                districts = this.districtsService.GetDistrictsFromSearch(listDistrictsViewModel.SearchString).ToList();
             }
 
             districts = this.districtsService.SortBy(districts.ToArray(), listDistrictsViewModel.Sorter);
@@ -48,6 +44,7 @@
             var pageCitiesViewModel = districts.ToPagedList(pageNumber, pageSize);
 
             listDistrictsViewModel.AllDistricts = pageCitiesViewModel;
+
             listDistrictsViewModel.CityName = this.citiesService.GetCityName(listDistrictsViewModel.CityId);
 
             return this.View(listDistrictsViewModel);

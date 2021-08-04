@@ -16,16 +16,13 @@
     {
         private readonly IDeletableEntityRepository<District> districtsRepository;
         private readonly IRepository<UserDistrict> userDistrictsRepository;
-        private readonly IDeletableEntityRepository<City> citiesRepository;
 
         public DistrictsService(
             IDeletableEntityRepository<District> districtsRepository,
-            IRepository<UserDistrict> userDistrictsRepository,
-            IDeletableEntityRepository<City> citiesRepository)
+            IRepository<UserDistrict> userDistrictsRepository)
         {
             this.districtsRepository = districtsRepository;
             this.userDistrictsRepository = userDistrictsRepository;
-            this.citiesRepository = citiesRepository;
         }
 
         public async Task CreateAsync(string name, string cityId)
@@ -97,7 +94,7 @@
                  Id = x.Id,
                  Name = x.Name,
                  DistrictViewsCount = x.DistrictViews.Count,
-                 UsersCount = x.UserDistricts.Count(x => x.UserId == userId),
+                 UsersCount = x.UserDistricts.Count,
              })
              .ToListAsync();
 
@@ -123,6 +120,16 @@
 
             this.userDistrictsRepository.AddAsync(userDistrict);
             this.districtsRepository.SaveChangesAsync();
+        }
+
+        public string GetDistrictName(string Id)
+        {
+            var district = this.districtsRepository
+                   .All()
+                   .Where(x => x.Id == Id)
+                   .FirstOrDefault();
+
+            return district.Name;
         }
     }
 }

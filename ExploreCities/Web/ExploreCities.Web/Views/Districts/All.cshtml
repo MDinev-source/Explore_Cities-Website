@@ -14,7 +14,7 @@
 
             <div class="col text-left">
                 <div class="row">
-                    <input class="btn btn-outline-primary" type="text" name="SearchString" />
+                    <label class="text-primary">Filter by name</label><input class="btn btn-outline-primary" type="text" name="SearchString" />
                     <input class="btn btn-outline-primary" type="submit" value="Filter" />
                 </div>
             </div>
@@ -35,8 +35,8 @@
                 <div class="form-group">
                     <label class="text-primary">Sort by</label>
                     <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
-                        <option value="1" selected="@(Model.Sorter.ToString() == "CityName" ? true : false)">District name</option>
-                        <option value="2" selected="@(Model.Sorter.ToString() == "RegionsCount" ? true : false)">District Views count (desc.)</option>
+                        <option value="1" selected="@(Model.Sorter.ToString() == "DistrictName" ? true : false)">District name</option>
+                        <option value="2" selected="@(Model.Sorter.ToString() == "DistrictViewsCount" ? true : false)">District Views count (desc.)</option>
                         <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
                     </select>
                 </div>
@@ -66,14 +66,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => district.Name)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => district.DistrictViewsCount)
                 </td>
                 <td class="text-center">
                     @Html.DisplayFor(modelItem => district.UsersCount)
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-route-id="/Districts/CityDistricts?cityId=@district.Id">All District Views</a>
+                    <a class="btn btn-block btn-primary text-white mb-3" asp-area="" asp-controller="DistrictViews" asp-action="All" asp-route-districtId="@district.Id">All District Views</a>
                 </td>
             </tr>
         }
@@ -85,6 +85,7 @@
         page => Url.Action("All",
             new
                 {
+                    CityId = Model.CityId,
                     PageNumber = page,
                     PageSize = Model.PageSize,
                     SearchString = Model.SearchString,
