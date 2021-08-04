@@ -27,6 +27,6 @@
 
         public virtual ICollection<District> Districts { get; set; }
 
-        public ICollection<UserCity> UserCities { get; set; }
+        public virtual ICollection<UserCity> UserCities { get; set; }
     }
 }

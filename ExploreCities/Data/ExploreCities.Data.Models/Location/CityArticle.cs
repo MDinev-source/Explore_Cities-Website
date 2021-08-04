@@ -37,8 +37,8 @@
         [Required]
         public string CityId { get; set; }
 
-        public virtual City City { get; set; }
+        public City City { get; set; }
 
-        public ICollection<Picture> Picture { get; set; }
+        public virtual ICollection<Picture> Picture { get; set; }
     }
 }

@@ -28,6 +28,6 @@
 
         public virtual ICollection<DistrictView> DistrictViews { get; set; }
 
-        public ICollection<UserDistrict> UserDistricts { get; set; }
+        public virtual ICollection<UserDistrict> UserDistricts { get; set; }
     }
 }
