@@ -5,11 +5,10 @@
 @inject IGetEnumsDataService GetEnumDataService
 
 @{
-    this.ViewData["Title"] = "Create new region view";
+    this.ViewData["Title"] = "Create new district view";
 
     var cityItems = this.Model.Cities
         .Select(x => new SelectListItem(x.Value, x.Key));
-
 
     var listEnumTypes = GetEnumDataService
         .GetEnumsFromNameSpace();

@@ -1,5 +1,7 @@
 ﻿namespace ExploreCities.Web.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ExploreCities.Data.Models;
@@ -7,6 +9,7 @@
     using ExploreCities.Web.ViewModels.DistrictViews;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using X.PagedList;
 
     public class DistrictViewsController : Controller
     {
@@ -47,6 +50,21 @@
             await this.districtViewsService.CreateAsync(input, user.Id);
 
             return this.RedirectToAction("/");
+        }
+
+        public async Task<IActionResult> All(AllDistrictViewsViewModel allDistrictViewsViewModel)
+        {
+            var districtViews = await this.districtViewsService.GetAllDistrictViewsAsync(allDistrictViewsViewModel.DistrictId);
+
+            districtViews = this.districtViewsService.SortBy(districtViews.ToArray(), allDistrictViewsViewModel.Sorter);
+
+            var pageNumber = allDistrictViewsViewModel.PageNumber ?? 1;
+            var pageSize = allDistrictViewsViewModel.PageSize ?? 6;
+            var pageDistrictViewsViewModel = districtViews.ToPagedList(pageNumber, pageSize);
+
+            allDistrictViewsViewModel.AllDistrictViews = pageDistrictViewsViewModel;
+
+            return this.View(allDistrictViewsViewModel);
         }
     }
 }
