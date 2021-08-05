@@ -12,7 +12,7 @@
 
         Task<IEnumerable<DistrictsViewModel>> GetAllDistrictsAsync(string cityId, string userId);
 
-        IEnumerable<DistrictsViewModel> GetDistrictsFromSearch(string searchString);
+        IEnumerable<DistrictsViewModel> GetDistrictsFromSearch(string searchString, string cityId);
 
         IEnumerable<DistrictsViewModel> SortBy(DistrictsViewModel[] districts, DistrictsSorter sorter);
 

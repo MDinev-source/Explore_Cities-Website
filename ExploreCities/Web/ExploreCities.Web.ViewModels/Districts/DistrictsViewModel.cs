@@ -6,6 +6,10 @@
 
         public string Name { get; set; }
 
+        public string CityName { get; set; }
+
+        public string CityId { get; set; }
+
         public int DistrictViewsCount { get; set; }
 
         public int UsersCount { get; set; }

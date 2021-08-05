@@ -30,14 +30,15 @@
         public async Task<IActionResult> All(ListDistrictsViewModel listDistrictsViewModel, string cityId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
+
             var districts = await this.districtsService.GetAllDistrictsAsync(listDistrictsViewModel.CityId ?? cityId, user.Id);
 
-            if (listDistrictsViewModel.SearchString == null)
+            if (listDistrictsViewModel.SearchString != null)
             {
-                districts = await this.districtsService.GetAllDistrictsAsync(listDistrictsViewModel.CityId, user.Id);
+                districts = this.districtsService.GetDistrictsFromSearch(listDistrictsViewModel.SearchString, listDistrictsViewModel.CityId).ToList();
             }
 
-            districts = this.districtsService.SortBy(districts.ToArray(), listDistrictsViewModel.Sorter);
+            districts = this.districtsService.SortBy(districts.ToArray(), listDistrictsViewModel.Sorter).ToList();
 
             var pageNumber = listDistrictsViewModel.PageNumber ?? 1;
             var pageSize = listDistrictsViewModel.PageSize ?? 6;

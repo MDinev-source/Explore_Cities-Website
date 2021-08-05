@@ -50,7 +50,7 @@
             return region.Id;
         }
 
-        public IEnumerable<DistrictsViewModel> GetDistrictsFromSearch(string searchString)
+        public IEnumerable<DistrictsViewModel> GetDistrictsFromSearch(string searchString, string cityId)
         {
             var escapedSearchTokens = searchString.Split(new char[] { ' ', ',', '.', ':', '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -93,6 +93,7 @@
              {
                  Id = x.Id,
                  Name = x.Name,
+                 CityId = x.CityId,
                  DistrictViewsCount = x.DistrictViews.Count,
                  UsersCount = x.UserDistricts.Count,
              })

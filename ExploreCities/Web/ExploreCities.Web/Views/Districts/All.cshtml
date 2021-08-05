@@ -19,6 +19,10 @@
                 </div>
             </div>
 
+            <input type="hidden" asp-for="@Model.PageNumber">
+            <input type="hidden" asp-for="@Model.CityId" />
+            <input type="hidden" asp-for="@Model.CityName" />
+
             <div class="col text-right">
                 <div class="form-group">
                     <label class="text-primary">Show</label>
@@ -44,7 +48,7 @@
 
         </div>
 
-        <a class="text-primary" asp-action="All">Back to List</a>
+        <a class="text-primary" asp-action="All" asp-controller="Districts" asp-route-cityId="@Model.CityId">Back to List</a>
 
     </p>
 </form>
