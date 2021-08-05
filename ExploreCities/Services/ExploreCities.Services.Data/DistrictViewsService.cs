@@ -71,8 +71,8 @@
                     PictureUrl = x.PictureUrl,
                     UserId = x.AddedByUserId,
                     Username = x.AddedByUser.UserName,
-                    CreatedOn = x.CreatedOn.ToString("dd/MM/yyyy"),
-                    ModifiedOn = x.ModifiedOn != null ? x.ModifiedOn.ToString() : "not update",
+                    CreatedOn = x.CreatedOn,
+                    ModifiedOn = x.ModifiedOn,
                     ObjectsCount = x.DistrictObjects.Count,
                 })
                 .ToListAsync();
@@ -86,12 +86,10 @@
             {
                 case DistrictViewsSorter.Username:
                     return districtViews.OrderBy(d => d.Username).ThenBy(d => d.CreatedOn).ToList();
-                case DistrictViewsSorter.ObjectsCount:
-                    return districtViews.OrderByDescending(c => c.ObjectsCount).ThenBy(c => c.CreatedOn).ToList();
-                case DistrictViewsSorter.ModifiedOn:
-                    return districtViews.OrderByDescending(c => c.ModifiedOn).ThenBy(c => c.CreatedOn).ToList();
                 case DistrictViewsSorter.CreatedOn:
-                    return districtViews.OrderByDescending(c => c.CreatedOn).ThenBy(c => c.Username).ToList();
+                    return districtViews.OrderByDescending(c => c.CreatedOn).ThenBy(d => d.ModifiedOn).ToList();
+                case DistrictViewsSorter.ModifiedOn:
+                    return districtViews.OrderByDescending(c => c.ModifiedOn).ThenBy(d => d.CreatedOn).ToList();
 
                 default:
                     return districtViews.OrderBy(d => d.Username).ThenBy(d => d.CreatedOn).ToList();

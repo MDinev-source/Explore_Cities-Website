@@ -15,15 +15,18 @@
     {
         private readonly ICitiesService citiesService;
         private readonly IDistrictViewsService districtViewsService;
+        private readonly IDistrictsService districtsService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public DistrictViewsController(
             ICitiesService citiesService,
             IDistrictViewsService districtViewsService,
+            IDistrictsService districtsService,
             UserManager<ApplicationUser> userManager)
         {
             this.citiesService = citiesService;
             this.districtViewsService = districtViewsService;
+            this.districtsService = districtsService;
             this.userManager = userManager;
         }
 
@@ -56,13 +59,15 @@
         {
             var districtViews = await this.districtViewsService.GetAllDistrictViewsAsync(allDistrictViewsViewModel.DistrictId);
 
-            districtViews = this.districtViewsService.SortBy(districtViews.ToArray(), allDistrictViewsViewModel.Sorter);
+            districtViews = this.districtViewsService.SortBy(districtViews.ToArray(), allDistrictViewsViewModel.Sorter).ToList();
 
             var pageNumber = allDistrictViewsViewModel.PageNumber ?? 1;
             var pageSize = allDistrictViewsViewModel.PageSize ?? 6;
             var pageDistrictViewsViewModel = districtViews.ToPagedList(pageNumber, pageSize);
 
             allDistrictViewsViewModel.AllDistrictViews = pageDistrictViewsViewModel;
+
+            allDistrictViewsViewModel.DistrictName = this.districtsService.GetDistrictName(allDistrictViewsViewModel.DistrictId);
 
             return this.View(allDistrictViewsViewModel);
         }

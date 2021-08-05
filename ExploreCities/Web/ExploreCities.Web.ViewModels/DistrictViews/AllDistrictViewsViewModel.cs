@@ -5,9 +5,9 @@
 
     public class AllDistrictViewsViewModel
     {
-        public string DistrictId { get; set; }
+        public string DistrictName { get; set; }
 
-        public string SearchString { get; set; }
+        public string DistrictId { get; set; }
 
         public int? PageNumber { get; set; }
 

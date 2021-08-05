@@ -2,9 +2,18 @@
 
 @{ ViewData["Title"] = "District Views"; }
 
-<h2 class="text-center">All district views in @Model.AllDistrictViews.FirstOrDefault().DistrictName</h2>
-<form method="get" asp-controller="Activities" asp-action="IndexInDestination">
-    <div class="row d-flex justify-content-between">    
+<div class="page-header text-center">
+    <h1 id="tables">District views for: </h1>
+    <h1 class="font-weight-bold font-italic">@Model.DistrictName</h1>
+</div>
+
+<form method="get" asp-controller="DistrictViews" asp-action="All">
+
+    <input type="hidden" asp-for="@Model.PageNumber">
+    <input type="hidden" asp-for="@Model.DistrictId" />
+    <input type="hidden" asp-for="@Model.DistrictName" />
+
+    <div class="row d-flex justify-content-between">
         <div class="form-group">
             <label class="text-primary">Show:</label>
             <select class="btn btn-outline-primary" name="PageSize" onchange="this.form.submit();">
@@ -18,9 +27,8 @@
             <label class="text-primary">Sort by:</label>
             <select class="btn btn-outline-primary" name="Sorter" id="Sorter" onchange="this.form.submit();">
                 <option value="1" selected="@(Model.Sorter.ToString() == "Username" ? true : false)">Username</option>
-                <option value="2" selected="@(Model.Sorter.ToString() == "ObjectsCount" ? true : false)">Objects count (desc.)</option>
-                <option value="3" selected="@(Model.Sorter.ToString() == "CreatedOn" ? true : false)">Created on (desc.)</option>
-                <option value="4" selected="@(Model.Sorter.ToString() == "ModifiedOn" ? true : false)">Modified on (desc.)</option>
+                <option value="2" selected="@(Model.Sorter.ToString() == "CreatedOn" ? true : false)">Created on (desc.)</option>
+                <option value="3" selected="@(Model.Sorter.ToString() == "ModifiedOn" ? true : false)">Modified on (desc.)</option>
             </select>
         </div>
     </div>
@@ -30,8 +38,8 @@
 <div class="card-deck container-fluid">
     @foreach (var item in Model.AllDistrictViews)
     {
-<div class="col-md-4">
-    <div class="card text-body bg-light" style="max-width: 20rem; height: 500px">
+<div class="col-md-4 mb-4">
+    <div class="card text-body bg-light" style="max-width: 20rem; height: 450px">
         <a asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">
             <img style="height: 200px; width: 100%" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
         </a>
@@ -41,7 +49,7 @@
                     @item.Username
                 </a> - click to see profile
             </h5>
-            <p class="card-text">This is create on @item.CreatedOn for district @item.DistrictName. @item.ObjectsCount objects have been added to the district view</p>
+            <p class="card-text">This card is create on @item.CreatedOn.</p>
         </div>
         <div class="row">
             <div class="col">
@@ -52,25 +60,30 @@
         </div>
 
         <div class="card-footer">
-            <small class="text-body">Last updated - @item.ModifiedOn</small>
+            @if (item.ModifiedOn != null)
+            {
+            <small class="text-body">Last modified - @item.ModifiedOn</small> }
+            else
+            {
+            <small class="text-body">Not modified</small>}
         </div>
     </div>
 </div>}
 </div>
+
 <div class="d-flex justify-content-around">
     @Html.PagedListPager((IPagedList)Model.AllDistrictViews,
-            page => Url.Action("All",
-                new
-                {
-                    DistrictId=Model.DistrictId,
-                    PageNumber = page,
-                    PageSize = Model.PageSize,
-                    SearchString = Model.SearchString,
-                }),
-            new PagedListRenderOptions
-            {
-                MaximumPageNumbersToDisplay = 5,
-                LiElementClasses = new string[] { "page-item" },
-                PageClasses = new string[] { "page-link" }
-            })
+                        page => Url.Action("All",
+                            new
+                            {
+                                DistrictId = Model.DistrictId,
+                                PageNumber = page,
+                                PageSize = Model.PageSize,
+                            }),
+                        new PagedListRenderOptions
+                        {
+                            MaximumPageNumbersToDisplay = 5,
+                            LiElementClasses = new string[] { "page-item" },
+                            PageClasses = new string[] { "page-link" }
+                        })
 </div>

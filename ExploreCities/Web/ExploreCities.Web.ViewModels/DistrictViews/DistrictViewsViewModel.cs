@@ -1,8 +1,12 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
+    using System;
+
     public class DistrictViewsViewModel
     {
         public string Id { get; set; }
+
+        public string DistrictId { get; set; }
 
         public string DistrictName { get; set; }
 
@@ -12,9 +16,9 @@
 
         public string Username { get; set; }
 
-        public string CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
 
-        public string ModifiedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         public int ObjectsCount { get; set; }
     }

@@ -3,8 +3,7 @@
     public enum DistrictViewsSorter
     {
         Username = 1,
-        ObjectsCount = 2,
-        CreatedOn = 3,
-        ModifiedOn = 4,
+        CreatedOn = 2,
+        ModifiedOn = 3,
     }
 }
