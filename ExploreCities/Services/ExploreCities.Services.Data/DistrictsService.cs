@@ -123,12 +123,11 @@
             this.districtsRepository.SaveChangesAsync();
         }
 
-        public string GetDistrictName(string Id)
+        public string GetDistrictName(string districtId)
         {
             var district = this.districtsRepository
                    .All()
-                   .Where(x => x.Id == Id)
-                   .FirstOrDefault();
+                   .FirstOrDefault(x => x.Id == districtId);
 
             return district.Name;
         }

@@ -20,6 +20,6 @@
 
         string GetDistrictId(string name);
 
-        string GetDistrictName(string Id);
+        string GetDistrictName(string districtId);
     }
 }
