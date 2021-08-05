@@ -1,6 +1,5 @@
 ﻿namespace ExploreCities.Web.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -21,18 +20,14 @@
 
         public async Task<IActionResult> All(ListCitiesViewModel listCitiesViewModel)
         {
-            IEnumerable<CitiesViewModel> cities;
+            var cities = await this.citiesService.GetAllCitiesAsync();
 
-            if (listCitiesViewModel.SearchString == null)
-            {
-                 cities = await this.citiesService.GetAllCitiesAsync();
-            }
-            else
+            if (listCitiesViewModel.SearchString != null)
             {
                 cities = this.citiesService.GetCitiesFromSearch(listCitiesViewModel.SearchString, listCitiesViewModel.OptionSearch).ToList();
             }
 
-            cities = this.citiesService.SortBy(cities.ToArray(), listCitiesViewModel.Sorter);
+            cities = this.citiesService.SortBy(cities.ToArray(), listCitiesViewModel.Sorter).ToList();
 
             var pageNumber = listCitiesViewModel.PageNumber ?? 1;
             var pageSize = listCitiesViewModel.PageSize ?? 6;

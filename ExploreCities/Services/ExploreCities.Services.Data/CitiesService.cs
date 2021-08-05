@@ -118,13 +118,11 @@
 
         public string GetCityName(string cityId)
         {
-            var cityName = this.citiesRepository
+            var city = this.citiesRepository
              .All()
-             .Where(x => x.Id == cityId)
-             .Select(x => x.Name.ToString())
-             .FirstOrDefault();
+             .FirstOrDefault(x => x.Id == cityId);
 
-            return cityName;
+            return city.Name;
         }
 
         public IEnumerable<CitiesViewModel> SortBy(CitiesViewModel[] cities, CitiesSorter sorter)
