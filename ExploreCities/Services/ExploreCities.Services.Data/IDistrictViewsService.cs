@@ -13,5 +13,7 @@
         Task<IEnumerable<DistrictViewsViewModel>> GetAllDistrictViewsAsync(string districtId);
 
         IEnumerable<DistrictViewsViewModel> SortBy(DistrictViewsViewModel[] districtViews, DistrictViewsSorter sorter);
+
+        Task<DistrictViewsDetailsViewModel> GetViewModelByIdAsync(string id);
     }
 }

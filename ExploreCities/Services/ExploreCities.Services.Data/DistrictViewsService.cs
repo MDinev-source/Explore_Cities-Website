@@ -8,6 +8,7 @@
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Mapping;
     using ExploreCities.Web.ViewModels.DistrictViews;
     using ExploreCities.Web.ViewModels.Enums;
     using Microsoft.EntityFrameworkCore;
@@ -94,6 +95,29 @@
                 default:
                     return districtViews.OrderBy(d => d.Username).ThenBy(d => d.CreatedOn).ToList();
             }
+        }
+
+        public async Task<DistrictViewsDetailsViewModel> GetViewModelByIdAsync(string id)
+        {
+
+            var districtView = await this.districtViewsRepository.All()
+                .Where(d => d.Id == id)
+                 .Select(x => new DistrictViewsDetailsViewModel
+                 {
+                     DistrictName = x.District.Name,
+                     PictureUrl = x.PictureUrl,
+                     ArrivalYear = x.ArrivalYear,
+                     DepartureYear = x.DepartureYear,
+                     Comment = x.Comment,
+                     ParkingSpacesExistence = x.ParkingSpaces,
+                     ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds,
+                     AirPollutionRating = x.AirPollution,
+                     NoiseRating = x.Noise,
+                     PublicTransportRating = x.PublicTransport,
+                 })
+                .FirstOrDefaultAsync();
+
+            return districtView;
         }
     }
 }

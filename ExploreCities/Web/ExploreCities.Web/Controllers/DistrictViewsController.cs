@@ -71,5 +71,12 @@
 
             return this.View(allDistrictViewsViewModel);
         }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var districtView = await this.districtViewsService.GetViewModelByIdAsync(id);
+
+            return this.View(districtView);
+        }
     }
 }
