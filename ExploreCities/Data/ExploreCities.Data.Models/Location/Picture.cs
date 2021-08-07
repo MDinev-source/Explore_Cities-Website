@@ -12,16 +12,9 @@
             this.Id = Guid.NewGuid().ToString();
         }
 
-        [Required]
-        [MaxLength(50)]
-        public string ObjectName { get; set; }
-
-        [Required]
         public string Extension { get; set; }
 
-        [Required]
-        [MaxLength(80)]
-        public string Comment { get; set; }
+        public string RemoteImageUrl { get; set; }
 
         [Required]
         public string DistrictObjectId { get; set; }
