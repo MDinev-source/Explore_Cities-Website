@@ -1,6 +1,9 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
+    using System.Collections.Generic;
+
     using ExploreCities.Data.Models.Enums;
+    using ExploreCities.Web.ViewModels.DistrictViewObjects;
 
     public class DistrictViewsDetailsViewModel
     {
@@ -25,5 +28,7 @@
         public NoiseRating NoiseRating { get; set; }
 
         public PublicTransportRating PublicTransportRating { get; set; }
+
+        public ICollection<CreateDistrictViewObjectInputModel> DistrictViewObjects { get; set; }
     }
 }

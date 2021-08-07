@@ -56,6 +56,7 @@
                 <a class="btn btn-outline-primary" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                 <a class="btn btn-outline-warning" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 <a class=" btn btn-outline-info" asp-area="" asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-outline-success" asp-area="" asp-controller="DistrictViewObjects" asp-action="Create" asp-route-districtViewId="@item.Id">Add object</a>
             </div>
         </div>
 
@@ -71,7 +72,7 @@
 </div>}
 </div>
 
-<div class="d-flex justify-content-around">
+   <div class="d-flex justify-content-around">
     @Html.PagedListPager((IPagedList)Model.AllDistrictViews,
                         page => Url.Action("All",
                             new
@@ -86,4 +87,4 @@
                             LiElementClasses = new string[] { "page-item" },
                             PageClasses = new string[] { "page-link" }
                         })
-</div>
+   </div>

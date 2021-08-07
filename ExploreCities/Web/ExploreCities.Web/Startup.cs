@@ -68,6 +68,7 @@
             services.AddTransient<IDistrictsService, DistrictsService>();
             services.AddTransient<ICitiesService, CitiesService>();
             services.AddTransient<IDistrictViewsService, DistrictViewsService>();
+            services.AddTransient<IDistrictViewObjectsService, DistrictViewObjectsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

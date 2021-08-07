@@ -8,7 +8,6 @@
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Models.Location;
-    using ExploreCities.Services.Mapping;
     using ExploreCities.Web.ViewModels.DistrictViews;
     using ExploreCities.Web.ViewModels.Enums;
     using Microsoft.EntityFrameworkCore;
@@ -41,20 +40,31 @@
             this.districtService.AddUserToDistrict(userId, districtId);
             this.citiesService.AddUserToCity(userId, cityId);
 
-            var districtView = new DistrictView
+            DistrictView districtView;
+
+            if (!this.districtViewsRepository
+                .All()
+                .Any(x => x.AddedByUserId == userId))
             {
-                ArrivalYear = input.ArrivalYear,
-                DepartureYear = input.DepartureYear != null ? input.DepartureYear : null,
-                DistrictId = districtId,
-                Comment = input.Comment,
-                PictureUrl = input.PictureUrl,
-                ParkingSpaces = Enum.Parse<ParkingSpacesExistence>(input.ParkingSpacesExistence),
-                ChildrenPlaygrounds = Enum.Parse<ChildrenPlaygroundsExistence>(input.ChildrenPlaygroundsExistence),
-                AirPollution = Enum.Parse<AirPollutionRating>(input.AirPollutionRating),
-                Noise = Enum.Parse<NoiseRating>(input.NoiseRating),
-                PublicTransport = Enum.Parse<PublicTransportRating>(input.PublicTransportRating),
-                AddedByUserId = userId,
-            };
+                districtView = new DistrictView
+                {
+                    ArrivalYear = input.ArrivalYear,
+                    DepartureYear = input.DepartureYear != null ? input.DepartureYear : null,
+                    DistrictId = districtId,
+                    Comment = input.Comment,
+                    PictureUrl = input.PictureUrl,
+                    ParkingSpaces = Enum.Parse<ParkingSpacesExistence>(input.ParkingSpacesExistence),
+                    ChildrenPlaygrounds = Enum.Parse<ChildrenPlaygroundsExistence>(input.ChildrenPlaygroundsExistence),
+                    AirPollution = Enum.Parse<AirPollutionRating>(input.AirPollutionRating),
+                    Noise = Enum.Parse<NoiseRating>(input.NoiseRating),
+                    PublicTransport = Enum.Parse<PublicTransportRating>(input.PublicTransportRating),
+                    AddedByUserId = userId,
+                };
+            }
+            else
+            {
+                throw new ArgumentException("User already create district view.");
+            }
 
             await this.districtViewsRepository.AddAsync(districtView);
             await this.districtViewsRepository.SaveChangesAsync();
@@ -99,7 +109,6 @@
 
         public async Task<DistrictViewsDetailsViewModel> GetViewModelByIdAsync(string id)
         {
-
             var districtView = await this.districtViewsRepository.All()
                 .Where(d => d.Id == id)
                  .Select(x => new DistrictViewsDetailsViewModel
@@ -118,6 +127,15 @@
                 .FirstOrDefaultAsync();
 
             return districtView;
+        }
+
+        public string GetDistrictViewId(string userId)
+        {
+            var districtView = this.districtViewsRepository
+                 .All()
+                 .FirstOrDefault(x => x.AddedByUserId == userId);
+
+            return districtView.Id;
         }
     }
 }
