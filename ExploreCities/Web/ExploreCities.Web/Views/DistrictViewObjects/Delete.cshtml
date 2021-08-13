@@ -1,0 +1,31 @@
+﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.DistrictViewObjectDeleteViewModel
+
+@{ this.ViewData["Title"] = "Delete object"; }
+
+<div class="row justify-content-center">
+    <form asp-area="" asp-controller="DistrictViewObjects" asp-action="Delete" method="post" class="text-center col-md-6">
+        <fieldset disabled="">
+            <h4>@this.ViewData["Title"]</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="ObjectType"></label>
+                <input asp-for="ObjectType" class="form-control col-md-12" placeholder="@Model.ObjectType" />
+                <span asp-validation-for="ObjectType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control col-md-12" placeholder="@Model.Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Opinion"></label>
+                <input asp-for="Opinion" class="form-control col-md-12" placeholder="@Model.Opinion" />
+                <span asp-validation-for="Opinion" class="text-danger"></span>
+            </div>
+            <div class="alert alert-danger">
+                <h5>Are you shure you want to delete object.</h5>
+            </div>
+        </fieldset>
+        <button type="submit" class="btn btn-warning">Delete object</button>
+    </form>
+</div>

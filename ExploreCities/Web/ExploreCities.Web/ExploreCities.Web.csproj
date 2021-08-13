@@ -47,4 +47,8 @@
     <ProjectReference Include="..\ExploreCities.Web.Infrastructure\ExploreCities.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\ExploreCities.Web.ViewModels\ExploreCities.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Pictures\districtViewObjects\" />
+  </ItemGroup>
 </Project>

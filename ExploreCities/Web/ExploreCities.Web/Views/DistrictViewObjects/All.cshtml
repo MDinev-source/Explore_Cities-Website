@@ -1,0 +1,44 @@
+﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.AllDistrictViewObjectsViewModel
+
+@{
+    ViewData["Title"] = "List District View Objects";
+}
+
+<h1 class="text-center">List</h1>
+
+<form method="get" asp-controller="DistrictViewObjects" asp-action="All">
+
+    <input type="hidden" asp-for="@Model.DistrictViewId" value="@Model.DistrictViewId" />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Pictures count</th>
+                <th scope="col" class="text-center">Info</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DistrictViewObjects)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ObjectType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.PicturesCount)
+                    </td>
+                    <td class="text-center">
+                        <a class=" btn btn-info" asp-area="" asp-controller="DistrictViewObjects" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</form>

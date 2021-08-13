@@ -1,0 +1,50 @@
+﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.DistrictViewObjectDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col md-3 text-center">
+            <div class="form-group mb-4 text-center">
+                <a asp-area="" asp-controller="Pictures" asp-action="All" asp-route-objectId="@Model.Id">
+                    <img style="height: 250px; width: 230px" src="/Pictures/refPictures/61SMV0WHaxL.png" />
+                </a>
+                <h4 class="text-dark text-center">All pictures</h4>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col col-md-6">
+                    <div class="form-group mb-2">
+                        <label class="text-center" asp-for="ObjectType">Type</label>
+                        <input type="text" readonly class="form-control" id="objtype" asp-for="ObjectType" value="@Model.ObjectType">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label class="text-center" asp-for="Name">Name</label>
+                        <input type="text" readonly class="form-control" id="objname" asp-for="DistrictViewId" value="@Model.Name">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label class="text-center" asp-for="Opinion">Opinion</label>
+                        <input type="text" readonly class="form-control" id="objopinion" asp-for="Opinion" value="@Model.Opinion">
+                    </div>
+
+                    <div class="form-group mb-4 text-center col">
+                        <div class="row d-md-flex">
+                            <a class="btn btn-primary col mr-1 mb-2" asp-area="" asp-controller="DistrictViewObjects" asp-action="Edit" asp-route-objectType="@Model.ObjectType" asp-route-id="@Model.Id">Edit</a>
+                            <a class="btn btn-warning col mb-2" style="width: 80%" asp-area="" asp-controller="DistrictViewObjects" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
