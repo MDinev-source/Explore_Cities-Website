@@ -1,0 +1,26 @@
+﻿@model ExploreCities.Web.ViewModels.Pictures.PictureDeleteViewModel
+
+@{ this.ViewData["Title"] = "Delete picture"; }
+
+<div class="row justify-content-center">
+    <form asp-area="" asp-controller="Pictures" asp-action="Delete" method="post" class="text-center col-md-6">
+        <fieldset disabled="">
+            <h4>@this.ViewData["Title"]</h4>
+            <hr />
+
+            <div class=form-group>
+                <label asp-for="@Model.Path"></label>
+                <img style="height: 450px; width: 100%;" class="card-img-top" src="@Model.Path" alt="image" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateOn"></label>
+                <input asp-for="CreateOn" class="form-control col-md-12" placeholder="@Model.CreateOn" />
+                <span asp-validation-for="CreateOn" class="text-danger"></span>
+            </div>
+            <div class="alert alert-danger">
+                <h5>Are you shure you want to delete picture.</h5>
+            </div>
+        </fieldset>
+        <button type="submit" class="btn btn-warning">Delete picture</button>
+    </form>
+</div>
