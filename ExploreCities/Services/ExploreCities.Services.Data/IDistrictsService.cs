@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.Districts;
     using ExploreCities.Web.ViewModels.Enums;
 
@@ -16,10 +17,18 @@
 
         IEnumerable<DistrictsViewModel> SortBy(DistrictsViewModel[] districts, DistrictsSorter sorter);
 
-        void AddUserToDistrict(string userId, string districtId);
+        Task<bool> AddUserToDistrict(string userId, string districtId);
+
+        Task<bool> RemoveUserFromDistrict(string userId, string districtId);
+
+        bool CheckUserDistrictByCity(string userId, string cityId);
+
+        Task<bool> RemoveDistrict(District district);
 
         string GetDistrictId(string name);
 
         string GetDistrictName(string districtId);
+
+        District GetDistrict(string districtId);
     }
 }

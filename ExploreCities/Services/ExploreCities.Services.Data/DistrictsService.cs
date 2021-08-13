@@ -28,26 +28,27 @@
         public async Task CreateAsync(string name, string cityId)
         {
             if (!this.districtsRepository
-                .AllAsNoTrackingWithDeleted()
-                .Any(x => x.Name == name))
+                .AllAsNoTracking()
+                .Any(x => x.Name == name && x.CityId == cityId))
             {
-                var region = new District
+                var district = new District
                 {
                     Name = name,
                     CityId = cityId,
                 };
 
-                await this.districtsRepository.AddAsync(region);
+                await this.districtsRepository.AddAsync(district);
                 await this.districtsRepository.SaveChangesAsync();
             }
         }
 
         public string GetDistrictId(string name)
         {
-            var region = this.districtsRepository.AllAsNoTrackingWithDeleted()
-                .Where(x => x.Name == name).FirstOrDefault();
+            var district = this.districtsRepository.AllAsNoTracking()
+                .Where(x => x.Name == name)
+                .FirstOrDefault();
 
-            return region.Id;
+            return district.Id;
         }
 
         public IEnumerable<DistrictsViewModel> GetDistrictsFromSearch(string searchString, string cityId)
@@ -55,7 +56,7 @@
             var escapedSearchTokens = searchString.Split(new char[] { ' ', ',', '.', ':', '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
 
             var districts = this.districtsRepository
-                .All()
+                .AllAsNoTracking()
                 .ToList()
                 .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())))
                 .Select(x => new DistrictsViewModel
@@ -87,7 +88,7 @@
         public async Task<IEnumerable<DistrictsViewModel>> GetAllDistrictsAsync(string cityId, string userId)
         {
             var districts = await this.districtsRepository
-             .All()
+             .AllAsNoTracking()
              .Where(x => x.CityId == cityId)
              .Select(x => new DistrictsViewModel
              {
@@ -102,15 +103,15 @@
             return districts;
         }
 
-        public void AddUserToDistrict(string userId, string districtId)
+        public async Task<bool> AddUserToDistrict(string userId, string districtId)
         {
             var userInDistrict = this.userDistrictsRepository
-                 .All()
+                 .AllAsNoTracking()
                  .Any(x => x.UserId == userId && x.DistrictId == districtId);
 
             if (userInDistrict)
             {
-                return;
+                return false;
             }
 
             var userDistrict = new UserDistrict
@@ -119,17 +120,76 @@
                 DistrictId = districtId,
             };
 
-            this.userDistrictsRepository.AddAsync(userDistrict);
-            this.districtsRepository.SaveChangesAsync();
+            await this.userDistrictsRepository.AddAsync(userDistrict);
+            await this.districtsRepository.SaveChangesAsync();
+
+            return true;
         }
 
         public string GetDistrictName(string districtId)
         {
             var district = this.districtsRepository
-                   .All()
+                   .AllAsNoTracking()
                    .FirstOrDefault(x => x.Id == districtId);
 
             return district.Name;
+        }
+
+        public District GetDistrict(string districtId)
+        {
+            var district = this.districtsRepository
+              .AllAsNoTracking()
+              .FirstOrDefault(x => x.Id == districtId);
+
+            return district;
+        }
+
+        public async Task<bool> RemoveUserFromDistrict(string userId, string districtId)
+        {
+            var userInDistrict = this.userDistrictsRepository
+           .AllAsNoTracking()
+           .Any(x => x.UserId == userId && x.DistrictId == districtId);
+
+            var userDistrict = new UserDistrict
+            {
+                UserId = userId,
+                DistrictId = districtId,
+            };
+
+            this.userDistrictsRepository.Delete(userDistrict);
+            await this.districtsRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> RemoveDistrict(District district)
+        {
+            this.districtsRepository.Delete(district);
+            await this.districtsRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public bool CheckUserDistrictByCity(string userId, string cityId)
+        {
+            var districtInCity = this.districtsRepository
+                .AllAsNoTracking()
+                .Where(x => x.CityId == cityId)
+                .ToList();
+
+            foreach (var district in districtInCity)
+            {
+                var userDistrict = this.userDistrictsRepository
+                        .AllAsNoTracking()
+                        .Where(x => x.DistrictId == district.Id && x.UserId == userId);
+
+                if (userDistrict != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
