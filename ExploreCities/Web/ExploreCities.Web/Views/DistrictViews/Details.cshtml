@@ -9,179 +9,64 @@
 
 <div class="container">
 
-    <div class="text-center mb-4">
-        <img src="@Model.PictureUrl" class="img-fluid rounded" style="height: 300px; width: 50%;" alt="Activity image" />
-    </div>
+    <div class="row">
 
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="DistrictName">District name</label>
-            <input type="text" readonly class="form-control" id="DistrictName" asp-for="DistrictName" value="@Model.DistrictName">
-        </div>
-    </div>
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="ArrivalYear">Arrival year</label>
-            <input type="text" readonly class="form-control" id="DistrictName" asp-for="ArrivalYear" value="@Model.ArrivalYear">
-        </div>
-    </div>
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="DepartureYear">Departure year</label>
-            <input type="text" readonly class="form-control" id="DistrictName" asp-for="DepartureYear" value="@Model.DepartureYear">
-        </div>
-    </div>
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="Comment">Comment</label>
-            <input type="text" readonly class="form-control" id="DistrictName" asp-for="Comment" value="@Model.Comment">
-        </div>
-    </div>
+        <div class="col md-3 text-center">
 
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="ParkingSpacesExistence">Parking spaces - @Model.ParkingSpacesExistence</label>
-            @if ((int)Model.ParkingSpacesExistence == 1)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-            @if ((int)Model.ParkingSpacesExistence == 2)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-
-            @if ((int)Model.ParkingSpacesExistence == 3)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
+            <div class="form-group mb-4 text-center">
+                <a asp-controller="DistrictViewObjects" asp-action="All" asp-route-districtViewId="@Model.Id">
+                    <img style="height: 250px; width: 230px" src="/Pictures/refPictures/city-non-residential-buildings-vector-icons-set-municipal-real-estate-objects-isolated-white-background-city-non-residential-130496813.jpg" />
+                </a>
+                <h4 class="text-dark text-center">All objects</h4>
+            </div>
+            <div class="form-group mb-4 text-center">
+                <a class="btn btn-primary col mb-2" style="width: 80%" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@Model.Id">Edit view</a>
+                <a class="btn btn-warning col mb-2" style="width: 80%" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@Model.Id">Delete view</a>
+            </div>
 
         </div>
-    </div>
 
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="ChildrenPlaygroundsExistence">Children playgrounds - @Model.ChildrenPlaygroundsExistence</label>
-            @if ((int)Model.ChildrenPlaygroundsExistence == 1)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-            @if ((int)Model.ChildrenPlaygroundsExistence == 2)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
+        <div class="col-md-9">
 
-            @if ((int)Model.ChildrenPlaygroundsExistence == 3)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
+            <div class="row">
 
+                <div class="col md-6">
+
+                    <div class=" form-group mb-4">
+                        <div class="col">
+                            <img src="@Model.PictureUrl" class="img-fluid rounded" style="height: 300px; width: 57%;" alt="Activity image" />
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <div class="col-md-7">
+                            <label class="text-center" asp-for="DistrictName">District name</label>
+                            <input type="text" readonly class="form-control" id="DistrictName" asp-for="DistrictName" value="@Model.DistrictName">
+                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <div class="col-md-7">
+                            <label class="text-center" asp-for="ArrivalYear">Arrival year</label>
+                            <input type="text" readonly class="form-control" id="DistrictName" asp-for="ArrivalYear" value="@Model.ArrivalYear">
+                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <div class="col-md-7">
+                            <label class="text-center" asp-for="DepartureYear">Departure year</label>
+                            <input type="text" readonly class="form-control" id="DistrictName" asp-for="DepartureYear" value="@Model.DepartureYear">
+                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <div class="col-md-7">
+                            <label class="text-center" asp-for="Comment">Comment</label>
+                            <input type="text" readonly class="form-control" id="DistrictName" asp-for="Comment" value="@Model.Comment">
+                        </div>
+                    </div>
+
+                    @await this.Html.PartialAsync("_ProgressDetailsPartial")
+
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="AirPollutionRating">Air pollution - @Model.AirPollutionRating</label>
-            @if ((int)Model.AirPollutionRating == 1)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-            @if ((int)Model.AirPollutionRating == 2)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-
-            @if ((int)Model.AirPollutionRating == 3)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-
-        </div>
-    </div>
-
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="NoiseRating">Noise - @Model.NoiseRating</label>
-            @if ((int)Model.NoiseRating == 1)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-            @if ((int)Model.NoiseRating == 2)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-
-            @if ((int)Model.NoiseRating == 3)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-
-        </div>
-    </div>
-
-    <div class="form-group mb-2">
-        <div class="col col-md-6 offset-3">
-            <label class="text-center" asp-for="PublicTransportRating">Public transport - @Model.PublicTransportRating</label>
-            @if ((int)Model.PublicTransportRating == 1)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-            @if ((int)Model.PublicTransportRating == 2)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-
-            @if ((int)Model.PublicTransportRating == 3)
-            {
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-            }
-
-        </div>
-    </div>
-
 </div>
-

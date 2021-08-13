@@ -73,9 +73,50 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var districtView = await this.districtViewsService.GetViewModelByIdAsync(id);
+            var districtView = await this.districtViewsService.GetDetailViewModelByIdAsync(id);
 
             return this.View(districtView);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var districtViewToEdit = await this.districtViewsService.GetEditViewModelByIdAsync(id);
+
+            return this.View(districtViewToEdit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(DistrictViewEditModel districtViewEditModel)
+        {
+            await this.districtViewsService.EditAsync(districtViewEditModel);
+
+            return this.RedirectToAction("Details", "DistrictViews", new { area = "", id = districtViewEditModel.Id });
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var districtViewToDelete = await this.districtViewsService.GetDeleteViewModelByIdAsync(id);
+            return this.View(districtViewToDelete);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(DistrictViewDeleteViewModel districtViewDeleteViewModel)
+        {
+            var id = districtViewDeleteViewModel.Id;
+            await this.districtViewsService.DeleteByIdAsync(id);
+            return this.RedirectToAction("/");
+        }
+
+        public async Task<IActionResult> MyAll(MyAllDistrictViewsViewModel myAllDistrictViewsViewModel)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var districtViews = await this.districtViewsService
+                .GetMyAllDistrictViewsAsync(user.Id);
+
+            myAllDistrictViewsViewModel.AllDistrictViews = districtViews;
+
+            return this.View(myAllDistrictViewsViewModel);
         }
     }
 }

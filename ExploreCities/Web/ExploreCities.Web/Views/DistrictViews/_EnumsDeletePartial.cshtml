@@ -1,0 +1,75 @@
+﻿@model ExploreCities.Web.ViewModels.DistrictViews.DistrictViewDeleteViewModel
+
+<div class="form-group">
+    <label asp-for="AirPollutionRating" class="text-left"></label>
+    @if ((int)Model.AirPollutionRating == 1)
+    {
+<input asp-for="AirPollutionRating" class="form-control col-md-12 text-danger" placeholder="@Model.AirPollutionRating">}
+    @if ((int)Model.AirPollutionRating == 2)
+    {
+<input asp-for="AirPollutionRating" class="form-control col-md-12 text-info" placeholder="@Model.AirPollutionRating">}
+    @if ((int)Model.AirPollutionRating == 3)
+    {
+<input asp-for="AirPollutionRating" class="form-control col-md-12 text-success" placeholder="@Model.AirPollutionRating">}
+    <span asp-validation-for="AirPollutionRating" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label asp-for="ChildrenPlaygroundsExistence" class="text-left"></label>
+    @if ((int)Model.ChildrenPlaygroundsExistence == 1)
+    {
+<input asp-for="ChildrenPlaygroundsExistence" class="form-control col-md-12 text-danger" placeholder="@Model.ChildrenPlaygroundsExistence">}
+    @if ((int)Model.ChildrenPlaygroundsExistence == 2)
+    {
+<input asp-for="ChildrenPlaygroundsExistence" class="form-control col-md-12 text-info" placeholder="@Model.ChildrenPlaygroundsExistence">}
+    @if ((int)Model.ChildrenPlaygroundsExistence == 3)
+    {
+<input asp-for="ChildrenPlaygroundsExistence" class="form-control col-md-12 text-success" placeholder="@Model.ChildrenPlaygroundsExistence">}
+    <span asp-validation-for="ChildrenPlaygroundsExistence" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label asp-for="NoiseRating" class="text-left"></label>
+    @if ((int)Model.NoiseRating == 1)
+    {
+<input asp-for="NoiseRating" class="form-control col-md-12 text-danger" placeholder="@Model.NoiseRating">}
+    @if ((int)Model.NoiseRating == 2)
+    {
+<input asp-for="NoiseRating" class="form-control col-md-12 text-info" placeholder="@Model.NoiseRating">}
+    @if ((int)Model.NoiseRating == 3)
+    {
+<input asp-for="NoiseRating" class="form-control col-md-12 text-success" placeholder="@Model.NoiseRating">}
+    <span asp-validation-for="NoiseRating" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label asp-for="ParkingSpacesExistence" class="text-left"></label>
+    @if ((int)Model.ParkingSpacesExistence == 1)
+    {
+<input asp-for="ParkingSpacesExistence" class="form-control col-md-12 text-danger" placeholder="@Model.ParkingSpacesExistence">}
+    @if ((int)Model.ParkingSpacesExistence == 2)
+    {
+<input asp-for="ParkingSpacesExistence" class="form-control col-md-12 text-info" placeholder="@Model.ParkingSpacesExistence">}
+    @if ((int)Model.ParkingSpacesExistence == 3)
+    {
+<input asp-for="ParkingSpacesExistence" class="form-control col-md-12 text-success" placeholder="@Model.ParkingSpacesExistence">}
+    <span asp-validation-for="ParkingSpacesExistence" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label asp-for="PublicTransportRating" class="text-left"></label>
+    @if ((int)Model.PublicTransportRating == 1)
+    {
+<input asp-for="PublicTransportRating" class="form-control col-md-12 text-danger" placeholder="@Model.PublicTransportRating">}
+    @if ((int)Model.PublicTransportRating == 2)
+    {
+<input asp-for="PublicTransportRating" class="form-control col-md-12 text-info" placeholder="@Model.PublicTransportRating">}
+    @if ((int)Model.PublicTransportRating == 3)
+    {
+<input asp-for="PublicTransportRating" class="form-control col-md-12 text-success" placeholder="@Model.PublicTransportRating">}
+    <span asp-validation-for="PublicTransportRating" class="text-danger"></span>
+</div>

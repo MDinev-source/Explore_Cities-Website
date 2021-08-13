@@ -1,15 +1,10 @@
-﻿namespace ExploreCities.Web.ViewModels.DistrictViews
+﻿using ExploreCities.Data.Models.Enums;
+
+namespace ExploreCities.Web.ViewModels.DistrictViews
 {
-    using System.Collections.Generic;
-
-    using ExploreCities.Data.Models.Enums;
-    using ExploreCities.Web.ViewModels.DistrictViewObjects;
-
-    public class DistrictViewsDetailsViewModel
+    public class DistrictViewDeleteViewModel
     {
         public string Id { get; set; }
-
-        public string CityName { get; set; }
 
         public string DistrictName { get; set; }
 
@@ -30,7 +25,5 @@
         public NoiseRating NoiseRating { get; set; }
 
         public PublicTransportRating PublicTransportRating { get; set; }
-
-        public ICollection<CreateDistrictViewObjectInputModel> DistrictViewObjects { get; set; }
     }
 }

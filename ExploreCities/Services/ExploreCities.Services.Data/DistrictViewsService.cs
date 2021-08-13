@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -17,15 +18,18 @@
         private readonly IDeletableEntityRepository<DistrictView> districtViewsRepository;
         private readonly ICitiesService citiesService;
         private readonly IDistrictsService districtService;
+        private readonly IDistrictViewObjectsService districtViewObjectsService;
 
         public DistrictViewsService(
             IDeletableEntityRepository<DistrictView> districtViewsRepository,
             ICitiesService citiesService,
-            IDistrictsService createDistrictService)
+            IDistrictsService districtService,
+            IDistrictViewObjectsService districtViewObjectsService)
         {
             this.districtViewsRepository = districtViewsRepository;
             this.citiesService = citiesService;
-            this.districtService = createDistrictService;
+            this.districtService = districtService;
+            this.districtViewObjectsService = districtViewObjectsService;
         }
 
         public async Task CreateAsync(CreateDistrictViewInputModel input, string userId)
@@ -37,14 +41,9 @@
 
             var districtId = this.districtService.GetDistrictId(districtName);
 
-            this.districtService.AddUserToDistrict(userId, districtId);
-            this.citiesService.AddUserToCity(userId, cityId);
-
             DistrictView districtView;
 
-            if (!this.districtViewsRepository
-                .All()
-                .Any(x => x.AddedByUserId == userId))
+            if (await this.districtService.AddUserToDistrict(userId, districtId))
             {
                 districtView = new DistrictView
                 {
@@ -66,6 +65,7 @@
                 throw new ArgumentException("User already create district view.");
             }
 
+            await this.citiesService.AddUserToCity(userId, cityId);
             await this.districtViewsRepository.AddAsync(districtView);
             await this.districtViewsRepository.SaveChangesAsync();
         }
@@ -73,7 +73,7 @@
         public async Task<IEnumerable<DistrictViewsViewModel>> GetAllDistrictViewsAsync(string districtId)
         {
             var districtViews = await this.districtViewsRepository
-                .All()
+                .AllAsNoTracking()
                 .Where(x => x.DistrictId == districtId)
                 .Select(x => new DistrictViewsViewModel
                 {
@@ -107,12 +107,14 @@
             }
         }
 
-        public async Task<DistrictViewsDetailsViewModel> GetViewModelByIdAsync(string id)
+        public async Task<DistrictViewsDetailsViewModel> GetDetailViewModelByIdAsync(string id)
         {
-            var districtView = await this.districtViewsRepository.All()
+            var districtView = await this.districtViewsRepository
+                .AllAsNoTracking()
                 .Where(d => d.Id == id)
                  .Select(x => new DistrictViewsDetailsViewModel
                  {
+                     Id = id,
                      DistrictName = x.District.Name,
                      PictureUrl = x.PictureUrl,
                      ArrivalYear = x.ArrivalYear,
@@ -132,10 +134,167 @@
         public string GetDistrictViewId(string userId)
         {
             var districtView = this.districtViewsRepository
-                 .All()
+                 .AllAsNoTracking()
                  .FirstOrDefault(x => x.AddedByUserId == userId);
 
             return districtView.Id;
+        }
+
+        public async Task EditAsync(DistrictViewEditModel districtViewEditModel)
+        {
+            var districtView = this.districtViewsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == districtViewEditModel.Id)
+                .FirstOrDefault();
+
+            var oldDistrictName = this.districtService.GetDistrictName(districtView.DistrictId);
+
+            if (oldDistrictName != districtViewEditModel.DistrictName)
+            {
+                var district = this.districtService.GetDistrict(districtView.DistrictId);
+
+                await this.districtService.CreateAsync(districtViewEditModel.DistrictName, district.CityId);
+
+                var districtId = this.districtService.GetDistrictId(districtViewEditModel.DistrictName);
+
+                await this.districtService.RemoveUserFromDistrict(districtView.AddedByUserId, districtView.DistrictId);
+
+                districtView.DistrictId = districtId;
+
+                await this.districtService.AddUserToDistrict(districtView.AddedByUserId, districtId);
+
+                if (this.districtViewsRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.DistrictId == district.Id).ToList().Count - 1 == 0)
+                {
+                    await this.districtService.RemoveDistrict(district);
+                }
+            }
+
+            districtView.ArrivalYear = districtViewEditModel.ArrivalYear;
+            districtView.DepartureYear = districtViewEditModel.DepartureYear != null ? districtViewEditModel.DepartureYear : null;
+            districtView.Comment = districtViewEditModel.Comment;
+            districtView.PictureUrl = districtViewEditModel.PictureUrl;
+            districtView.ParkingSpaces = Enum.Parse<ParkingSpacesExistence>(districtViewEditModel.ParkingSpacesExistence);
+            districtView.ChildrenPlaygrounds = Enum.Parse<ChildrenPlaygroundsExistence>(districtViewEditModel.ChildrenPlaygroundsExistence);
+            districtView.AirPollution = Enum.Parse<AirPollutionRating>(districtViewEditModel.AirPollutionRating);
+            districtView.Noise = Enum.Parse<NoiseRating>(districtViewEditModel.NoiseRating);
+            districtView.PublicTransport = Enum.Parse<PublicTransportRating>(districtViewEditModel.PublicTransportRating);
+
+            this.districtViewsRepository.Update(districtView);
+            await this.districtViewsRepository.SaveChangesAsync();
+        }
+
+        public async Task<DistrictViewEditModel> GetEditViewModelByIdAsync(string id)
+        {
+            var districtView = await this.districtViewsRepository
+                .AllAsNoTracking()
+                .Where(d => d.Id == id)
+                 .Select(x => new DistrictViewEditModel
+                 {
+                     Id = id,
+                     DistrictName = x.District.Name,
+                     PictureUrl = x.PictureUrl,
+                     ArrivalYear = x.ArrivalYear,
+                     DepartureYear = x.DepartureYear,
+                     Comment = x.Comment,
+                     ParkingSpacesExistence = x.ParkingSpaces.ToString(),
+                     ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds.ToString(),
+                     AirPollutionRating = x.AirPollution.ToString(),
+                     NoiseRating = x.Noise.ToString(),
+                     PublicTransportRating = x.PublicTransport.ToString(),
+                 })
+                .FirstOrDefaultAsync();
+
+            return districtView;
+        }
+
+        public async Task DeleteByIdAsync(string id)
+        {
+            var districtView = this.districtViewsRepository
+                 .AllAsNoTracking()
+                 .Where(x => x.Id == id)
+                 .FirstOrDefault();
+
+            var district = this.districtService.GetDistrict(districtView.DistrictId);
+
+            await this.districtService.RemoveUserFromDistrict(districtView.AddedByUserId, districtView.DistrictId);
+
+            if (this.districtViewsRepository
+                .AllAsNoTracking()
+                .Where(x => x.DistrictId == district.Id).ToList().Count - 1 == 0)
+            {
+                await this.districtService.RemoveDistrict(district);
+            }
+
+            if (this.districtService.CheckUserDistrictByCity(districtView.AddedByUserId, district.CityId) == false)
+            {
+                await this.citiesService.RemoveUserFromCity(districtView.AddedByUserId, district.CityId);
+            }
+
+            await this.districtViewObjectsService.DeleteAllObjectsFromCurrentView(districtView.Id);
+
+            this.districtViewsRepository
+                .Delete(districtView);
+
+            this.districtViewsRepository.Update(districtView);
+            await this.districtViewsRepository.SaveChangesAsync();
+        }
+
+        public async Task<DistrictViewDeleteViewModel> GetDeleteViewModelByIdAsync(string id)
+        {
+            var districtView = await this.districtViewsRepository
+                .AllAsNoTracking()
+                .Where(d => d.Id == id)
+                .Select(x => new DistrictViewDeleteViewModel
+                {
+                    Id = id,
+                    DistrictName = x.District.Name,
+                    PictureUrl = x.PictureUrl,
+                    ArrivalYear = x.ArrivalYear,
+                    DepartureYear = x.DepartureYear,
+                    Comment = x.Comment,
+                    ParkingSpacesExistence = x.ParkingSpaces,
+                    ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds,
+                    AirPollutionRating = x.AirPollution,
+                    NoiseRating = x.Noise,
+                    PublicTransportRating = x.PublicTransport,
+                })
+                .FirstOrDefaultAsync();
+
+            return districtView;
+        }
+
+        public async Task<IEnumerable<MyDistrictViewViewModel>> GetMyAllDistrictViewsAsync(string userId)
+        {
+            var districtViews = await this.districtViewsRepository
+                .AllAsNoTracking()
+                .Where(x => x.AddedByUserId == userId)
+                .Select(x => new MyDistrictViewViewModel
+                {
+                    Id = x.Id,
+                    DistrictId = x.DistrictId,
+                    PictureUrl = x.PictureUrl,
+                    UserId = x.AddedByUserId,
+                    Username = x.AddedByUser.UserName,
+                    CreatedOn = x.CreatedOn,
+                    ModifiedOn = x.ModifiedOn,
+                    ObjectsCount = x.DistrictObjects.Count,
+                })
+                .ToListAsync();
+
+            foreach (var view in districtViews)
+            {
+                var district = this.districtService.GetDistrict(view.DistrictId);
+
+                view.DistricName = district.Name;
+
+                var city = this.citiesService.GetCity(district.CityId);
+
+                view.CityName = city.Name;
+            }
+
+            return districtViews.OrderBy(x => x.CityName).ThenBy(x => x.DistricName);
         }
     }
 }

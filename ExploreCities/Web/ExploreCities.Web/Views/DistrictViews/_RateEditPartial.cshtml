@@ -1,0 +1,105 @@
+﻿@model ExploreCities.Web.ViewModels.DistrictViews.DistrictViewEditModel
+@using ExploreCities.Services.Data
+
+@inject IGetEnumsDataService GetEnumDataService
+
+@{ var listEnumTypes = GetEnumDataService
+                  .GetEnumsFromNameSpace(); }
+
+@foreach (var enumType in listEnumTypes)
+{
+<div class="form-group">
+    <div class="row">
+
+        @if (enumType.Name == "AirPollutionRating")
+        {
+
+<div class="col-md-4">
+    <label asp-for="AirPollutionRating" class="form-check-label">Air Pollution</label>
+</div>
+
+                    @foreach (var value in GetEnumDataService.GetEnumvValues(enumType))
+                    {
+<div class="col">
+    <div class="form-check form-check-inline">
+        <input asp-for="AirPollutionRating" class="form-check-input" type="radio" value=@value>
+        <label asp-for="AirPollutionRating" class="form-check-label">@value</label>
+    </div>
+</div>}
+
+                                        <span asp-validation-for="AirPollutionRating" class="text-danger"></span>}
+
+        @if (enumType.Name == "ChildrenPlaygroundsExistence")
+        {
+
+<div class="col-md-4">
+    <label asp-for="ChildrenPlaygroundsExistence" class="form-check-label">Playgrounds</label>
+</div>
+
+                    @foreach (var value in GetEnumDataService.GetEnumvValues(enumType))
+                    {
+<div class="col">
+    <div class="form-check form-check-inline">
+        <input asp-for="ChildrenPlaygroundsExistence" class="form-check-input" type="radio" value=@value>
+        <label asp-for="ChildrenPlaygroundsExistence" class="form-check-label">@value</label>
+    </div>
+</div>}
+
+                                        <span asp-validation-for="ChildrenPlaygroundsExistence" class="text-danger"></span>}
+
+        @if (enumType.Name == "NoiseRating")
+        {
+
+<div class="col-md-4">
+    <label asp-for="NoiseRating" class="form-check-label">Noise</label>
+</div>
+
+                    @foreach (var value in GetEnumDataService.GetEnumvValues(enumType))
+                    {
+<div class="col">
+    <div class="form-check form-check-inline">
+        <input asp-for="NoiseRating" class="form-check-input" type="radio" value=@value>
+        <label asp-for="NoiseRating" class="form-check-label">@value</label>
+    </div>
+</div>}
+
+                                        <span asp-validation-for="NoiseRating" class="text-danger"></span>}
+
+        @if (enumType.Name == "ParkingSpacesExistence")
+        {
+
+<div class="col-md-4">
+    <label asp-for="ParkingSpacesExistence" class="form-check-label">Parking Spaces</label>
+</div>
+
+                    @foreach (var value in GetEnumDataService.GetEnumvValues(enumType))
+                    {
+<div class="col">
+    <div class="form-check form-check-inline">
+        <input asp-for="ParkingSpacesExistence" class="form-check-input" type="radio" value=@value>
+        <label asp-for="ParkingSpacesExistence" class="form-check-label">@value</label>
+    </div>
+</div>}
+
+                                        <span asp-validation-for="ParkingSpacesExistence" class="text-danger"></span>}
+
+        @if (enumType.Name == "PublicTransportRating")
+        {
+
+<div class="col-md-4">
+    <label asp-for="PublicTransportRating" class="form-check-label">Public Transport</label>
+</div>
+
+                    @foreach (var value in GetEnumDataService.GetEnumvValues(enumType))
+                    {
+<div class="col">
+    <div class="form-check form-check-inline">
+        <input asp-for="PublicTransportRating" class="form-check-input" type="radio" value=@value>
+        <label asp-for="PublicTransportRating" class="form-check-label">@value</label>
+    </div>
+</div>}
+
+                                        <span asp-validation-for="PublicTransportRating" class="text-danger"></span>}
+
+    </div>
+</div>}
