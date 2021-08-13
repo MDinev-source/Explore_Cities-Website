@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.Cities;
     using ExploreCities.Web.ViewModels.Enums;
 
@@ -16,8 +17,12 @@
 
         IEnumerable<CitiesViewModel> GetCitiesFromSearch(string searchString, string optionsSearch);
 
-        void AddUserToCity(string userId, string citytId);
+        Task<bool> AddUserToCity(string userId, string citytId);
+
+        Task<bool> RemoveUserFromCity(string userId, string cityId);
 
         string GetCityName(string cityId);
+
+        City GetCity(string cityId);
     }
 }

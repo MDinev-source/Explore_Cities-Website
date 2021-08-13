@@ -25,7 +25,7 @@
             this.userCitiesRepository = userCitiesRepository;
         }
 
-        public void AddUserToCity(string userId, string citytId)
+        public async Task<bool> AddUserToCity(string userId, string citytId)
         {
             var userInCity = this.userCitiesRepository
             .All()
@@ -33,7 +33,7 @@
 
             if (userInCity)
             {
-                return;
+                return false;
             }
 
             var userCities = new UserCity
@@ -42,13 +42,15 @@
                 CityId = citytId,
             };
 
-            this.userCitiesRepository.AddAsync(userCities);
-            this.citiesRepository.SaveChangesAsync();
+            await this.userCitiesRepository.AddAsync(userCities);
+            await this.citiesRepository.SaveChangesAsync();
+
+            return true;
         }
 
         public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
         {
-            return this.citiesRepository.AllAsNoTracking()
+            return this.citiesRepository.All()
                 .Select(x => new
                 {
                     x.Id,
@@ -116,6 +118,15 @@
             return cities;
         }
 
+        public City GetCity(string cityId)
+        {
+            var city = this.citiesRepository
+          .AllAsNoTracking()
+          .FirstOrDefault(x => x.Id == cityId);
+
+            return city;
+        }
+
         public string GetCityName(string cityId)
         {
             var city = this.citiesRepository
@@ -123,6 +134,24 @@
              .FirstOrDefault(x => x.Id == cityId);
 
             return city.Name;
+        }
+
+        public async Task<bool> RemoveUserFromCity(string userId, string cityId)
+        {
+            var userInDistrict = this.userCitiesRepository
+            .AllAsNoTracking()
+            .Any(x => x.UserId == userId && x.CityId == cityId);
+
+            var userCity = new UserCity
+            {
+                UserId = userId,
+                CityId = cityId,
+            };
+
+            this.userCitiesRepository.Delete(userCity);
+            await this.citiesRepository.SaveChangesAsync();
+
+            return true;
         }
 
         public IEnumerable<CitiesViewModel> SortBy(CitiesViewModel[] cities, CitiesSorter sorter)
