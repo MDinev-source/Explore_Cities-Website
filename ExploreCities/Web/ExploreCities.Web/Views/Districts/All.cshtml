@@ -5,7 +5,7 @@
 
 <div class="page-header text-center">
     <h1 id="tables">Listed districts for: </h1>
-    <h1 class="font-weight-bold font-italic">@Model.CityName</h1>
+    <h1 class="font-weight-bold font-italic">@Model.CityName city</h1>
 </div>
 
 <form method="get" asp-controller="Districts" asp-action="All">
@@ -59,7 +59,9 @@
             <th scope="col">District Name</th>
             <th scope="col" class="text-center">Districts Views Count</th>
             <th scope="col" class="text-center">Users Count</th>
+            <th scope="col" class="text-center">Raiting</th>
             <th scope="col" class="text-center">District Views</th>
+            <th scope="col" class="text-center">Rate District</th>
         </tr>
     </thead>
 
@@ -76,9 +78,16 @@
                 <td class="text-center">
                     @Html.DisplayFor(modelItem => district.UsersCount)
                 </td>
-                <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-area="" asp-controller="DistrictViews" asp-action="All" asp-route-districtId="@district.Id">All District Views</a>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => district.Rating)
                 </td>
+                <td>
+                    <a class="btn btn-block btn-primary text-white mb-3"  asp-area="" asp-controller="DistrictViews" asp-action="All" asp-route-districtId="@district.Id">All views</a>
+                </td>
+                  <td>
+                    <a class="btn btn-block btn-secondary text-white mb-3" asp-area="" asp-controller="Districts" asp-action="Rate" asp-route-districtId="@district.Id">Rate district</a>
+                </td>
+
             </tr>
         }
     </tbody>

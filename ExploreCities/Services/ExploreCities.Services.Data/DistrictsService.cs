@@ -7,6 +7,7 @@
 
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models;
+    using ExploreCities.Data.Models.Discussions;
     using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.Districts;
     using ExploreCities.Web.ViewModels.Enums;
@@ -16,13 +17,16 @@
     {
         private readonly IDeletableEntityRepository<District> districtsRepository;
         private readonly IRepository<UserDistrict> userDistrictsRepository;
+        private readonly IRepository<DistrictLike> districtLikes;
 
         public DistrictsService(
             IDeletableEntityRepository<District> districtsRepository,
-            IRepository<UserDistrict> userDistrictsRepository)
+            IRepository<UserDistrict> userDistrictsRepository,
+            IRepository<DistrictLike> districtLikes)
         {
             this.districtsRepository = districtsRepository;
             this.userDistrictsRepository = userDistrictsRepository;
+            this.districtLikes = districtLikes;
         }
 
         public async Task CreateAsync(string name, string cityId)
@@ -42,10 +46,10 @@
             }
         }
 
-        public string GetDistrictId(string name)
+        public string GetDistrictId(string name, string cityId)
         {
             var district = this.districtsRepository.AllAsNoTracking()
-                .Where(x => x.Name == name)
+                .Where(x => x.Name == name&&x.CityId==cityId)
                 .FirstOrDefault();
 
             return district.Id;
@@ -97,6 +101,7 @@
                  CityId = x.CityId,
                  DistrictViewsCount = x.DistrictViews.Count,
                  UsersCount = x.UserDistricts.Count,
+                 Rating = x.Raiting,
              })
              .ToListAsync();
 
@@ -190,6 +195,38 @@
             }
 
             return false;
+        }
+
+        public async Task<bool> RateDistrict(string districtId, string userId)
+        {
+            var district = await this.districtsRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == districtId);
+
+            var districtLike = this.districtLikes
+                .AllAsNoTracking()
+                .Any(x => x.DistrictId == district.Id && x.UserId == userId);
+
+            if (districtLike)
+            {
+                return false;
+            }
+
+            var dbDistrictLike = new DistrictLike
+            {
+                UserId = userId,
+                DistrictId = district.Id,
+            };
+
+            district.Raiting += 1;
+
+            this.districtsRepository.Update(district);
+            await this.districtsRepository.SaveChangesAsync();
+
+            await this.districtLikes.AddAsync(dbDistrictLike);
+            await this.districtLikes.SaveChangesAsync();
+
+            return true;
         }
     }
 }

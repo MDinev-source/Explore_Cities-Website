@@ -10,6 +10,8 @@
 
         public string CityId { get; set; }
 
+        public int Rating { get; set; }
+
         public int DistrictViewsCount { get; set; }
 
         public int UsersCount { get; set; }

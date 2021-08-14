@@ -25,10 +25,12 @@
 
         Task<bool> RemoveDistrict(District district);
 
-        string GetDistrictId(string name);
+        string GetDistrictId(string name, string cityId);
 
         string GetDistrictName(string districtId);
 
         District GetDistrict(string districtId);
+
+        Task<bool> RateDistrict(string districtId, string userId);
     }
 }

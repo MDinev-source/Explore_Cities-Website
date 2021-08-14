@@ -50,5 +50,14 @@
 
             return this.View(listDistrictsViewModel);
         }
+
+        public async Task<IActionResult> Rate(string districtId)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.districtsService.RateDistrict(districtId, user.Id);
+
+            return this.RedirectToAction("/");
+        }
     }
 }
