@@ -3,26 +3,27 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-    </ol>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img style="height: 500px; width: 80%;" class="d-block w-100" src="/Pictures/carousel/Samarsko-zname-31-jul-2016_2.jpg" alt="First slide">
-        </div>
-        <div class="carousel-item">
-            <img style="height: 500px; width: 80%;" class="d-block w-100" src="/pictures/carousel/Plovdiv-Old-Town_0.jpg" alt="Second slide">
-        </div>
-        <div class="carousel-item">
-            <img style="height: 500px; width: 80%;" class="d-block w-100" src="/pictures/carousel/Sofia.jpg" alt="Third slide">
-        </div>
-        <div class="carousel-item">
-            <img style="height: 500px; width: 80%;" class="d-block w-100" src="/pictures/carousel/primorski_park.jpg" alt="Fourth slide">
-        </div>
-        <div class="carousel-item">
-            <img style="height: 500px; width: 80%;" class="d-block w-100" src="/pictures/carousel/dc13ad7081734a1dcca0c7ee0c674d86.jpeg" alt="Fifth slide">
-        </div>
 
+    </ol>
+    <div class="carousel-inner  col-md-10 offset-1" >
+        <div class="carousel-item active">
+            <img  style="height: 450px; width: 40%;" class="d-block w-100" src="/pictures/carouselSignedInUser/pexels-photo-1168940.jpeg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h1>Click to see <a asp-controller="Cities" asp-action="All"> All Cities</a>.</h1>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img  style="height: 450px; width: 40%;" class="d-block w-100" src="/pictures/carouselSignedInUser/pexels-photo-173294.jpeg" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h1>Click to create <a asp-controller="DistrictViews" asp-action="Create"> View</a>.</h1>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img style="height: 450px; width: 40%;" class="d-block w-100" src="/pictures/carouselSignedInUser/pexels-photo-3935702.jpeg" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h1>Click to see <a asp-controller="DistrictViews" asp-action="MyAll">My Views</a>.</h1>
+            </div>
+        </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

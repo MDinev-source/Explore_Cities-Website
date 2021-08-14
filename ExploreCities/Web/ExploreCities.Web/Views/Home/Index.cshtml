@@ -1,4 +1,9 @@
 ﻿@using ExploreCities.Common
+@using ExploreCities.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -10,7 +15,25 @@
 
 
 
-<cache expires-after="@TimeSpan.FromHours(1)">
-    @await this.Html.PartialAsync("_CarouselPartial")
+
+
+@if (this.SignInManager.IsSignedIn(this.User))
+{
+    <cache expires-after="@TimeSpan.FromHours(4)">
+
+    @await this.Html.PartialAsync("_CarouselSignedInUserPartial")
+        <br />
+        @await this.Html.PartialAsync("_MainEntitiesPartial")
+    </cache>
     <br />
-</cache>
+
+}
+else
+{
+    <cache expires-after="@TimeSpan.FromHours(4)">
+        @await this.Html.PartialAsync("_CarouselPartial")
+    </cache>
+
+}
+
+
