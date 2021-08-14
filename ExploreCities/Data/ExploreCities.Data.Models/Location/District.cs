@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using ExploreCities.Data.Common.Models;
+    using ExploreCities.Data.Models.Discussions;
 
     public class District : BaseDeletableModel<string>
     {
@@ -13,6 +15,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.DistrictViews = new HashSet<DistrictView>();
             this.UserDistricts = new HashSet<UserDistrict>();
+            this.DistrictLikes = new HashSet<DistrictLike>();
         }
 
         [Required]
@@ -29,5 +32,7 @@
         public virtual ICollection<DistrictView> DistrictViews { get; set; }
 
         public virtual ICollection<UserDistrict> UserDistricts { get; set; }
+
+        public virtual ICollection<DistrictLike> DistrictLikes { get; set; }
     }
 }

@@ -20,7 +20,9 @@ namespace ExploreCities.Data.Models
 
             this.UserCities = new HashSet<UserCity>();
             this.UserDistricts = new HashSet<UserDistrict>();
-            this.UserDiscussions = new HashSet<UserDiscussion>();
+            this.DistrictLikes = new HashSet<DistrictLike>();
+            this.DistrictViewLikes = new HashSet<DistrictViewLike>();
+            this.DistrictViewDislikes = new HashSet<DistrictViewDislike>();
         }
 
         // Audit info
@@ -44,6 +46,10 @@ namespace ExploreCities.Data.Models
 
         public virtual ICollection<UserDistrict> UserDistricts { get; set; }
 
-        public virtual ICollection<UserDiscussion> UserDiscussions { get; set; }
+        public virtual ICollection<DistrictLike> DistrictLikes { get; set; }
+
+        public virtual ICollection<DistrictViewLike> DistrictViewLikes { get; set; }
+
+        public virtual ICollection<DistrictViewDislike> DistrictViewDislikes { get; set; }
     }
 }

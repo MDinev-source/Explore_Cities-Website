@@ -14,8 +14,9 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Pictures = new HashSet<Picture>();
-            this.Discussions = new HashSet<Discussion>();
             this.DistrictObjects = new HashSet<DistrictObject>();
+            this.DistrictViewLikes = new HashSet<DistrictViewLike>();
+            this.DistrictViewDislikes = new HashSet<DistrictViewDislike>();
         }
 
         public int ArrivalYear { get; set; }
@@ -33,6 +34,10 @@
 
         [Required]
         public string PictureUrl { get; set; }
+
+        public int Likes { get; set; }
+
+        public int Dislikes { get; set; }
 
         [Required]
         public ParkingSpacesExistence ParkingSpaces { get; set; }
@@ -56,8 +61,10 @@
 
         public virtual ICollection<Picture> Pictures { get; set; }
 
-        public virtual ICollection<Discussion> Discussions { get; set; }
-
         public virtual ICollection<DistrictObject> DistrictObjects { get; set; }
+
+        public virtual ICollection<DistrictViewLike> DistrictViewLikes { get; set; }
+
+        public virtual ICollection<DistrictViewDislike> DistrictViewDislikes { get; set; }
     }
 }

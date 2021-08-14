@@ -4,14 +4,16 @@ using ExploreCities.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExploreCities.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210814045230_DeleteDiscussionAddLikes")]
+    partial class DeleteDiscussionAddLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,36 +154,6 @@ namespace ExploreCities.Data.Migrations
                     b.HasIndex("DistrictId");
 
                     b.ToTable("DistrictLikes");
-                });
-
-            modelBuilder.Entity("ExploreCities.Data.Models.Discussions.DistrictViewDislike", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DistrictViewId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "DistrictViewId");
-
-                    b.HasIndex("DistrictViewId");
-
-                    b.ToTable("DistrictViewDislikes");
-                });
-
-            modelBuilder.Entity("ExploreCities.Data.Models.Discussions.DistrictViewLike", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DistrictViewId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "DistrictViewId");
-
-                    b.HasIndex("DistrictViewId");
-
-                    b.ToTable("DistrictViewLikes");
                 });
 
             modelBuilder.Entity("ExploreCities.Data.Models.Location.City", b =>
@@ -382,18 +354,12 @@ namespace ExploreCities.Data.Migrations
                     b.Property<int?>("DepartureYear")
                         .HasColumnType("int");
 
-                    b.Property<int>("Dislikes")
-                        .HasColumnType("int");
-
                     b.Property<string>("DistrictId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -621,44 +587,6 @@ namespace ExploreCities.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ExploreCities.Data.Models.Discussions.DistrictViewDislike", b =>
-                {
-                    b.HasOne("ExploreCities.Data.Models.Location.DistrictView", "DistrictView")
-                        .WithMany("DistrictViewDislikes")
-                        .HasForeignKey("DistrictViewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
-                        .WithMany("DistrictViewDislikes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DistrictView");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ExploreCities.Data.Models.Discussions.DistrictViewLike", b =>
-                {
-                    b.HasOne("ExploreCities.Data.Models.Location.DistrictView", "DistrictView")
-                        .WithMany("DistrictViewLikes")
-                        .HasForeignKey("DistrictViewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ExploreCities.Data.Models.ApplicationUser", "User")
-                        .WithMany("DistrictViewLikes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DistrictView");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ExploreCities.Data.Models.Location.CityArticle", b =>
                 {
                     b.HasOne("ExploreCities.Data.Models.ApplicationUser", "AddedByUser")
@@ -833,10 +761,6 @@ namespace ExploreCities.Data.Migrations
 
                     b.Navigation("DistrictLikes");
 
-                    b.Navigation("DistrictViewDislikes");
-
-                    b.Navigation("DistrictViewLikes");
-
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
@@ -877,10 +801,6 @@ namespace ExploreCities.Data.Migrations
             modelBuilder.Entity("ExploreCities.Data.Models.Location.DistrictView", b =>
                 {
                     b.Navigation("DistrictObjects");
-
-                    b.Navigation("DistrictViewDislikes");
-
-                    b.Navigation("DistrictViewLikes");
 
                     b.Navigation("Pictures");
                 });
