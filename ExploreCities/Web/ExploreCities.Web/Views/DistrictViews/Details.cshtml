@@ -19,9 +19,12 @@
                 </a>
                 <h4 class="text-dark text-center">All objects</h4>
             </div>
+
             <div class="form-group mb-4 text-center">
                 <a class="btn btn-primary col mb-2" style="width: 80%" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@Model.Id">Edit view</a>
                 <a class="btn btn-warning col mb-2" style="width: 80%" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@Model.Id">Delete view</a>
+                <a class="btn btn-success col mb-2" style="width: 80%" asp-area="" asp-controller="DistrictViews" asp-action="Like" asp-route-id="@Model.Id">True comment</a>
+                <a class="btn btn-warning col mb-2" style="width: 80%" asp-area="" asp-controller="DistrictViews" asp-action="Dislike" asp-route-id="@Model.Id">False comment</a>
             </div>
 
         </div>
@@ -56,15 +59,19 @@
                             <input type="text" readonly class="form-control" id="DistrictName" asp-for="DepartureYear" value="@Model.DepartureYear">
                         </div>
                     </div>
+
+                    @await this.Html.PartialAsync("_ProgressDetailsPartial")
+
                     <div class="form-group mb-2">
                         <div class="col-md-7">
                             <label class="text-center" asp-for="Comment">Comment</label>
                             <input type="text" readonly class="form-control" id="DistrictName" asp-for="Comment" value="@Model.Comment">
+                            <div class="row justify-content-center">
+                                <h5 class="col text-success">True: @Model.Likes</h5>
+                                <h5 class="col text-warning">False: @Model.Dislikes</h5>
+                            </div>
                         </div>
                     </div>
-
-                    @await this.Html.PartialAsync("_ProgressDetailsPartial")
-
                 </div>
             </div>
         </div>

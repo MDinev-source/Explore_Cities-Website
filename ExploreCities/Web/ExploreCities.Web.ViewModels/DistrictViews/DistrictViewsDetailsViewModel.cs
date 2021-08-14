@@ -21,6 +21,10 @@
 
         public string PictureUrl { get; set; }
 
+        public int Likes { get; set; }
+
+        public int Dislikes { get; set; }
+
         public ParkingSpacesExistence ParkingSpacesExistence { get; set; }
 
         public ChildrenPlaygroundsExistence ChildrenPlaygroundsExistence { get; set; }

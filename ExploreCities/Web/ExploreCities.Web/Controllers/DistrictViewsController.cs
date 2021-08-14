@@ -118,5 +118,23 @@
 
             return this.View(myAllDistrictViewsViewModel);
         }
+
+        public async Task<IActionResult> Like(string id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.districtViewsService.LikeDistrictView(id, user.Id);
+
+            return this.RedirectToAction("/");
+        }
+
+        public async Task<IActionResult> Dislike(string id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            await this.districtViewsService.DislikeDistrictView(id, user.Id);
+
+            return this.RedirectToAction("/");
+        }
     }
 }

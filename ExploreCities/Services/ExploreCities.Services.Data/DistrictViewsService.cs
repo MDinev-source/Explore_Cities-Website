@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using ExploreCities.Data.Common.Repositories;
+    using ExploreCities.Data.Models.Discussions;
     using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.DistrictViews;
@@ -19,17 +20,23 @@
         private readonly ICitiesService citiesService;
         private readonly IDistrictsService districtService;
         private readonly IDistrictViewObjectsService districtViewObjectsService;
+        private readonly IRepository<DistrictViewLike> districtViewLikes;
+        private readonly IRepository<DistrictViewDislike> districtViewDislikes;
 
         public DistrictViewsService(
             IDeletableEntityRepository<DistrictView> districtViewsRepository,
             ICitiesService citiesService,
             IDistrictsService districtService,
-            IDistrictViewObjectsService districtViewObjectsService)
+            IDistrictViewObjectsService districtViewObjectsService,
+            IRepository<DistrictViewLike> districtViewLikes,
+            IRepository<DistrictViewDislike> districtViewDislikes)
         {
             this.districtViewsRepository = districtViewsRepository;
             this.citiesService = citiesService;
             this.districtService = districtService;
             this.districtViewObjectsService = districtViewObjectsService;
+            this.districtViewLikes = districtViewLikes;
+            this.districtViewDislikes = districtViewDislikes;
         }
 
         public async Task CreateAsync(CreateDistrictViewInputModel input, string userId)
@@ -39,7 +46,7 @@
 
             await this.districtService.CreateAsync(districtName, cityId);
 
-            var districtId = this.districtService.GetDistrictId(districtName);
+            var districtId = this.districtService.GetDistrictId(districtName, cityId);
 
             DistrictView districtView;
 
@@ -125,6 +132,8 @@
                      AirPollutionRating = x.AirPollution,
                      NoiseRating = x.Noise,
                      PublicTransportRating = x.PublicTransport,
+                     Likes = x.Likes,
+                     Dislikes = x.Dislikes,
                  })
                 .FirstOrDefaultAsync();
 
@@ -155,7 +164,7 @@
 
                 await this.districtService.CreateAsync(districtViewEditModel.DistrictName, district.CityId);
 
-                var districtId = this.districtService.GetDistrictId(districtViewEditModel.DistrictName);
+                var districtId = this.districtService.GetDistrictId(districtViewEditModel.DistrictName, district.CityId);
 
                 await this.districtService.RemoveUserFromDistrict(districtView.AddedByUserId, districtView.DistrictId);
 
@@ -295,6 +304,88 @@
             }
 
             return districtViews.OrderBy(x => x.CityName).ThenBy(x => x.DistricName);
+        }
+
+        public async Task<bool> LikeDistrictView(string districtViewId, string userId)
+        {
+            var districtView = await this.districtViewsRepository
+                 .AllAsNoTracking()
+                 .FirstOrDefaultAsync(x => x.Id == districtViewId);
+
+            var districtViewLike = this.districtViewLikes
+                .AllAsNoTracking()
+                .Any(x => x.DistrictViewId == districtView.Id && x.UserId == userId);
+
+            var districtViewDisLike = this.districtViewDislikes
+            .AllAsNoTracking()
+            .Any(x => x.DistrictViewId == districtView.Id && x.UserId == userId);
+
+            if (districtViewLike)
+            {
+                return false;
+            }
+
+            if (districtViewDisLike)
+            {
+                return false;
+            }
+
+            var dbDistrictViewLike = new DistrictViewLike
+            {
+                UserId = userId,
+                DistrictViewId = districtView.Id,
+            };
+
+            districtView.Likes += 1;
+
+            this.districtViewsRepository.Update(districtView);
+            await this.districtViewsRepository.SaveChangesAsync();
+
+            await this.districtViewLikes.AddAsync(dbDistrictViewLike);
+            await this.districtViewLikes.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DislikeDistrictView(string districtViewId, string userId)
+        {
+            var districtView = await this.districtViewsRepository
+                    .AllAsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Id == districtViewId);
+
+            var districtViewLike = this.districtViewLikes
+                .AllAsNoTracking()
+                .Any(x => x.DistrictViewId == districtView.Id && x.UserId == userId);
+
+            var districtViewDisLike = this.districtViewDislikes
+            .AllAsNoTracking()
+            .Any(x => x.DistrictViewId == districtView.Id && x.UserId == userId);
+
+            if (districtViewLike)
+            {
+                return false;
+            }
+
+            if (districtViewDisLike)
+            {
+                return false;
+            }
+
+            var dbDistrictViewDisLike = new DistrictViewDislike
+            {
+                UserId = userId,
+                DistrictViewId = districtView.Id,
+            };
+
+            districtView.Dislikes += 1;
+
+            this.districtViewsRepository.Update(districtView);
+            await this.districtViewsRepository.SaveChangesAsync();
+
+            await this.districtViewDislikes.AddAsync(dbDistrictViewDisLike);
+            await this.districtViewDislikes.SaveChangesAsync();
+
+            return true;
         }
     }
 }
