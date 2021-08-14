@@ -2,9 +2,12 @@
 
 @{ ViewData["Title"] = "My District Views"; }
 
+<div class="jumbotron">
+    @if (Model.AllDistrictViews.Any())
+    {
 <div class="card-deck container-fluid">
-@foreach (var item in Model.AllDistrictViews)
-{
+    @foreach (var item in Model.AllDistrictViews)
+    {
 <div class="col-md-4 mb-4">
     <div class="card text-body bg-light" style="max-width: 20rem; height: 450px">
         <a asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">
@@ -36,4 +39,9 @@ else
         </div>
     </div>
 </div>}
+</div> }
+else
+{ <p class="text-center">
+    <em class="text-muted">No views created.</em>
+</p>}
 </div>

@@ -9,36 +9,45 @@
 <form method="get" asp-controller="DistrictViewObjects" asp-action="All">
 
     <input type="hidden" asp-for="@Model.DistrictViewId" value="@Model.DistrictViewId" />
+    <div class="jumbotron">
+        @if (Model.DistrictViewObjects.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Pictures count</th>
+                        <th scope="col" class="text-center">Info</th>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Type</th>
-                <th scope="col" class="text-center">Name</th>
-                <th scope="col" class="text-center">Pictures count</th>
-                <th scope="col" class="text-center">Info</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.DistrictViewObjects)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ObjectType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.PicturesCount)
-                    </td>
-                    <td class="text-center">
-                        <a class=" btn btn-info" asp-area="" asp-controller="DistrictViewObjects" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.DistrictViewObjects)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ObjectType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.PicturesCount)
+                            </td>
+                            <td class="text-center">
+                                <a class=" btn btn-info" asp-area="" asp-controller="DistrictViewObjects" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-center">
+                <em class="text-muted">No objects created.</em>
+            </p>
+        }
+    </div>
 </form>
