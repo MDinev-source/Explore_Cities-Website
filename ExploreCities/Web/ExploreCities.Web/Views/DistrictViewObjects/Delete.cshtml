@@ -1,6 +1,10 @@
 ﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.DistrictViewObjectDeleteViewModel
 
-@{ this.ViewData["Title"] = "Delete object"; }
+@using ExploreCities.Services.Data
+@inject IGetEnumsDataService GetEnumDataService
+
+@{ this.ViewData["Title"] = "Delete object";
+    var correctName = GetEnumDataService.ReturnCorrectName(Model.ObjectType.ToString());}
 
 <div class="row justify-content-center">
     <form asp-area="" asp-controller="DistrictViewObjects" asp-action="Delete" method="post" class="text-center col-md-6">
@@ -9,7 +13,7 @@
             <hr />
             <div class="form-group">
                 <label asp-for="ObjectType"></label>
-                <input asp-for="ObjectType" class="form-control col-md-12" placeholder="@Model.ObjectType" />
+                <input asp-for="ObjectType" class="form-control col-md-12" placeholder="@Model.ObjectType" value="@correctName" />
                 <span asp-validation-for="ObjectType" class="text-danger"></span>
             </div>
             <div class="form-group">

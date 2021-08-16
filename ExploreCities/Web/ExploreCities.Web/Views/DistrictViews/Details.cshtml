@@ -8,7 +8,6 @@
 
 @{
     ViewData["Title"] = "Details";
-
 }
 
 <div class="container container-fluid">
@@ -75,7 +74,14 @@
 
                         <div class="col mb-2">
                             <label class="text-center" asp-for="DepartureYear"></label>
-                            <input type="text" readonly class="form-control" id="DistrictName" asp-for="DepartureYear" value="@Model.DepartureYear">
+                            @if (Model.DepartureYear != null)
+                            {
+                                <input type="text" readonly class="form-control" id="DistrictName" asp-for="DepartureYear" value="@Model.DepartureYear">
+                            }
+                            else
+                            {
+                                <input type="text" readonly class="form-control" name="DepartureYear" value="Present">
+                            }
                         </div>
 
                         @await this.Html.PartialAsync("_ProgressDetailsPartial")

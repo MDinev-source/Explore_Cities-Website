@@ -3,7 +3,7 @@
 @{ ViewData["Title"] = "My District Views"; }
 
 <h1 class=" text-center">@this.ViewData["Title"]</h1>
-
+<hr />
 @if (Model.AllDistrictViews.Any())
 {
 <div class="card-deck container-fluid">
@@ -31,8 +31,8 @@
         </div>
 
         <div class="card-footer">
-            @if (item.ModifiedOn != null)
-            {
+      @if (item.ModifiedOn != null)
+      {
 <small class="text-body">Last modified - @item.ModifiedOn</small> }
 else
 {

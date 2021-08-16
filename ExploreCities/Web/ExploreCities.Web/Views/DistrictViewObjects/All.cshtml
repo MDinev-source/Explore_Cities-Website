@@ -1,5 +1,8 @@
 ﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.AllDistrictViewObjectsViewModel
 
+@using ExploreCities.Services.Data
+@inject IGetEnumsDataService GetEnumDataService
+
 @{
     ViewData["Title"] = "All Objects";
 }
@@ -24,9 +27,10 @@
             <tbody>
                 @foreach (var item in Model.DistrictViewObjects)
                 {
+                    var correctName = GetEnumDataService.ReturnCorrectName(item.ObjectType);
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ObjectType)
+                            @Html.DisplayFor(modelItem => correctName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)

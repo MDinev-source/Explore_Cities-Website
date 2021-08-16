@@ -7,11 +7,11 @@
 @{
     var listEnumTypes = GetEnumDataService.GetEnumsFromNameSpace();
 
-    var minWidth = 15;
-    var maxWidth = 100;
-    var functionalWidth = maxWidth - minWidth;
-    var increaseValue = 0;
-    var currentValue = 0;
+    double minWidth = 15;
+    double maxWidth = 100;
+    double functionalWidth = maxWidth - minWidth;
+    double increaseValue = 0;
+    double currentValue = 0;
 
     string[] classValue = new string[] { "progress-bar bg-danger", "progress-bar bg-info", "progress-bar bg-success" };
 }
@@ -33,7 +33,7 @@
                 {
                     @if (Model.AirPollutionRating.ToString() == enumValues[i])
                     {
-                        <label class="text-center" asp-for="AirPollutionRating"></label>
+                        <label class="text-center" asp-for="AirPollutionRating">Air pollution</label>
                         <div class="progress">
 
                             <div class="@clasS" role="progressbar" style="width: @currentValue%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
@@ -49,7 +49,7 @@
                 {
                     @if (Model.ChildrenPlaygroundsExistence.ToString() == enumValues[i])
                     {
-                        <label class="text-center" asp-for="ChildrenPlaygroundsExistence"></label>
+                        <label class="text-center" asp-for="ChildrenPlaygroundsExistence">Children playgrounds</label>
                         <div class="progress">
                             <div class="@clasS" role="progressbar" style="width: @currentValue%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
                                 @Model.ChildrenPlaygroundsExistence
@@ -64,7 +64,7 @@
                 {
                     @if (Model.NoiseRating.ToString() == enumValues[i])
                     {
-                        <label class="text-center" asp-for="NoiseRating"></label>
+                        <label class="text-center" asp-for="NoiseRating">Noise</label>
                         <div class="progress">
                             <div class="@clasS" role="progressbar" style="width: @currentValue%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
                                 @Model.NoiseRating
@@ -80,7 +80,7 @@
 
                     @if (Model.ParkingSpacesExistence.ToString() == enumValues[i])
                     {
-                        <label class="text-center" asp-for="ParkingSpacesExistence"></label>
+                        <label class="text-center" asp-for="ParkingSpacesExistence">Parking spaces</label>
                         <div class="progress">
                             <div class="@clasS" role="progressbar" style="width: @currentValue%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
                                 @Model.ParkingSpacesExistence
@@ -95,7 +95,7 @@
                 {
                     @if (Model.PublicTransportRating.ToString() == enumValues[i])
                     {
-                        <label class="text-center" asp-for="PublicTransportRating"></label>
+                        <label class="text-center" asp-for="PublicTransportRating">Public transport</label>
                         <div class="progress">
                             <div class="@clasS" role="progressbar" style="width: @currentValue%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
                                 @Model.PublicTransportRating
