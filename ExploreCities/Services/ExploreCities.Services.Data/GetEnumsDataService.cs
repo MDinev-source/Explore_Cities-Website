@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
 
     using ExploreCities.Data.Models.Enums;
 
@@ -30,6 +31,36 @@
             List<string> enumValues = Enum.GetNames(enumType).ToList();
 
             return enumValues;
+        }
+
+        public string ReturnCorrectName(string name)
+        {
+            var sb = new StringBuilder();
+
+            int count = name.Count(c => char.IsUpper(c));
+
+            if (count > 1)
+            {
+                foreach (var ch in name)
+                {
+                    if (name.IndexOf(ch) == 0)
+                    {
+                        sb.Append(ch.ToString());
+                    }
+                    else if (char.IsUpper(ch))
+                    {
+                        sb.Append(" " + ch.ToString());
+                    }
+                    else
+                    {
+                        sb.Append(ch.ToString());
+                    }
+                }
+
+                return sb.ToString().TrimEnd();
+            }
+
+            return name;
         }
     }
 }
