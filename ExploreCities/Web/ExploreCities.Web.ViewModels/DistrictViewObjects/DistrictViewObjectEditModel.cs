@@ -1,13 +1,12 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViewObjects
 {
-    public class DistrictViewObjectEditModel
+    using System.ComponentModel.DataAnnotations;
+
+    public class DistrictViewObjectEditModel : BaseEditDetailsModel
     {
-        public string Id { get; set; }
-
-        public string ObjectType { get; set; }
-
-        public string Name { get; set; }
-
+        [Required]
+        [MinLength(30)]
+        [Display(Name = "Opinion")]
         public string Opinion { get; set; }
     }
 }

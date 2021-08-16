@@ -1,15 +1,10 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViewObjects
 {
-    public class DistrictViewObjectViewModel
+    using System.ComponentModel.DataAnnotations;
+
+    public class DistrictViewObjectViewModel : BaseEditDetailsModel
     {
-        public string Id { get; set; }
-
-        public string ObjectType { get; set; }
-
-        public string Name { get; set; }
-
+        [Display(Name = "Pictures count")]
         public int PicturesCount { get; set; }
-
-        public string DistrictViewId { get; set; }
     }
 }

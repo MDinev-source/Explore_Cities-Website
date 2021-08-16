@@ -1,10 +1,13 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
+    using System.ComponentModel.DataAnnotations;
+
     using ExploreCities.Web.ViewModels.Enums;
     using X.PagedList;
 
     public class AllDistrictViewsViewModel
     {
+        [Display(Name = "District name")]
         public string DistrictName { get; set; }
 
         public string DistrictId { get; set; }

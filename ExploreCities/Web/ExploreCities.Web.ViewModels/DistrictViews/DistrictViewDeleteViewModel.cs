@@ -1,17 +1,13 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
-    public class DistrictViewDeleteViewModel
-    {
-        public string Id { get; set; }
+    using System.ComponentModel.DataAnnotations;
 
+    public class DistrictViewDeleteViewModel : BasePropertiesModel
+    {
+        [Display(Name = "Comment")]
         public string Comment { get; set; }
 
-        public string PictureUrl { get; set; }
-
-        public string DistrictId { get; set; }
-
-        public string DistrictName { get; set; }
-
+        [Display(Name = "City name")]
         public string CityName { get; set; }
     }
 }

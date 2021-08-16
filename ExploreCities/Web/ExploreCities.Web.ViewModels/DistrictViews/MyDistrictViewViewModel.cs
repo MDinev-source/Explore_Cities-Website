@@ -1,11 +1,13 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class MyDistrictViewViewModel : DistrictViewsViewModel
     {
-        public string CityId { get; set; }
-
+        [Display(Name = "City name")]
         public string CityName { get; set; }
 
+        [Display(Name = "District name")]
         public string DistricName { get; set; }
     }
 }
