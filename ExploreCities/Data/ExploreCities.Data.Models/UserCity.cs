@@ -1,8 +1,9 @@
 ﻿namespace ExploreCities.Data.Models
 {
+    using ExploreCities.Data.Common.Models;
     using ExploreCities.Data.Models.Location;
 
-    public class UserCity
+    public class UserCity : BaseDeletableModel<string>
     {
         public string UserId { get; set; }
 

@@ -33,5 +33,10 @@
         public virtual DistrictView DistrictView { get; set; }
 
         public virtual ICollection<Picture> Pictures { get; set; }
+
+        [Required]
+        public string AddedByUserId { get; set; }
+
+        public virtual ApplicationUser AddedByUser { get; set; }
     }
 }

@@ -27,8 +27,6 @@
 
         public DbSet<City> Cities { get; set; }
 
-        public DbSet<CityArticle> CityArticles { get; set; }
-
         public DbSet<Picture> Pictures { get; set; }
 
         public DbSet<District> Districts { get; set; }

@@ -1,8 +1,9 @@
 ﻿namespace ExploreCities.Data.Models.Discussions
 {
+    using ExploreCities.Data.Common.Models;
     using ExploreCities.Data.Models.Location;
 
-    public class DistrictViewDislike
+    public class DistrictViewDislike : BaseDeletableModel<string>
     {
         public string UserId { get; set; }
 

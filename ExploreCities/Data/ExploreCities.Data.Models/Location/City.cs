@@ -11,7 +11,6 @@
         public City()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Articles = new HashSet<CityArticle>();
             this.Districts = new HashSet<District>();
             this.UserCities = new HashSet<UserCity>();
         }
@@ -22,8 +21,6 @@
 
         [Required]
         public string Area { get; set; }
-
-        public virtual ICollection<CityArticle> Articles { get; set; }
 
         public virtual ICollection<District> Districts { get; set; }
 
