@@ -11,5 +11,9 @@
         public string Opinion { get; set; }
 
         public string DistrictViewId { get; set; }
+
+        public string UserId { get; set; }
+
+        public string Username { get; set; }
     }
 }

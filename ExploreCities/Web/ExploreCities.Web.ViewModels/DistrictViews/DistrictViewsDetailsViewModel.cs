@@ -25,6 +25,10 @@
 
         public int Dislikes { get; set; }
 
+        public string UserId { get; set; }
+
+        public string Username { get; set; }
+
         public ParkingSpacesExistence ParkingSpacesExistence { get; set; }
 
         public ChildrenPlaygroundsExistence ChildrenPlaygroundsExistence { get; set; }

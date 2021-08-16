@@ -14,7 +14,7 @@
 
     public class DistrictViewObjectsService : IDistrictViewObjectsService
     {
-        private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif", "jpeg" };
         private readonly IDeletableEntityRepository<DistrictObject> districtViewObjectsRepository;
         private readonly IPicturesService picturesService;
 
@@ -26,7 +26,7 @@
             this.picturesService = picturesService;
         }
 
-        public async Task CreateAsync(CreateDistrictViewObjectInputModel cratedObjectInput, string imagePath)
+        public async Task CreateAsync(CreateDistrictViewObjectInputModel cratedObjectInput, string userId, string imagePath)
         {
             var districtViewObject = new DistrictObject
             {
@@ -34,6 +34,7 @@
                 Name = cratedObjectInput.Name,
                 Opinion = cratedObjectInput.Opinion,
                 DistrictViewId = cratedObjectInput.DistrictViewId,
+                AddedByUserId = userId,
             };
 
             Directory.CreateDirectory($"{imagePath}/districtViewObjects/");
@@ -49,6 +50,7 @@
                 {
                     Extension = extension,
                 };
+
                 districtViewObject.Pictures.Add(dbPicture);
 
                 var physicalPath = $"{imagePath}/districtViewObjects/{dbPicture.Id}.{extension}";
@@ -57,6 +59,9 @@
 
                 using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
                 await picture.CopyToAsync(fileStream);
+
+                dbPicture.AddedByUserId = userId;
+                dbPicture.DistrictObjectId = districtViewObject.Id;
             }
 
             await this.districtViewObjectsRepository.AddAsync(districtViewObject);
@@ -169,6 +174,7 @@
                 Name = x.Name,
                 ObjectType = x.ObjectType.ToString(),
                 Opinion = x.Opinion,
+                UserId = x.AddedByUserId,
             })
            .FirstOrDefaultAsync();
 

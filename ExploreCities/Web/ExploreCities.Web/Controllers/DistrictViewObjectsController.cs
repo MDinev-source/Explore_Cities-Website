@@ -41,7 +41,7 @@
         public async Task<IActionResult> Create(CreateDistrictViewObjectInputModel input)
         {
             var imagePath = $"{this.environment.WebRootPath}/Pictures";
-
+            var user = await this.userManager.GetUserAsync(this.User);
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
@@ -49,7 +49,7 @@
 
             try
             {
-                await this.districtViewObjectsService.CreateAsync(input, imagePath);
+                await this.districtViewObjectsService.CreateAsync(input, user.Id, imagePath);
             }
             catch (Exception ex)
             {

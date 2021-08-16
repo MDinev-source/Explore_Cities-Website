@@ -130,7 +130,7 @@
         public string GetCityName(string cityId)
         {
             var city = this.citiesRepository
-             .All()
+             .AllAsNoTracking()
              .FirstOrDefault(x => x.Id == cityId);
 
             return city.Name;

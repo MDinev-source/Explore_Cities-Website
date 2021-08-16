@@ -8,7 +8,7 @@
 
     public interface IDistrictViewObjectsService
     {
-        Task CreateAsync(CreateDistrictViewObjectInputModel input, string imagePath);
+        Task CreateAsync(CreateDistrictViewObjectInputModel input, string userId, string imagePath);
 
         Task<IEnumerable<DistrictViewObjectViewModel>> GetAllDistrictViewObjectsAsync(string districtViewId, string userId);
 

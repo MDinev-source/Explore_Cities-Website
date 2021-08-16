@@ -134,6 +134,7 @@
                      PublicTransportRating = x.PublicTransport,
                      Likes = x.Likes,
                      Dislikes = x.Dislikes,
+                     UserId = x.AddedByUserId,
                  })
                 .FirstOrDefaultAsync();
 
@@ -252,22 +253,25 @@
 
         public async Task<DistrictViewDeleteViewModel> GetDeleteViewModelByIdAsync(string id)
         {
+            var districtId = this.districtViewsRepository
+           .AllAsNoTracking()
+           .Where(x => x.Id == id).FirstOrDefault().DistrictId;
+
+            var district = this.districtService.GetDistrict(districtId);
+
+            var city = this.citiesService.GetCity(district.CityId);
+
             var districtView = await this.districtViewsRepository
                 .AllAsNoTracking()
                 .Where(d => d.Id == id)
                 .Select(x => new DistrictViewDeleteViewModel
                 {
                     Id = id,
-                    DistrictName = x.District.Name,
                     PictureUrl = x.PictureUrl,
-                    ArrivalYear = x.ArrivalYear,
-                    DepartureYear = x.DepartureYear,
                     Comment = x.Comment,
-                    ParkingSpacesExistence = x.ParkingSpaces,
-                    ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds,
-                    AirPollutionRating = x.AirPollution,
-                    NoiseRating = x.Noise,
-                    PublicTransportRating = x.PublicTransport,
+                    DistrictId = districtId,
+                    DistrictName = x.District.Name,
+                    CityName = city.Name,
                 })
                 .FirstOrDefaultAsync();
 

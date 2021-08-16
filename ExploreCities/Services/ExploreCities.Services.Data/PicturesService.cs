@@ -57,6 +57,7 @@
                        DistrictViewObjectId = x.DistrictObjectId,
                        CreatedOn = x.CreatedOn,
                        Path = BasePath + $"{x.Id}" + "." + $"{x.Extension}",
+                       UserId = x.AddedByUserId,
                    }).ToListAsync();
 
             return pictures.OrderByDescending(x => x.CreatedOn);
@@ -71,8 +72,6 @@
                {
                    Id = id,
                    Path = BasePath + $"{x.Id}" + "." + $"{x.Extension}",
-                   //ObjectType = currentObject.ObjectType.ToString(),
-                   //ObjectName = currentObject.Name,
                    CreateOn = x.CreatedOn,
                })
                .FirstOrDefaultAsync();
@@ -82,22 +81,18 @@
 
         public int GetIndex(string pictureId, string objectId)
         {
-            var picture = this.pictureRepository
-                  .AllAsNoTracking()
-                  .Where(x => x.Id == pictureId)
-                  .FirstOrDefault();
-
             var allPictures = this
                    .pictureRepository
                    .AllAsNoTracking()
                    .Where(x => x.DistrictObjectId == objectId)
+                   .OrderByDescending(x => x.CreatedOn)
                    .ToList();
 
             var index = 0;
 
             for (int i = 0; i <= allPictures.Count - 1; i++)
             {
-                if (allPictures[i].Id == picture.Id)
+                if (allPictures[i].Id == pictureId)
                 {
                     index = i;
                     break;
