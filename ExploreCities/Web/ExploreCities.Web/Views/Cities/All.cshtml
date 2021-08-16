@@ -9,7 +9,6 @@
 <form method="get" asp-controller="Cities" asp-action="All">
     <p>
         <div class="row">
-
             <div class="col text-left">
                 <div class="form-group">
                     <label class="form-check-label text-primary">Filter by: </label>
@@ -63,7 +62,7 @@
     </p>
 </form>
 
-<table class="table">
+<table class="table table-hover" style="width: 100%">
     <thead>
         <tr>
             <th scope="col">City Name</th>
@@ -71,7 +70,6 @@
             <th scope="col" class="text-center">Districts Count</th>
             <th scope="col" class="text-center">Users Count</th>
             <th scope="col" class="text-center">Districts</th>
-            <th scope="col" class="text-center">Articles</th>
         </tr>
     </thead>
 
@@ -92,12 +90,10 @@
                     @Html.DisplayFor(modelItem => city.UsersCount)
                 </td>
                 <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-area="" asp-controller="Districts" asp-action="All" asp-route-cityId="@city.Id">All Districts</a>
+                    <div class="row justify-content-center">
+                        <a class="btn btn-block btn-primary text-white mb-3" style="width: 150px" asp-area="" asp-controller="Districts" asp-action="All" asp-route-cityId="@city.Id">All Districts</a>
+                    </div>
                 </td>
-                <td>
-                    <a class="btn btn-block btn-primary text-white mb-3" asp-route="/Cities/Histories">All Articles</a>
-                </td>
-
             </tr>
         }
     </tbody>

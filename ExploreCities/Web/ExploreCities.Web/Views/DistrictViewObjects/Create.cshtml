@@ -10,43 +10,50 @@
     this.ViewData["Title"] = "Create new object";
 }
 
+<div class="row justify-content-center">
+    <form class="col-md-6" enctype="multipart/form-data" asp-controller="DistrictViewObjects" asp-action="Create" method="post">
 
-<form enctype="multipart/form-data" asp-controller="DistrictViewObjects" asp-action="Create" method="post" class="col-md-6 offset-3">
+        <h1 class="text-center">@this.ViewData["Title"]</h1>
 
-    <h1 class="text-center">@this.ViewData["Title"]</h1>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <hr />
 
-    <input type="hidden" asp-for="@Model.DistrictViewId" value="@Model.DistrictViewId" />
+        <input type="hidden" asp-for="@Model.DistrictViewId" value="@Model.DistrictViewId" />
 
-    <div class="form-group">
-        <label asp-for="ObjectType" class="control-label"></label>
-        <select asp-for="ObjectType" multiple class="form-control" id="exampleFormControlSelect2">
-            @foreach (var value in GetEnumDataService.GetEnumvValues(typeof(DistrictObjectType)))
-            {
-                <option>@value.ToString()</option>
-            }
-        </select>
-        <span asp-validation-for="ObjectType" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="ObjectType" class="control-label"></label>
+            <select asp-for="ObjectType" multiple class="form-control" id="exampleFormControlSelect2">
+                @foreach (var value in GetEnumDataService.GetEnumvValues(typeof(DistrictObjectType)))
+                {
+                    <option>@value.ToString()</option>
+                }
+            </select>
+            <span asp-validation-for="ObjectType" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Opinion" class="control-label"></label>
-        <textarea asp-for="Opinion" rows="4" class="form-control" placeholder="Add opinion for current object."></textarea>
-        <span asp-validation-for="Opinion" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Pictures"></label>
-        <input asp-for="Pictures" class="form-control-file"/>
-        <span asp-validation-for="Pictures" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </div>
-</form>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Opinion" class="control-label"></label>
+            <textarea asp-for="Opinion" rows="4" class="form-control" placeholder="Add opinion for current object."></textarea>
+            <span asp-validation-for="Opinion" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Pictures"></label>
+            <input asp-for="Pictures" class="form-control-file" />
+            <span asp-validation-for="Pictures" class="text-danger"></span>
+        </div>
 
+        <div class="row justify-content-center">
+            <input type="submit" value="Create" class="btn btn-primary" style="width: 150px" />
+        </div>
 
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

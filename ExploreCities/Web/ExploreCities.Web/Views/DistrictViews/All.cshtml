@@ -1,17 +1,16 @@
-﻿@model ExploreCities.Web.ViewModels.DistrictViews.AllDistrictViewsViewModel
+﻿@using ExploreCities.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@model ExploreCities.Web.ViewModels.DistrictViews.AllDistrictViewsViewModel
 
 @{ ViewData["Title"] = "District Views"; }
 
-<div class="page-header text-center">
-    <h1 id="tables">District views for: </h1>
-    <h1 class="font-weight-bold font-italic">@Model.DistrictName</h1>
-</div>
+<h1 class=" text-center"> Views for @Model.DistrictName district</h1>
 
 <form method="get" asp-controller="DistrictViews" asp-action="All">
-
-    <input type="hidden" asp-for="@Model.PageNumber">
-    <input type="hidden" asp-for="@Model.DistrictId" />
-    <input type="hidden" asp-for="@Model.DistrictName" />
 
     <div class="row d-flex justify-content-between">
         <div class="form-group">
@@ -38,52 +37,53 @@
 <div class="card-deck container-fluid">
     @foreach (var item in Model.AllDistrictViews)
     {
-<div class="col-md-4 mb-4">
-    <div class="card text-body bg-light" style="max-width: 20rem; height: 450px">
-        <a asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">
-            <img style="height: 200px; width: 100%" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
-        </a>
-        <div class="card-body">
-            <h5 class="card-title">
-                Creator @item.Username
-            </h5>
-            <p class="card-text">This card is create on @item.CreatedOn.</p>
-        </div>
-        <div class="row">
-            <div class="col">
-                <a class="btn btn-primary" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                <a class="btn btn-warning" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                <a class=" btn btn-info" asp-area="" asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                <a class="btn btn-success" asp-area="" asp-controller="DistrictViewObjects" asp-action="Create" asp-route-districtViewId="@item.Id">Add object</a>
-            </div>
-        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-body bg-light" style="max-width: 20rem; height: 450px">
+                <a asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">
+                    <img style="height: 200px; width: 100%" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Creator @item.Username
+                    </h5>
+                    <p class="card-text">This card is create on @item.CreatedOn.</p>
+                </div>
+                <div class="row ">
+                    <div class="col d-flex justify-content-center" style="width: 100%">
+                        @if (this.UserManager.GetUserId(this.User) == item.UserId)
+                        {
+                            <a class="btn btn-primary mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-warning mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@item.Id">Delete</a>}
+                        <a class="btn btn-info mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </div>
+                </div>
 
-        <div class="card-footer">
-            @if (item.ModifiedOn != null)
-            {
-            <small class="text-body">Last modified - @item.ModifiedOn</small> }
-            else
-            {
-            <small class="text-body">Not modified</small>}
-        </div>
-    </div>
-</div>}
+                <div class="card-footer">
+                    @if (item.ModifiedOn != null)
+                    {
+                        <small class="text-body">Last modified - @item.ModifiedOn</small> }
+                    else
+                    {
+                        <small class="text-body">Not modified</small>}
+                </div>
+            </div>
+        </div>}
 </div>
 
-   <div class="d-flex justify-content-around">
+<div class="d-flex justify-content-around">
     @Html.PagedListPager((IPagedList)Model.AllDistrictViews,
                         page => Url.Action("All",
-                            new
+                         new
+                         {
+                             DistrictId = Model.DistrictId,
+                             PageNumber = page,
+                             PageSize = Model.PageSize,
+
+                         }),
+                            new PagedListRenderOptions
                             {
-                                DistrictId = Model.DistrictId,
-                                PageNumber = page,
-                                PageSize = Model.PageSize,
-          
-                            }),
-                        new PagedListRenderOptions
-                        {
-                            MaximumPageNumbersToDisplay = 5,
-                            LiElementClasses = new string[] { "page-item" },
-                            PageClasses = new string[] { "page-link" }
-                        })
-   </div>
+                                MaximumPageNumbersToDisplay = 5,
+                                LiElementClasses = new string[] { "page-item" },
+                                PageClasses = new string[] { "page-link" }
+                            })
+</div>

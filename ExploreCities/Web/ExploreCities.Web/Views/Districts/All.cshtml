@@ -3,10 +3,7 @@
     ViewData["Titles"] = "All Districts";
 }
 
-<div class="page-header text-center">
-    <h1 id="tables">Listed districts for: </h1>
-    <h1 class="font-weight-bold font-italic">@Model.CityName city</h1>
-</div>
+<h1 class=" text-center"> Districts for @Model.CityName city</h1>
 
 <form method="get" asp-controller="Districts" asp-action="All">
     <p>
@@ -53,56 +50,60 @@
     </p>
 </form>
 
-<div class="jumbotron">
-    @if (Model.AllDistricts.Any())
-    {
-        <table class="table">
-            <thead>
+@if (Model.AllDistricts.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">District Name</th>
+                <th scope="col" class="text-center">Districts Views Count</th>
+                <th scope="col" class="text-center">Users Count</th>
+                <th scope="col" class="text-center">Raiting</th>
+                <th scope="col" class="text-center">District Views</th>
+                <th scope="col" class="text-center">Rate District</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var district in Model.AllDistricts)
+            {
                 <tr>
-                    <th scope="col">District Name</th>
-                    <th scope="col" class="text-center">Districts Views Count</th>
-                    <th scope="col" class="text-center">Users Count</th>
-                    <th scope="col" class="text-center">Raiting</th>
-                    <th scope="col" class="text-center">District Views</th>
-                    <th scope="col" class="text-center">Rate District</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var district in Model.AllDistricts)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => district.Name)
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => district.DistrictViewsCount)
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => district.UsersCount)
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => district.Rating)
-                        </td>
-                        <td>
-                            <a class="btn btn-block btn-primary text-white mb-3" asp-area="" asp-controller="DistrictViews" asp-action="All" asp-route-districtId="@district.Id">All views</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-block btn-secondary text-white mb-3" asp-area="" asp-controller="Districts" asp-action="Rate" asp-route-districtId="@district.Id">Rate district</a>
-                        </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => district.Name)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => district.DistrictViewsCount)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => district.UsersCount)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => district.Rating)
+                    </td>
+                    <td>
+                        <div class="row justify-content-center">
+                            <a class="btn btn-block btn-primary text-white mb-3" style="width: 150px" asp-area="" asp-controller="DistrictViews" asp-action="All" asp-route-districtId="@district.Id">All views</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row justify-content-center">
+                            <a class="btn btn-block btn-info text-white mb-3" style="width: 150px" asp-area="" asp-controller="Districts" asp-action="Rate" asp-route-districtId="@district.Id">Rate district</a>
+                        </div>
+                    </td>
 
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="jumbotron">
         <p class="text-center">
             <em class="text-muted">No districts added to @Model.CityName city.</em>
         </p>
-    }
+    </div>
+}
 
-</div>
 <div class="d-flex justify-content-around">
     @Html.PagedListPager((IPagedList)Model.AllDistricts,
         page => Url.Action("All",

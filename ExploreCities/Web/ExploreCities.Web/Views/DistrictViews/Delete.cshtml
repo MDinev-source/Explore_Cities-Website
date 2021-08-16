@@ -5,11 +5,17 @@
 <div class="row justify-content-center">
     <form asp-area="" asp-controller="DistrictViews" asp-action="Delete" method="post" class="text-center col-md-6">
         <fieldset disabled="">
-            <h4>@this.ViewData["Title"]</h4>
+            <h1>@this.ViewData["Title"]</h1>
             <hr />
-            <div class= form-group>
+            <div class=form-group>
                 <label asp-for="@Model.PictureUrl"></label>
-                <img style="height: 200px; width: 100%;" class="card-img-top" src="@Model.PictureUrl" alt="image" />
+                <img style="height: 300px; width: 100%;" class="card-img-top" src="@Model.PictureUrl" alt="image" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CityName"></label>
+                <input asp-for="CityName" class="form-control col-md-12" placeholder="@Model.CityName" />
+                <span asp-validation-for="CityName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DistrictName"></label>
@@ -17,25 +23,12 @@
                 <span asp-validation-for="DistrictName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ArrivalYear"></label>
-                <input asp-for="ArrivalYear" class="form-control col-md-12" placeholder="@Model.ArrivalYear" />
-                <span asp-validation-for="ArrivalYear" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DepartureYear"></label>
-                <input asp-for="DepartureYear" class="form-control col-md-12" placeholder="@Model.DepartureYear" />
-                <span asp-validation-for="DepartureYear" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Comment"></label>
-                <input asp-for="Comment" class="form-control col-md-12" placeholder="@Model.Comment" />
+                <textarea asp-for="Comment" rows="4" readonly class="form-control"></textarea>
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
-
-            @await this.Html.PartialAsync("_EnumsDeletePartial")
-
             <div class="alert alert-danger">
-                <h5>Are you shure you want to delete district view.</h5>
+                <h5>Are you shure you want to delete district view from @Model.DistrictName district, @Model.CityName city.</h5>
             </div>
         </fieldset>
         <button type="submit" class="btn btn-warning">Delete district view</button>

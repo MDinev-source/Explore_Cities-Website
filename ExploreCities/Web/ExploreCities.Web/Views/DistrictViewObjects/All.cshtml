@@ -1,53 +1,55 @@
 ﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.AllDistrictViewObjectsViewModel
 
 @{
-    ViewData["Title"] = "List District View Objects";
+    ViewData["Title"] = "All Objects";
 }
 
-<h1 class="text-center">List</h1>
+<h1 class="text-center">All Objects for this View</h1>
 
 <form method="get" asp-controller="DistrictViewObjects" asp-action="All">
 
     <input type="hidden" asp-for="@Model.DistrictViewId" value="@Model.DistrictViewId" />
-    <div class="jumbotron">
-        @if (Model.DistrictViewObjects.Any())
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Type</th>
-                        <th scope="col" class="text-center">Name</th>
-                        <th scope="col" class="text-center">Pictures count</th>
-                        <th scope="col" class="text-center">Info</th>
+    @if (Model.DistrictViewObjects.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col" class="text-center">Name</th>
+                    <th scope="col" class="text-center">Pictures count</th>
+                    <th scope="col" class="text-center">Info</th>
 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DistrictViewObjects)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ObjectType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.PicturesCount)
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <a class=" btn btn-info" style="width: 150px" asp-controller="DistrictViewObjects" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </div>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.DistrictViewObjects)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ObjectType)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td class="text-center">
-                                @Html.DisplayFor(modelItem => item.PicturesCount)
-                            </td>
-                            <td class="text-center">
-                                <a class=" btn btn-info" asp-area="" asp-controller="DistrictViewObjects" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="jumbotron">
             <p class="text-center">
                 <em class="text-muted">No objects created.</em>
             </p>
-        }
-    </div>
+        </div>
+    }
 </form>

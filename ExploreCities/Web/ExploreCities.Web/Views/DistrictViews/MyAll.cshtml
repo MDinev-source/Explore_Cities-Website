@@ -2,9 +2,10 @@
 
 @{ ViewData["Title"] = "My District Views"; }
 
-<div class="jumbotron">
-    @if (Model.AllDistrictViews.Any())
-    {
+<h1 class=" text-center">@this.ViewData["Title"]</h1>
+
+@if (Model.AllDistrictViews.Any())
+{
 <div class="card-deck container-fluid">
     @foreach (var item in Model.AllDistrictViews)
     {
@@ -17,15 +18,15 @@
             <h5 class="card-title">
                 Creator @item.Username
             </h5>
-            <p class="card-text">@item.DistricName district-city @item.CityName</p>
+            <p class="card-text">@item.DistricName district-@item.CityName city</p>
             <p class="card-text">This card is create on @item.CreatedOn.</p>
         </div>
-        <div class="row">
-            <div class="col">
-                <a class="btn btn-primary" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                <a class="btn btn-warning" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                <a class=" btn btn-info" asp-area="" asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                <a class="btn btn-success" asp-area="" asp-controller="DistrictViewObjects" asp-action="Create" asp-route-districtViewId="@item.Id">Add object</a>
+        <div class="row ">
+            <div class="col d-flex justify-content-center" style="width: 100%">
+                <a class="btn btn-primary mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-warning mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-info mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Details" asp-route-id="@item.Id">Details</a>
+               
             </div>
         </div>
 
@@ -41,7 +42,9 @@ else
 </div>}
 </div> }
 else
-{ <p class="text-center">
-    <em class="text-muted">No views created.</em>
-</p>}
-</div>
+{
+<div class="jumbotron">
+    <p class="text-center">
+        <em class="text-muted">No views created.</em>
+    </p>
+</div>}
