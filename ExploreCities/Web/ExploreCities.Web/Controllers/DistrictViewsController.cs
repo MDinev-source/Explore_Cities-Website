@@ -90,6 +90,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(DistrictViewEditModel districtViewEditModel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(districtViewEditModel);
+            }
+
             await this.districtViewsService.EditAsync(districtViewEditModel);
 
             var id = districtViewEditModel.Id;

@@ -13,7 +13,6 @@
 
     public class DistrictViewObjectsController : Controller
     {
-
         private readonly IDistrictViewObjectsService districtViewObjectsService;
         private readonly IWebHostEnvironment environment;
         private readonly UserManager<ApplicationUser> userManager;
@@ -53,7 +52,7 @@
 
             try
             {
-              districtViewObject = await this.districtViewObjectsService.CreateAsync(createInputModel, user.Id, imagePath);
+                districtViewObject = await this.districtViewObjectsService.CreateAsync(createInputModel, user.Id, imagePath);
             }
             catch (Exception ex)
             {
@@ -94,6 +93,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(BaseEditDetailsDeleteModel districtViewObjectEditModel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(districtViewObjectEditModel);
+            }
+
             var id = districtViewObjectEditModel.Id;
 
             await this.districtViewObjectsService.EditAsync(districtViewObjectEditModel);
