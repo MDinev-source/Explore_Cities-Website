@@ -79,7 +79,7 @@
 
         public IEnumerable<CitiesViewModel> GetCitiesFromSearch(string searchString, string optionSearch)
         {
-            IEnumerable<CitiesViewModel> cities = null;
+            IEnumerable<CitiesViewModel> cities;
 
             var escapedSearchTokens = searchString
                 .Split(new char[] { ' ', ',', '.', ':', '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
