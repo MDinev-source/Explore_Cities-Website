@@ -108,11 +108,9 @@
         {
             var id = districtViewDeleteViewModel.Id;
 
-            string districtId = this.districtViewsService.GetDistrictView(id).DistrictId;
-
             await this.districtViewsService.DeleteByIdAsync(id);
 
-            return this.RedirectToAction(nameof(this.All), new { districtId });
+            return this.RedirectToAction(nameof(this.MyAll));
         }
 
         public async Task<IActionResult> MyAll(MyAllDistrictViewsViewModel myAllDistrictViewsViewModel)
