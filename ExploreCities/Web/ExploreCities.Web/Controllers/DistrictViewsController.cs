@@ -66,7 +66,7 @@
 
             allDistrictViewsViewModel.AllDistrictViews = pageDistrictViewsViewModel;
 
-            allDistrictViewsViewModel.DistrictName = this.districtsService.GetDistrictName(allDistrictViewsViewModel.DistrictId);
+            allDistrictViewsViewModel.DistrictName = this.districtsService.GetDistrict(allDistrictViewsViewModel.DistrictId).Name;
 
             return this.View(allDistrictViewsViewModel);
         }

@@ -78,7 +78,7 @@
 
         public async Task<IActionResult> Edit(string id, string objectType)
         {
-            var districtViewObjectToEdit = await this.districtViewObjectsService.GetEditViewModelByIdAsync(id);
+            var districtViewObjectToEdit = await this.districtViewObjectsService.GetViewModelByIdAsync(id);
 
             districtViewObjectToEdit.ObjectType = objectType;
 
@@ -86,7 +86,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DistrictViewObjectEditModel districtViewObjectEditModel)
+        public async Task<IActionResult> Edit(BaseEditDetailsDeleteModel districtViewObjectEditModel)
         {
             await this.districtViewObjectsService.EditAsync(districtViewObjectEditModel);
 
@@ -95,13 +95,13 @@
 
         public async Task<IActionResult> Delete(string id)
         {
-            var districtViewObjectToDelete = await this.districtViewObjectsService.GetDeleteViewModelByIdAsync(id);
+            var districtViewObjectToDelete = await this.districtViewObjectsService.GetViewModelByIdAsync(id);
 
             return this.View(districtViewObjectToDelete);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(DistrictViewObjectDeleteViewModel districtViewObjectDeleteViewModel)
+        public async Task<IActionResult> Delete(BaseEditDetailsDeleteModel districtViewObjectDeleteViewModel)
         {
             var id = districtViewObjectDeleteViewModel.Id;
 

@@ -46,7 +46,7 @@
 
             listDistrictsViewModel.AllDistricts = pageCitiesViewModel;
 
-            listDistrictsViewModel.CityName = this.citiesService.GetCityName(listDistrictsViewModel.CityId);
+            listDistrictsViewModel.CityName = this.citiesService.GetCity(listDistrictsViewModel.CityId).Name;
 
             return this.View(listDistrictsViewModel);
         }
