@@ -1,9 +1,10 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class BaseCreateEditModel
+    public class BaseCreateEditModel : IValidatableObject
     {
         [Required]
         [MinLength(3)]
@@ -48,5 +49,10 @@
         [Required]
         [Display(Name = "Public transport")]
         public string PublicTransportRating { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (this.DepartureYear != null && this.DepartureYear < this.ArrivalYear) yield return new ValidationResult("Departure year cannot be less than arrival year");
+        }
     }
 }
