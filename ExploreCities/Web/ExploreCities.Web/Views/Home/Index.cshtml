@@ -8,32 +8,35 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="index-div bg-blur border border-primary">
+    <div class="text-center">
+
+        @if (this.SignInManager.IsSignedIn(this.User))
+        {
+            <h5>Enjoy @GlobalConstants.SystemName Bulgaria and find out other people's opinions about where you live!</h5>
+            @*<hr class="bg-primary w-75">*@
+            <cache expires-after="@TimeSpan.FromHours(4)">
+                @await this.Html.PartialAsync("_CarouselSignedInUserPartial")
+                <br />
+                @*<h5 class=" text-info">Use the fast links pictures.</h5>*@
+                @await this.Html.PartialAsync("_MainEntitiesPartial")
+            </cache>
+            <br />
+        }
+        else
+        {
+            <h2>Welcome to @GlobalConstants.SystemName Bulgaria!</h2>
+            <hr class="bg-primary w-75">
+            <p>This is a place, where you can promote the city and district you live in.</p>
+            <cache expires-after="@TimeSpan.FromHours(4)">
+                @await this.Html.PartialAsync("_CarouselPartial")
+            </cache>
+            <h4 class="text-center">
+                <a class="text-primay" href="/Identity/Account/Login">Login</a>
+                if you have an account or
+                <a class="text-primay" href="/Identity/Account/Register">Register</a>
+                now.
+            </h4>
+        }
+    </div>
 </div>
-
-
-
-
-
-@if (this.SignInManager.IsSignedIn(this.User))
-{
-    <cache expires-after="@TimeSpan.FromHours(4)">
-
-    @await this.Html.PartialAsync("_CarouselSignedInUserPartial")
-        <br />
-        @await this.Html.PartialAsync("_MainEntitiesPartial")
-    </cache>
-    <br />
-
-}
-else
-{
-    <cache expires-after="@TimeSpan.FromHours(4)">
-        @await this.Html.PartialAsync("_CarouselPartial")
-    </cache>
-
-}
-
-
