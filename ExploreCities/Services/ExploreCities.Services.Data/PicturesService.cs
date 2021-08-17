@@ -79,6 +79,15 @@
             return districtViewObject;
         }
 
+        public Picture GetPicture(string id)
+        {
+            var picture = this.pictureRepository
+            .AllAsNoTracking()
+            .FirstOrDefault(x => x.Id == id);
+
+            return picture;
+        }
+
         public int GetIndex(string pictureId, string objectId)
         {
             var allPictures = this

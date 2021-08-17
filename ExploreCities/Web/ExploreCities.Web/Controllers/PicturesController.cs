@@ -17,9 +17,9 @@
             this.picturesService = picturesService;
         }
 
-        public async Task<IActionResult> All(AllObjectPicturesViewModel allObjectPicturesViewModel)
+        public async Task<IActionResult> All(AllObjectPicturesViewModel allObjectPicturesViewModel, string objectId)
         {
-            var objectPictures = await this.picturesService.GetAllPicturesAsync(allObjectPicturesViewModel.ObjectId);
+            var objectPictures = await this.picturesService.GetAllPicturesAsync(allObjectPicturesViewModel.ObjectId ?? objectId);
 
             allObjectPicturesViewModel.Pictures = objectPictures;
 
@@ -49,9 +49,11 @@
         {
             var id = pictureDeleteViewModel.Id;
 
+            var objectId = this.picturesService.GetPicture(id).DistrictObjectId;
+
             await this.picturesService.DeleteByIdAsync(id);
 
-            return this.RedirectToAction("/");
+            return this.RedirectToAction(nameof(this.All), new { objectId });
         }
     }
 }

@@ -3,12 +3,13 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.DistrictViews;
     using ExploreCities.Web.ViewModels.Enums;
 
     public interface IDistrictViewsService
     {
-        Task CreateAsync(CreateDistrictViewInputModel input, string userId);
+        Task<DistrictView> CreateAsync(CreateDistrictViewInputModel input, string userId);
 
         Task<IEnumerable<DistrictViewsViewModel>> GetAllDistrictViewsAsync(string districtId);
 
@@ -31,5 +32,7 @@
         Task<bool> DislikeDistrictView(string districtViewId, string userId);
 
         string GetDistrictViewId(string userId);
+
+        DistrictView GetDistrictView(string Id);
     }
 }

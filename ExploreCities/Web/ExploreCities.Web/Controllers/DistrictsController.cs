@@ -57,7 +57,9 @@
 
             await this.districtsService.RateDistrict(districtId, user.Id);
 
-            return this.RedirectToAction("/");
+            var cityId = this.districtsService.GetDistrict(districtId).CityId;
+
+            return this.RedirectToAction(nameof(this.All), new { cityId });
         }
     }
 }

@@ -38,7 +38,7 @@
             this.districtViewDislikes = districtViewDislikes;
         }
 
-        public async Task CreateAsync(CreateDistrictViewInputModel input, string userId)
+        public async Task<DistrictView> CreateAsync(CreateDistrictViewInputModel input, string userId)
         {
             var districtName = input.DistrictName;
             var cityId = input.CityId;
@@ -74,6 +74,8 @@
             await this.citiesService.AddUserToCity(userId, cityId);
             await this.districtViewsRepository.AddAsync(districtView);
             await this.districtViewsRepository.SaveChangesAsync();
+
+            return districtView;
         }
 
         public async Task<IEnumerable<DistrictViewsViewModel>> GetAllDistrictViewsAsync(string districtId)
@@ -389,6 +391,15 @@
             await this.districtViewDislikes.SaveChangesAsync();
 
             return true;
+        }
+
+        public DistrictView GetDistrictView(string Id)
+        {
+            var districtView = this.districtViewsRepository
+         .AllAsNoTracking()
+         .FirstOrDefault(x => x.Id == Id);
+
+            return districtView;
         }
     }
 }

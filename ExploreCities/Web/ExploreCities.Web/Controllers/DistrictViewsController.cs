@@ -49,14 +49,16 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.districtViewsService.CreateAsync(input, user.Id);
+            var districtView = await this.districtViewsService.CreateAsync(input, user.Id);
 
-            return this.RedirectToAction("/");
+            var id = districtView.Id;
+
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
-        public async Task<IActionResult> All(AllDistrictViewsViewModel allDistrictViewsViewModel)
+        public async Task<IActionResult> All(AllDistrictViewsViewModel allDistrictViewsViewModel, string districtId)
         {
-            var districtViews = await this.districtViewsService.GetAllDistrictViewsAsync(allDistrictViewsViewModel.DistrictId);
+            var districtViews = await this.districtViewsService.GetAllDistrictViewsAsync(allDistrictViewsViewModel.DistrictId ?? districtId);
 
             districtViews = this.districtViewsService.SortBy(districtViews.ToArray(), allDistrictViewsViewModel.Sorter).ToList();
 
@@ -90,7 +92,9 @@
         {
             await this.districtViewsService.EditAsync(districtViewEditModel);
 
-            return this.RedirectToAction("Details", "DistrictViews", new { area = "", id = districtViewEditModel.Id });
+            var id = districtViewEditModel.Id;
+
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
         public async Task<IActionResult> Delete(string id)
@@ -103,8 +107,12 @@
         public async Task<IActionResult> Delete(DistrictViewDeleteViewModel districtViewDeleteViewModel)
         {
             var id = districtViewDeleteViewModel.Id;
+
+            string districtId = this.districtViewsService.GetDistrictView(id).DistrictId;
+
             await this.districtViewsService.DeleteByIdAsync(id);
-            return this.RedirectToAction("/");
+
+            return this.RedirectToAction(nameof(this.All), new { districtId });
         }
 
         public async Task<IActionResult> MyAll(MyAllDistrictViewsViewModel myAllDistrictViewsViewModel)
@@ -125,7 +133,7 @@
 
             await this.districtViewsService.LikeDistrictView(id, user.Id);
 
-            return this.RedirectToAction("/");
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
         public async Task<IActionResult> Dislike(string id)
@@ -134,7 +142,7 @@
 
             await this.districtViewsService.DislikeDistrictView(id, user.Id);
 
-            return this.RedirectToAction("/");
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
     }
 }

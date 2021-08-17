@@ -26,7 +26,7 @@
             this.picturesService = picturesService;
         }
 
-        public async Task CreateAsync(CreateDistrictViewObjectInputModel cratedObjectInput, string userId, string imagePath)
+        public async Task<DistrictObject> CreateAsync(CreateDistrictViewObjectInputModel cratedObjectInput, string userId, string imagePath)
         {
             var districtViewObject = new DistrictObject
             {
@@ -66,6 +66,8 @@
 
             await this.districtViewObjectsRepository.AddAsync(districtViewObject);
             await this.districtViewObjectsRepository.SaveChangesAsync();
+
+            return districtViewObject;
         }
 
         public async Task DeleteAllObjectsFromCurrentView(string districtViewId)
@@ -126,6 +128,15 @@
                 PicturesCount = x.Pictures.Count,
             })
             .ToListAsync();
+
+            return districtViewObject;
+        }
+
+        public DistrictObject GetDistrictViewObject(string districtObjectId)
+        {
+            var districtViewObject = this.districtViewObjectsRepository
+            .AllAsNoTracking()
+            .FirstOrDefault(x => x.Id == districtObjectId);
 
             return districtViewObject;
         }

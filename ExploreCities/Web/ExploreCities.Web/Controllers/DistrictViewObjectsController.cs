@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using ExploreCities.Data.Models;
+    using ExploreCities.Data.Models.Location;
     using ExploreCities.Services.Data;
     using ExploreCities.Web.ViewModels.DistrictViewObjects;
     using Microsoft.AspNetCore.Hosting;
@@ -38,26 +39,31 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateDistrictViewObjectInputModel input)
+        public async Task<IActionResult> Create(CreateDistrictViewObjectInputModel createInputModel)
         {
             var imagePath = $"{this.environment.WebRootPath}/Pictures";
             var user = await this.userManager.GetUserAsync(this.User);
+
+            DistrictObject districtViewObject;
+
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                return this.View(createInputModel);
             }
 
             try
             {
-                await this.districtViewObjectsService.CreateAsync(input, user.Id, imagePath);
+              districtViewObject = await this.districtViewObjectsService.CreateAsync(createInputModel, user.Id, imagePath);
             }
             catch (Exception ex)
             {
                 this.ModelState.AddModelError(string.Empty, ex.Message);
-                return this.View(input);
+                return this.View(createInputModel);
             }
 
-            return this.RedirectToAction("/");
+            var id = districtViewObject.Id;
+
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
         public async Task<IActionResult> All(AllDistrictViewObjectsViewModel listDistrictViewObjectsViewModel, string districtViewId)
@@ -88,9 +94,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(BaseEditDetailsDeleteModel districtViewObjectEditModel)
         {
+            var id = districtViewObjectEditModel.Id;
+
             await this.districtViewObjectsService.EditAsync(districtViewObjectEditModel);
 
-            return this.RedirectToAction("Details", "DistrictViewObjects", new { area = "", id = districtViewObjectEditModel.Id });
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
         public async Task<IActionResult> Delete(string id)
@@ -105,9 +113,11 @@
         {
             var id = districtViewObjectDeleteViewModel.Id;
 
+            var districtViewId = this.districtViewObjectsService.GetDistrictViewObject(id).DistrictViewId;
+
             await this.districtViewObjectsService.DeleteByIdAsync(id);
 
-            return this.RedirectToAction("/");
+            return this.RedirectToAction(nameof(this.All), new { districtViewId });
         }
     }
 }

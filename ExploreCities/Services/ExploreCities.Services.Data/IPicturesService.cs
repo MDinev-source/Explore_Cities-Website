@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using ExploreCities.Data.Models.Location;
     using ExploreCities.Web.ViewModels.Pictures;
 
     public interface IPicturesService
@@ -16,5 +16,7 @@
         Task DeleteByIdAsync(string id);
 
         int GetIndex(string pictureId, string objectId);
+
+        Picture GetPicture(string id);
     }
 }
