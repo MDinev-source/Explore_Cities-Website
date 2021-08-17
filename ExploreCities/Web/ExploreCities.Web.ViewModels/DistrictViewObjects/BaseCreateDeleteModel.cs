@@ -9,7 +9,7 @@
         [Required]
         [MinLength(3)]
         [MaxLength(50)]
-        [RegularExpression(@"^[a-zA-Z0-9]+\s[a-zA-Z0-9]+$")]
+        [RegularExpression(@"^[A-Z][a-z]+\s?[A-Za-z0-9]+$")]
         [Display(Name = "Object name")]
         public string Name { get; set; }
 
@@ -21,6 +21,5 @@
         [Required]
         [Display(Name = "Object type")]
         public DistrictObjectType ObjectType { get; set; }
-
     }
 }

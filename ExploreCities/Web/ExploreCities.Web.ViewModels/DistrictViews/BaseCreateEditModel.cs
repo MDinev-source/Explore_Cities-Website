@@ -8,7 +8,7 @@
         [Required]
         [MinLength(3)]
         [MaxLength(30)]
-        [RegularExpression(@"^[a-zA-Z0-9]+\s[a-zA-Z0-9]+$")]
+        [RegularExpression(@"^[A-Z][a-z]+\s?[A-Za-z0-9]+$")]
         [Display(Name = "District name")]
         public string DistrictName { get; set; }
 
