@@ -98,7 +98,7 @@
             await this.districtViewObjectsRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(DistrictViewObjectEditModel districtViewObjectEditModel)
+        public async Task EditAsync(BaseEditDetailsDeleteModel districtViewObjectEditModel)
         {
             var districtViewObject = this.districtViewObjectsRepository
                  .AllAsNoTracking()
@@ -130,45 +130,11 @@
             return districtViewObject;
         }
 
-        public async Task<DistrictViewObjectDeleteViewModel> GetDeleteViewModelByIdAsync(string id)
-        {
-            var districtViewObject = await this.districtViewObjectsRepository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .Select(x => new DistrictViewObjectDeleteViewModel
-                {
-                    Id = x.Id,
-                    ObjectType = x.ObjectType,
-                    Name = x.Name,
-                    Opinion = x.Opinion,
-                })
-                .FirstOrDefaultAsync();
-
-            return districtViewObject;
-        }
-
-        public async Task<DistrictViewObjectEditModel> GetEditViewModelByIdAsync(string id)
-        {
-            var districtViewObject = await this.districtViewObjectsRepository
-                  .AllAsNoTracking()
-                  .Where(x => x.Id == id)
-                  .Select(x => new DistrictViewObjectEditModel
-                  {
-                      Id = x.Id,
-                      ObjectType = x.ObjectType.ToString(),
-                      Name = x.Name,
-                      Opinion = x.Opinion,
-                  })
-                  .FirstOrDefaultAsync();
-
-            return districtViewObject;
-        }
-
-        public async Task<DistrictViewObjectDetailsViewModel> GetViewModelByIdAsync(string id)
+        public async Task<BaseEditDetailsDeleteModel> GetViewModelByIdAsync(string id)
         {
             var districtViewObject = await this.districtViewObjectsRepository.AllAsNoTracking()
            .Where(d => d.Id == id)
-            .Select(x => new DistrictViewObjectDetailsViewModel
+            .Select(x => new BaseEditDetailsDeleteModel
             {
                 Id = id,
                 Name = x.Name,

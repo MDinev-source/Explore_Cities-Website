@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -85,7 +84,7 @@
                 .Select(x => new DistrictViewsViewModel
                 {
                     Id = x.Id,
-                    DistrictName = this.districtService.GetDistrictName(districtId),
+                    DistrictName = this.districtService.GetDistrict(districtId).Name,
                     PictureUrl = x.PictureUrl,
                     UserId = x.AddedByUserId,
                     Username = x.AddedByUser.UserName,
@@ -141,6 +140,30 @@
             return districtView;
         }
 
+        public async Task<DistrictViewEditModel> GetEditViewModelByIdAsync(string id)
+        {
+            var districtView = await this.districtViewsRepository
+                .AllAsNoTracking()
+                .Where(d => d.Id == id)
+                 .Select(x => new DistrictViewEditModel
+                 {
+                     Id = id,
+                     DistrictName = x.District.Name,
+                     PictureUrl = x.PictureUrl,
+                     ArrivalYear = x.ArrivalYear,
+                     DepartureYear = x.DepartureYear,
+                     Comment = x.Comment,
+                     ParkingSpacesExistence = x.ParkingSpaces.ToString(),
+                     ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds.ToString(),
+                     AirPollutionRating = x.AirPollution.ToString(),
+                     NoiseRating = x.Noise.ToString(),
+                     PublicTransportRating = x.PublicTransport.ToString(),
+                 })
+                .FirstOrDefaultAsync();
+
+            return districtView;
+        }
+
         public string GetDistrictViewId(string userId)
         {
             var districtView = this.districtViewsRepository
@@ -157,7 +180,7 @@
                 .Where(x => x.Id == districtViewEditModel.Id)
                 .FirstOrDefault();
 
-            var oldDistrictName = this.districtService.GetDistrictName(districtView.DistrictId);
+            var oldDistrictName = this.districtService.GetDistrict(districtView.DistrictId).Name;
 
             if (oldDistrictName != districtViewEditModel.DistrictName)
             {
@@ -193,30 +216,6 @@
 
             this.districtViewsRepository.Update(districtView);
             await this.districtViewsRepository.SaveChangesAsync();
-        }
-
-        public async Task<DistrictViewEditModel> GetEditViewModelByIdAsync(string id)
-        {
-            var districtView = await this.districtViewsRepository
-                .AllAsNoTracking()
-                .Where(d => d.Id == id)
-                 .Select(x => new DistrictViewEditModel
-                 {
-                     Id = id,
-                     DistrictName = x.District.Name,
-                     PictureUrl = x.PictureUrl,
-                     ArrivalYear = x.ArrivalYear,
-                     DepartureYear = x.DepartureYear,
-                     Comment = x.Comment,
-                     ParkingSpacesExistence = x.ParkingSpaces.ToString(),
-                     ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds.ToString(),
-                     AirPollutionRating = x.AirPollution.ToString(),
-                     NoiseRating = x.Noise.ToString(),
-                     PublicTransportRating = x.PublicTransport.ToString(),
-                 })
-                .FirstOrDefaultAsync();
-
-            return districtView;
         }
 
         public async Task DeleteByIdAsync(string id)

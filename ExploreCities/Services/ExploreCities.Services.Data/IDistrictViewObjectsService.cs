@@ -12,15 +12,11 @@
 
         Task<IEnumerable<DistrictViewObjectViewModel>> GetAllDistrictViewObjectsAsync(string districtViewId, string userId);
 
-        Task<DistrictViewObjectDetailsViewModel> GetViewModelByIdAsync(string id);
+        Task<BaseEditDetailsDeleteModel> GetViewModelByIdAsync(string id);
 
-        Task EditAsync(DistrictViewObjectEditModel districtViewObjectEditModel);
-
-        Task<DistrictViewObjectEditModel> GetEditViewModelByIdAsync(string id);
+        Task EditAsync(BaseEditDetailsDeleteModel districtViewObjectEditModel);
 
         Task DeleteAllObjectsFromCurrentView(string districtViewId);
-
-        Task<DistrictViewObjectDeleteViewModel> GetDeleteViewModelByIdAsync(string id);
 
         Task DeleteByIdAsync(string id);
     }

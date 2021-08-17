@@ -21,16 +21,14 @@
 
         Task<bool> RemoveUserFromDistrict(string userId, string districtId);
 
-        bool CheckUserDistrictByCity(string userId, string cityId);
-
         Task<bool> RemoveDistrict(District district);
+
+        Task<bool> RateDistrict(string districtId, string userId);
+
+        bool CheckUserDistrictByCity(string userId, string cityId);
 
         string GetDistrictId(string name, string cityId);
 
-        string GetDistrictName(string districtId);
-
         District GetDistrict(string districtId);
-
-        Task<bool> RateDistrict(string districtId, string userId);
     }
 }

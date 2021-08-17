@@ -21,8 +21,6 @@
 
         Task<bool> RemoveUserFromCity(string userId, string cityId);
 
-        string GetCityName(string cityId);
-
         City GetCity(string cityId);
     }
 }

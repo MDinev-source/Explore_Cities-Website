@@ -26,10 +26,10 @@
 
         Task DeleteByIdAsync(string id);
 
-        string GetDistrictViewId(string userId);
-
         Task<bool> LikeDistrictView(string districtViewId, string userId);
 
         Task<bool> DislikeDistrictView(string districtViewId, string userId);
+
+        string GetDistrictViewId(string userId);
     }
 }

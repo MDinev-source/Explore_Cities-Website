@@ -127,15 +127,6 @@
             return city;
         }
 
-        public string GetCityName(string cityId)
-        {
-            var city = this.citiesRepository
-             .AllAsNoTracking()
-             .FirstOrDefault(x => x.Id == cityId);
-
-            return city.Name;
-        }
-
         public async Task<bool> RemoveUserFromCity(string userId, string cityId)
         {
             var userInDistrict = this.userCitiesRepository

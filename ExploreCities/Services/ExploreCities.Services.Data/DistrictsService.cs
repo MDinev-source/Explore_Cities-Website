@@ -49,7 +49,7 @@
         public string GetDistrictId(string name, string cityId)
         {
             var district = this.districtsRepository.AllAsNoTracking()
-                .Where(x => x.Name == name&&x.CityId==cityId)
+                .Where(x => x.Name == name && x.CityId == cityId)
                 .FirstOrDefault();
 
             return district.Id;
