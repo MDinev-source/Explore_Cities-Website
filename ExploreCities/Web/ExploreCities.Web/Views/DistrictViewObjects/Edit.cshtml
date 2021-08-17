@@ -1,4 +1,4 @@
-﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.DistrictViewObjectEditModel
+﻿@model ExploreCities.Web.ViewModels.DistrictViewObjects.BaseEditDetailsDeleteModel
 
 @using ExploreCities.Services.Data
 
@@ -24,13 +24,15 @@
             <select asp-for="ObjectType" multiple class="form-control" id="exampleFormControlSelect2">
                 @foreach (var value in GetEnumDataService.GetEnumvValues(typeof(DistrictObjectType)))
                 {
+                    var correctName = GetEnumDataService.ReturnCorrectName(value);
+
                     if (value == Model.ObjectType)
                     {
-                        <option selected="selected">@value.ToString()</option>
+                        <option selected="selected" value="@value">@correctName</option>
                     }
                     else
                     {
-                        <option>@value.ToString()</option>
+                        <option value="@value">@correctName</option>
                     }
                 }
             </select>
@@ -47,11 +49,10 @@
             <textarea asp-for="Opinion" rows="4" class="form-control" placeholder="Add opinion for current object."></textarea>
             <span asp-validation-for="Opinion" class="text-danger"></span>
         </div>
-
         <div class="row ">
             <div class="col d-flex justify-content-center" style="width: 100%">
-                <input type="submit" style="width: 50%" value="Edit" class="btn btn-primary mr-1 ml-1 " />
-                <a class="btn btn-warning mr-1 ml-1" style="width: 80%" asp-area="" asp-controller="DistrictViewObjects" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                <input class="btn btn-primary mr-1 ml-1 " style="width: 150px" type="submit"  value="Edit"  />
+                <a class="btn btn-warning mr-1 ml-1" style="width: 150px" asp-area="" asp-controller="DistrictViewObjects" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
             </div>
         </div>
     </form>
