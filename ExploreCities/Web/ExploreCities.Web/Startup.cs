@@ -21,6 +21,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using ExploreCities.Web.Middlewares;
 
     public class Startup
     {
@@ -104,6 +105,9 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSetAdminMiddleware();
+            app.UseSeedCitiesMiddleware();
 
             app.UseEndpoints(
                 endpoints =>

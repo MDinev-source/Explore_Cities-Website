@@ -9,6 +9,10 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="bg.json" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
@@ -50,5 +54,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Pictures\districtViewObjects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bg.json" />
   </ItemGroup>
 </Project>
