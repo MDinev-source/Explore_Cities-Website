@@ -1,6 +1,7 @@
 ﻿@using ExploreCities.Data.Models
 @using Microsoft.AspNetCore.Identity
 @using ExploreCities.Services.Data
+@using ExploreCities.Common
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IGetEnumsDataService GetEnumDataService
@@ -42,7 +43,8 @@
                 <textarea asp-for="Opinion" rows="4" readonly class="form-control"></textarea>
 
             </div>
-            @if (this.UserManager.GetUserId(this.User) == Model.UserId)
+            @if (this.UserManager.GetUserId(this.User) == Model.UserId 
+                || this.User.IsInRole(GlobalConstants.AdministratorRoleName))
             {
                 <div class="row">
                     <div class="col d-flex justify-content-center" style="width: 100%">

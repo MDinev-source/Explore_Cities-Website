@@ -1,5 +1,6 @@
 ﻿@using ExploreCities.Data.Models
 @using Microsoft.AspNetCore.Identity
+@using ExploreCities.Common
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -11,9 +12,9 @@
 }
 
 <div class="container container-fluid">
-<h1 class="offset-5">@this.ViewData["Title"]</h1>
+    <h1 class="offset-5">@this.ViewData["Title"]</h1>
 
-<hr />
+    <hr />
 
     <div class="row">
 
@@ -27,7 +28,8 @@
             </div>
 
             <div class="row d-flex justify-content-center">
-                @if (this.UserManager.GetUserId(this.User) == Model.UserId)
+                @if (this.UserManager.GetUserId(this.User) == Model.UserId
+                   || this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
                     <div class="row mb-2">
                         <a class="btn btn-success" style="width: 220px" asp-area="" asp-controller="DistrictViewObjects" asp-action="Create" asp-route-districtViewId="@Model.Id">Add object</a>

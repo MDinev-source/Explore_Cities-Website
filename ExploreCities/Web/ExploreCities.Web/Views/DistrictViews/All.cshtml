@@ -1,5 +1,6 @@
 ﻿@using ExploreCities.Data.Models
 @using Microsoft.AspNetCore.Identity
+@using ExploreCities.Common
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -52,7 +53,8 @@
                 </div>
                 <div class="row ">
                     <div class="col d-flex justify-content-center" style="width: 100%">
-                        @if (this.UserManager.GetUserId(this.User) == item.UserId)
+                        @if (this.UserManager.GetUserId(this.User) == item.UserId
+                          || this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
                             <a class="btn btn-primary mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                             <a class="btn btn-warning mr-1 ml-1" style="width: 80px" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@item.Id">Delete</a>}
