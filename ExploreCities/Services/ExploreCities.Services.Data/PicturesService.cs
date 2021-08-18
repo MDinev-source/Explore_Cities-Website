@@ -63,6 +63,22 @@
             return pictures.OrderByDescending(x => x.CreatedOn);
         }
 
+        public async Task<IEnumerable<ObjectPictureViewModel>> GetAllDbPicturesAsync()
+        {
+            var pictures = await this.pictureRepository
+                 .AllAsNoTracking()
+                 .Select(x => new ObjectPictureViewModel
+                 {
+                     Id = x.Id,
+                     DistrictViewObjectId = x.DistrictObjectId,
+                     CreatedOn = x.CreatedOn,
+                     Path = BasePath + $"{x.Id}" + "." + $"{x.Extension}",
+                     UserId = x.AddedByUserId,
+                 }).ToListAsync();
+
+            return pictures.OrderByDescending(x => x.CreatedOn);
+        }
+
         public async Task<PictureDeleteViewModel> GetDeleteViewModelByIdAsync(string id, string objectId)
         {
             var districtViewObject = await this.pictureRepository
@@ -88,6 +104,7 @@
             return picture;
         }
 
+
         public int GetIndex(string pictureId, string objectId)
         {
             var allPictures = this
@@ -96,6 +113,28 @@
                    .Where(x => x.DistrictObjectId == objectId)
                    .OrderByDescending(x => x.CreatedOn)
                    .ToList();
+
+            var index = 0;
+
+            for (int i = 0; i <= allPictures.Count - 1; i++)
+            {
+                if (allPictures[i].Id == pictureId)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        public int GetIndexForAllPics(string pictureId)
+        {
+            var allPictures = this
+                  .pictureRepository
+                  .AllAsNoTracking()
+                  .OrderByDescending(x => x.CreatedOn)
+                  .ToList();
 
             var index = 0;
 
