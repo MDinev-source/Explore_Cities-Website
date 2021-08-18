@@ -57,3 +57,20 @@
         </div>
     }
 </form>
+
+<div class="d-flex justify-content-around">
+    @Html.PagedListPager((IPagedList)Model.DistrictViewObjects,
+        page => Url.Action("All",
+            new
+                {
+                    DistrictViewId = Model.DistrictViewId,
+                    PageNumber = page,
+                    PageSize = Model.PageSize,
+            }),
+        new PagedListRenderOptions
+        {
+            MaximumPageNumbersToDisplay = 5,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+</div>

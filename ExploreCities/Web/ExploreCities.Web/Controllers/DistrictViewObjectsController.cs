@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using X.PagedList;
 
     public class DistrictViewObjectsController : Controller
     {
@@ -56,7 +57,8 @@
             }
             catch (Exception ex)
             {
-                this.ModelState.AddModelError(string.Empty, ex.Message);
+                string message = "Please, upload pictures to object.";
+                this.ModelState.AddModelError(string.Empty, message);
                 return this.View(createInputModel);
             }
 
@@ -68,8 +70,14 @@
         public async Task<IActionResult> All(AllDistrictViewObjectsViewModel listDistrictViewObjectsViewModel, string districtViewId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
+            var districtViewObjects = await this.districtViewObjectsService.GetAllDistrictViewObjectsAsync(listDistrictViewObjectsViewModel.DistrictViewId ?? districtViewId, user.Id);
 
-            listDistrictViewObjectsViewModel.DistrictViewObjects = await this.districtViewObjectsService.GetAllDistrictViewObjectsAsync(listDistrictViewObjectsViewModel.DistrictViewId ?? districtViewId, user.Id);
+            var pageNumber = listDistrictViewObjectsViewModel.PageNumber ?? 1;
+            var pageSize = listDistrictViewObjectsViewModel.PageSize ?? 6;
+            var pagedDistrictViewObjectsViewModel = districtViewObjects.ToPagedList(pageNumber, pageSize);
+
+            listDistrictViewObjectsViewModel.DistrictViewObjects = pagedDistrictViewObjectsViewModel;
+
 
             return this.View(listDistrictViewObjectsViewModel);
         }
