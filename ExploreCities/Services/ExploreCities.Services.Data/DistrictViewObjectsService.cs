@@ -132,15 +132,6 @@
             return districtViewObject;
         }
 
-        public DistrictObject GetDistrictViewObject(string districtObjectId)
-        {
-            var districtViewObject = this.districtViewObjectsRepository
-            .AllAsNoTracking()
-            .FirstOrDefault(x => x.Id == districtObjectId);
-
-            return districtViewObject;
-        }
-
         public async Task<BaseEditDetailsDeleteModel> GetViewModelByIdAsync(string id)
         {
             var districtViewObject = await this.districtViewObjectsRepository.AllAsNoTracking()
@@ -154,6 +145,15 @@
                 UserId = x.AddedByUserId,
             })
            .FirstOrDefaultAsync();
+
+            return districtViewObject;
+        }
+
+        public DistrictObject GetDistrictViewObject(string districtObjectId)
+        {
+            var districtViewObject = this.districtViewObjectsRepository
+            .AllAsNoTracking()
+            .FirstOrDefault(x => x.Id == districtObjectId);
 
             return districtViewObject;
         }

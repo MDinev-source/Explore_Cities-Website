@@ -167,14 +167,6 @@
             return districtView;
         }
 
-        public string GetDistrictViewId(string userId)
-        {
-            var districtView = this.districtViewsRepository
-                 .AllAsNoTracking()
-                 .FirstOrDefault(x => x.AddedByUserId == userId);
-
-            return districtView.Id;
-        }
 
         public async Task EditAsync(DistrictViewEditModel districtViewEditModel)
         {
@@ -401,6 +393,14 @@
          .FirstOrDefault(x => x.Id == Id);
 
             return districtView;
+        }
+        public string GetDistrictViewId(string userId)
+        {
+            var districtView = this.districtViewsRepository
+                 .AllAsNoTracking()
+                 .FirstOrDefault(x => x.AddedByUserId == userId);
+
+            return districtView.Id;
         }
     }
 }

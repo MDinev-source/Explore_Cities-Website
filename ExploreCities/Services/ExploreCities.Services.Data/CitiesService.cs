@@ -120,15 +120,6 @@
             return cities;
         }
 
-        public City GetCity(string cityId)
-        {
-            var city = this.citiesRepository
-          .AllAsNoTracking()
-          .FirstOrDefault(x => x.Id == cityId);
-
-            return city;
-        }
-
         public async Task<bool> RemoveUserFromCity(string userId, string cityId)
         {
             var userInDistrict = this.userCitiesRepository
@@ -160,6 +151,15 @@
                 default:
                     return cities.OrderBy(c => c.Name).ThenBy(c => c.Area).ToList();
             }
+        }
+
+        public City GetCity(string cityId)
+        {
+            var city = this.citiesRepository
+          .AllAsNoTracking()
+          .FirstOrDefault(x => x.Id == cityId);
+
+            return city;
         }
     }
 }

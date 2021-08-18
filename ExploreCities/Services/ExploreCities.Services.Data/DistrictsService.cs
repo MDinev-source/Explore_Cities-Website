@@ -46,13 +46,23 @@
             }
         }
 
-        public string GetDistrictId(string name, string cityId)
+        public async Task<IEnumerable<DistrictsViewModel>> GetAllDistrictsAsync(string cityId, string userId)
         {
-            var district = this.districtsRepository.AllAsNoTracking()
-                .Where(x => x.Name == name && x.CityId == cityId)
-                .FirstOrDefault();
+            var districts = await this.districtsRepository
+             .AllAsNoTracking()
+             .Where(x => x.CityId == cityId)
+             .Select(x => new DistrictsViewModel
+             {
+                 Id = x.Id,
+                 Name = x.Name,
+                 CityId = x.CityId,
+                 DistrictViewsCount = x.DistrictViews.Count,
+                 UsersCount = x.UserDistricts.Count,
+                 Rating = x.Raiting,
+             })
+             .ToListAsync();
 
-            return district.Id;
+            return districts;
         }
 
         public IEnumerable<DistrictsViewModel> GetDistrictsFromSearch(string searchString, string cityId)
@@ -68,10 +78,10 @@
                     CityId = x.CityId,
                     DistrictViewsCount = x.DistrictViews.Count,
                     UsersCount = x.UserDistricts.Count,
-                    Rating=x.Raiting,
+                    Rating = x.Raiting,
                 })
                 .ToList()
-                .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower()))&&c.CityId==cityId)
+                .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())) && c.CityId == cityId)
                 .ToList();
 
             return districts;
@@ -92,25 +102,6 @@
                 default:
                     return districts.OrderBy(c => c.Name).ThenBy(c => c.DistrictViewsCount).ToList();
             }
-        }
-
-        public async Task<IEnumerable<DistrictsViewModel>> GetAllDistrictsAsync(string cityId, string userId)
-        {
-            var districts = await this.districtsRepository
-             .AllAsNoTracking()
-             .Where(x => x.CityId == cityId)
-             .Select(x => new DistrictsViewModel
-             {
-                 Id = x.Id,
-                 Name = x.Name,
-                 CityId = x.CityId,
-                 DistrictViewsCount = x.DistrictViews.Count,
-                 UsersCount = x.UserDistricts.Count,
-                 Rating = x.Raiting,
-             })
-             .ToListAsync();
-
-            return districts;
         }
 
         public async Task<bool> AddUserToDistrict(string userId, string districtId)
@@ -143,15 +134,6 @@
                    .FirstOrDefault(x => x.Id == districtId);
 
             return district.Name;
-        }
-
-        public District GetDistrict(string districtId)
-        {
-            var district = this.districtsRepository
-              .AllAsNoTracking()
-              .FirstOrDefault(x => x.Id == districtId);
-
-            return district;
         }
 
         public async Task<bool> RemoveUserFromDistrict(string userId, string districtId)
@@ -232,6 +214,24 @@
             await this.districtLikes.SaveChangesAsync();
 
             return true;
+        }
+
+        public District GetDistrict(string districtId)
+        {
+            var district = this.districtsRepository
+              .AllAsNoTracking()
+              .FirstOrDefault(x => x.Id == districtId);
+
+            return district;
+        }
+
+        public string GetDistrictId(string name, string cityId)
+        {
+            var district = this.districtsRepository.AllAsNoTracking()
+                .Where(x => x.Name == name && x.CityId == cityId)
+                .FirstOrDefault();
+
+            return district.Id;
         }
     }
 }
