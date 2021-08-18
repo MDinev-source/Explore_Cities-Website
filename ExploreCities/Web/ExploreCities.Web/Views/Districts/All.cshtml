@@ -39,6 +39,7 @@
                         <option value="1" selected="@(Model.Sorter.ToString() == "DistrictName" ? true : false)">District name</option>
                         <option value="2" selected="@(Model.Sorter.ToString() == "DistrictViewsCount" ? true : false)">District Views count (desc.)</option>
                         <option value="3" selected="@(Model.Sorter.ToString() == "UsersCount" ? true : false)">Users count (desc.)</option>
+                        <option value="4" selected="@(Model.Sorter.ToString() == "Rating" ? true : false)">Rating (desc.)</option>
                     </select>
                 </div>
             </div>
@@ -56,8 +57,8 @@
         <thead>
             <tr>
                 <th scope="col">District Name</th>
-                <th scope="col" class="text-center">Views Count</th>
-                <th scope="col" class="text-center">Users Count</th>
+                <th scope="col" class="text-center">Views</th>
+                <th scope="col" class="text-center">Users</th>
                 <th scope="col" class="text-center">Rating</th>
                 <th scope="col" class="text-center">District Views</th>
                 <th scope="col" class="text-center">Rate District</th>
@@ -94,6 +95,7 @@
             }
         </tbody>
     </table>
+
 }
 else
 {
@@ -113,6 +115,7 @@ else
                     PageNumber = page,
                     PageSize = Model.PageSize,
                     SearchString = Model.SearchString,
+                    Sorter = Model.Sorter,
             }),
         new PagedListRenderOptions
         {
