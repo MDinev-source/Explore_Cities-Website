@@ -87,6 +87,7 @@
                 {
                     Id = x.Id,
                     DistrictName = this.districtService.GetDistrict(districtId).Name,
+                    DistrictId = districtId,
                     PictureUrl = x.PictureUrl,
                     UserId = x.AddedByUserId,
                     Username = x.AddedByUser.UserName,

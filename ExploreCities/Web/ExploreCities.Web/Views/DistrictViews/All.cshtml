@@ -12,6 +12,8 @@
 
 <form method="get" asp-controller="DistrictViews" asp-action="All">
 
+    <input type="hidden" asp-for="@Model.DistrictId" value="@Model.DistrictId" />
+
     <div class="row d-flex justify-content-between">
         <div class="form-group">
             <label class="text-primary">Show:</label>
@@ -78,6 +80,7 @@
                              DistrictId = Model.DistrictId,
                              PageNumber = page,
                              PageSize = Model.PageSize,
+                             Sorter = Model.Sorter,
 
                          }),
                             new PagedListRenderOptions
