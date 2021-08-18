@@ -88,30 +88,32 @@
             {
                 cities = this.citiesRepository
                .All()
-               .ToList()
-               .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())))
                .Select(x => new CitiesViewModel
                {
+                   Id = x.Id,
                    Name = x.Name,
                    Area = x.Area,
                    DistrictsCount = x.Districts.Count,
                    UsersCount = x.UserCities.Count,
                })
-               .ToList();
+               .ToList()
+                .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())))
+                .ToList();
             }
             else
             {
                 cities = this.citiesRepository
                .All()
-               .ToList()
-               .Where(c => escapedSearchTokens.All(t => c.Area.ToLower().Contains(t.ToLower())))
                .Select(x => new CitiesViewModel
                {
+                   Id = x.Id,
                    Name = x.Name,
                    Area = x.Area,
                    DistrictsCount = x.Districts.Count,
                    UsersCount = x.UserCities.Count,
                })
+               .ToList()
+               .Where(c => escapedSearchTokens.All(t => c.Area.ToLower().Contains(t.ToLower())))
                .ToList();
             }
 

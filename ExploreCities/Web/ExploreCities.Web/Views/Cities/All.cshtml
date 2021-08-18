@@ -62,13 +62,15 @@
     </p>
 </form>
 
+    @if(Model.AllCities.Any())
+    {
 <table class="table table-hover" style="width: 100%">
     <thead>
         <tr>
             <th scope="col">City Name</th>
             <th scope="col">Area</th>
-            <th scope="col" class="text-center">Districts Count</th>
-            <th scope="col" class="text-center">Users Count</th>
+            <th scope="col" class="text-center">Districts</th>
+            <th scope="col" class="text-center">Users</th>
             <th scope="col" class="text-center">Districts</th>
         </tr>
     </thead>
@@ -91,22 +93,32 @@
                 </td>
                 <td>
                     <div class="row justify-content-center">
-                        <a class="btn btn-block btn-primary text-white mb-3" style="width: 150px" asp-area="" asp-controller="Districts" asp-action="All" asp-route-cityId="@city.Id">All Districts</a>
+                        <a class="btn btn-block btn-primary text-white mb-3" style="width: 150px" asp-area="" asp-controller="Districts" asp-route-cityId="@city.Id" asp-action="All">All Districts</a>
                     </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+    }
+    else
+    {
+    <div class="jumbotron">
+        <p class="text-center">
+            <em class="text-muted">No Cities found.</em>
+        </p>
+    </div>
+    }
 
 <div class="d-flex justify-content-around">
     @Html.PagedListPager((IPagedList)Model.AllCities,
         page => Url.Action("All",
             new
-                {
-                    PageNumber = page,
-                    PageSize = Model.PageSize,
-                    SearchString = Model.SearchString,
+            {
+                PageNumber = page,
+                PageSize = Model.PageSize,
+                SearchString = Model.SearchString,
+                Sorter = Model.Sorter,
             }),
         new PagedListRenderOptions
         {

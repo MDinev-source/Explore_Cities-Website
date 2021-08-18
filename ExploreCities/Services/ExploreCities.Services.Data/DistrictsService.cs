@@ -61,14 +61,17 @@
 
             var districts = this.districtsRepository
                 .AllAsNoTracking()
-                .ToList()
-                .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())))
                 .Select(x => new DistrictsViewModel
                 {
+                    Id = x.Id,
                     Name = x.Name,
+                    CityId = x.CityId,
                     DistrictViewsCount = x.DistrictViews.Count,
                     UsersCount = x.UserDistricts.Count,
+                    Rating=x.Raiting,
                 })
+                .ToList()
+                .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower()))&&c.CityId==cityId)
                 .ToList();
 
             return districts;
@@ -84,6 +87,8 @@
                     return districts.OrderByDescending(c => c.DistrictViewsCount).ThenBy(c => c.Name).ToList();
                 case DistrictsSorter.UsersCount:
                     return districts.OrderByDescending(c => c.UsersCount).ThenBy(c => c.Name).ToList();
+                case DistrictsSorter.Rating:
+                    return districts.OrderByDescending(c => c.Rating).ThenBy(c => c.Name).ToList();
                 default:
                     return districts.OrderBy(c => c.Name).ThenBy(c => c.DistrictViewsCount).ToList();
             }

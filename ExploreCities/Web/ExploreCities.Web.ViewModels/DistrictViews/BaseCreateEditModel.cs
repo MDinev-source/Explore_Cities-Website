@@ -52,7 +52,10 @@
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (this.DepartureYear != null && this.DepartureYear < this.ArrivalYear) yield return new ValidationResult("Departure year cannot be less than arrival year");
+            if (this.DepartureYear != null && this.DepartureYear < this.ArrivalYear)
+            {
+                yield return new ValidationResult("Departure year cannot be less than arrival year");
+            }
         }
     }
 }
