@@ -1,7 +1,7 @@
 ﻿@model ExploreCities.Web.ViewModels.Pictures.AllObjectPicturesViewModel
 
 @{ ViewData["Title"] = "Picures carousel";
-                var currentId = "";
+           
 }
 
 <input type="hidden" asp-for="@Model.ObjectId" value="@Model.ObjectId">
@@ -23,7 +23,6 @@
                 <div class="carousel-item col-md-6 offset-3 border-dark">
                     <img style="height: 500px; width: 30%;" class="d-block w-100" src="@Path" >
                 </div>}
-               currentId = Model.Pictures.ToList()[i].Id;
         }
     </div>
 
