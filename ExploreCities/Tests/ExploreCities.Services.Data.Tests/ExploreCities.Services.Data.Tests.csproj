@@ -8,11 +8,27 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.6" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="Moq" Version="4.16.1" />
@@ -29,6 +45,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\ExploreCities.Data\ExploreCities.Data.csproj" />
     <ProjectReference Include="..\..\Services\ExploreCities.Services.Data\ExploreCities.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\ExploreCities.Web.ViewModels\ExploreCities.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\..\Web\ExploreCities.Web\ExploreCities.Web.csproj" />
   </ItemGroup>
 
 </Project>
