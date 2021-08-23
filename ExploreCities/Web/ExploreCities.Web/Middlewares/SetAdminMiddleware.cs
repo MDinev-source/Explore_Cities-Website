@@ -19,7 +19,7 @@
             HttpContext context,
             UserManager<ApplicationUser> userManager)
         {
-            SeedUserInRoles(userManager);
+            await SeedUserInRoles(userManager);
             await this.next(context);
         }
 
