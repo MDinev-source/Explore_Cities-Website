@@ -71,6 +71,8 @@
                  {
                      Id = x.Id,
                      DistrictViewObjectId = x.DistrictObjectId,
+                     ObjectName = x.DistrictObject.Name,
+                     ObjectType = x.DistrictObject.ObjectType.ToString(),
                      CreatedOn = x.CreatedOn,
                      Path = BasePath + $"{x.Id}" + "." + $"{x.Extension}",
                      UserId = x.AddedByUserId,
@@ -103,7 +105,6 @@
 
             return picture;
         }
-
 
         public int GetIndex(string pictureId, string objectId)
         {

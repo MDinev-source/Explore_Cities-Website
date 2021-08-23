@@ -15,7 +15,15 @@
         </a>
         <div class="card-footer">
             <div class="col">
-                <small class="text-body">Created on - @item.CreatedOn</small>
+                <div class="row">
+                    <small class="text-body">Name - @item.ObjectName</small>
+                </div>
+                <div class="row">
+                    <small class="text-body">Type - @item.ObjectType</small>
+                </div>
+                <div class="row">
+                    <small class="text-body">Created on - @item.CreatedOn</small>
+                </div>
             </div>
             <div class="col">
                 <a class="btn btn-warning" style="width: 100%" asp-area="Administration" asp-controller="Pictures" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
