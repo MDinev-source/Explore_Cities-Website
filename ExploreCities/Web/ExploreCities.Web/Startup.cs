@@ -22,6 +22,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using ExploreCities.Web.Middlewares;
+    using CloudinaryDotNet;
 
     public class Startup
     {
@@ -71,6 +72,14 @@
             services.AddTransient<IDistrictViewsService, DistrictViewsService>();
             services.AddTransient<IDistrictViewObjectsService, DistrictViewObjectsService>();
             services.AddTransient<IPicturesService, PicturesService>();
+
+            // Cloudinary Config
+            var cloudinaryAccount = new CloudinaryDotNet.Account(
+            this.configuration["Authentication:Cloudinary:CloudName"],
+            this.configuration["Authentication:Cloudinary:ApiKey"],
+            this.configuration["Authentication:Cloudinary:ApiSecret"]);
+            var cloudinary = new Cloudinary(cloudinaryAccount);
+            services.AddSingleton(cloudinary);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

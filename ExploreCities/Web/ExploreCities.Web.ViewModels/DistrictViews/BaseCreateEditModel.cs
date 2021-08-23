@@ -1,5 +1,6 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -25,9 +26,8 @@
         [MinLength(30)]
         public string Comment { get; set; }
 
-        [Required]
-        [Url]
-        [Display(Name = "Image URL")]
+        public IFormFile Picture { get; set; }
+
         public string PictureUrl { get; set; }
 
         [Required]

@@ -5,22 +5,27 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using CloudinaryDotNet;
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models.Discussions;
     using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Data.CloudinaryServ;
     using ExploreCities.Web.ViewModels.DistrictViews;
     using ExploreCities.Web.ViewModels.Enums;
     using Microsoft.EntityFrameworkCore;
 
     public class DistrictViewsService : IDistrictViewsService
     {
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif", "jpeg" };
+
         private readonly IDeletableEntityRepository<DistrictView> districtViewsRepository;
         private readonly ICitiesService citiesService;
         private readonly IDistrictsService districtService;
         private readonly IDistrictViewObjectsService districtViewObjectsService;
         private readonly IRepository<DistrictViewLike> districtViewLikes;
         private readonly IRepository<DistrictViewDislike> districtViewDislikes;
+        private readonly Cloudinary cloudinary;
 
         public DistrictViewsService(
             IDeletableEntityRepository<DistrictView> districtViewsRepository,
@@ -28,7 +33,8 @@
             IDistrictsService districtService,
             IDistrictViewObjectsService districtViewObjectsService,
             IRepository<DistrictViewLike> districtViewLikes,
-            IRepository<DistrictViewDislike> districtViewDislikes)
+            IRepository<DistrictViewDislike> districtViewDislikes,
+            Cloudinary cloudinary)
         {
             this.districtViewsRepository = districtViewsRepository;
             this.citiesService = citiesService;
@@ -36,6 +42,7 @@
             this.districtViewObjectsService = districtViewObjectsService;
             this.districtViewLikes = districtViewLikes;
             this.districtViewDislikes = districtViewDislikes;
+            this.cloudinary = cloudinary;
         }
 
         public async Task<DistrictView> CreateAsync(CreateDistrictViewInputModel input, string userId)
@@ -57,7 +64,6 @@
                     DepartureYear = input.DepartureYear != null ? input.DepartureYear : null,
                     DistrictId = districtId,
                     Comment = input.Comment,
-                    PictureUrl = input.PictureUrl,
                     ParkingSpaces = Enum.Parse<ParkingSpacesExistence>(input.ParkingSpacesExistence),
                     ChildrenPlaygrounds = Enum.Parse<ChildrenPlaygroundsExistence>(input.ChildrenPlaygroundsExistence),
                     AirPollution = Enum.Parse<AirPollutionRating>(input.AirPollutionRating),
@@ -65,6 +71,19 @@
                     PublicTransport = Enum.Parse<PublicTransportRating>(input.PublicTransportRating),
                     AddedByUserId = userId,
                 };
+
+                var picture = input.Picture;
+
+                var pictureUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, picture, input.DistrictName);
+
+                var fileType = picture.ContentType.Split('/')[1];
+
+                if (!this.allowedExtensions.Any(x => fileType.ToLower().EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {fileType}");
+                }
+
+                districtView.PictureUrl = pictureUrl;
             }
             else
             {
@@ -167,7 +186,6 @@
             return districtView;
         }
 
-
         public async Task EditAsync(DistrictViewEditModel districtViewEditModel)
         {
             var districtView = this.districtViewsRepository
@@ -199,10 +217,28 @@
                 }
             }
 
+            var pictureUrl = string.Empty;
+
+            if (districtViewEditModel.Picture != null)
+            {
+                ApplicationCloudinary.DeleteImage(this.cloudinary, districtViewEditModel.DistrictName);
+
+                var picture = districtViewEditModel.Picture;
+
+                pictureUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, picture, districtViewEditModel.DistrictName);
+
+                var fileType = picture.ContentType.Split('/')[1];
+
+                if (!this.allowedExtensions.Any(x => fileType.ToLower().EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {fileType}");
+                }
+            }
+
             districtView.ArrivalYear = districtViewEditModel.ArrivalYear;
             districtView.DepartureYear = districtViewEditModel.DepartureYear != null ? districtViewEditModel.DepartureYear : null;
             districtView.Comment = districtViewEditModel.Comment;
-            districtView.PictureUrl = districtViewEditModel.PictureUrl;
+            districtView.PictureUrl = pictureUrl;
             districtView.ParkingSpaces = Enum.Parse<ParkingSpacesExistence>(districtViewEditModel.ParkingSpacesExistence);
             districtView.ChildrenPlaygrounds = Enum.Parse<ChildrenPlaygroundsExistence>(districtViewEditModel.ChildrenPlaygroundsExistence);
             districtView.AirPollution = Enum.Parse<AirPollutionRating>(districtViewEditModel.AirPollutionRating);
@@ -394,6 +430,7 @@
 
             return districtView;
         }
+
         public string GetDistrictViewId(string userId)
         {
             var districtView = this.districtViewsRepository
