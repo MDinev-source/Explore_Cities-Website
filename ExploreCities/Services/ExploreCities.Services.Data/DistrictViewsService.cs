@@ -221,8 +221,6 @@
 
             if (districtViewEditModel.Picture != null)
             {
-                ApplicationCloudinary.DeleteImage(this.cloudinary, districtViewEditModel.DistrictName);
-
                 var picture = districtViewEditModel.Picture;
 
                 pictureUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, picture, districtViewEditModel.DistrictName);
