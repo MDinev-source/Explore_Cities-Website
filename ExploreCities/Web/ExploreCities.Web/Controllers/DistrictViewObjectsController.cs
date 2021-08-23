@@ -55,7 +55,7 @@
             {
                 districtViewObject = await this.districtViewObjectsService.CreateAsync(createInputModel, user.Id, imagePath);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 string message = "Please, upload pictures to object.";
                 this.ModelState.AddModelError(string.Empty, message);
@@ -77,7 +77,6 @@
             var pagedDistrictViewObjectsViewModel = districtViewObjects.ToPagedList(pageNumber, pageSize);
 
             listDistrictViewObjectsViewModel.DistrictViewObjects = pagedDistrictViewObjectsViewModel;
-
 
             return this.View(listDistrictViewObjectsViewModel);
         }
