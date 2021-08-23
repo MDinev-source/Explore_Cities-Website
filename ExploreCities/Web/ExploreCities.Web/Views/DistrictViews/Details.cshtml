@@ -7,9 +7,7 @@
 
 @model ExploreCities.Web.ViewModels.DistrictViews.DistrictViewsDetailsViewModel
 
-@{
-    ViewData["Title"] = "Details";
-}
+@{ ViewData["Title"] = "Details"; }
 
 <div class="container container-fluid">
     <h1 class="offset-5">@this.ViewData["Title"]</h1>
@@ -18,91 +16,85 @@
 
     <div class="row">
 
-        <div class="col md-3 text-center">
+        <div class="col-md-3 text-center">
 
             <div class="row d-flex justify-content-center">
                 <a asp-controller="DistrictViewObjects" asp-action="All" asp-route-districtViewId="@Model.Id">
-                    <img class="border" style="height: 250px; width: 230px" src="/Pictures/refPictures/1.2.png" />
+                    <img class="border" style="height: 250px; width: 80%" src="/Pictures/refPictures/1.2.png" />
                 </a>
                 <h4 class="text-dark text-center mb-3">All objects</h4>
             </div>
 
             <div class="row d-flex justify-content-center">
                 @if (this.UserManager.GetUserId(this.User) == Model.UserId
-                   || this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                  || this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
-                    <div class="row mb-2">
-                        <a class="btn btn-success" style="width: 220px" asp-area="" asp-controller="DistrictViewObjects" asp-action="Create" asp-route-districtViewId="@Model.Id">Add object</a>
-                    </div>
+    <div class="row mb-2">
+        <a class="btn btn-success" style="width: 220px" asp-area="" asp-controller="DistrictViewObjects" asp-action="Create" asp-route-districtViewId="@Model.Id">Add object</a>
+    </div>
                     <div class="row mb-2">
                         <a class="btn btn-primary " style="width: 220px" asp-area="" asp-controller="DistrictViews" asp-action="Edit" asp-route-id="@Model.Id">Edit view</a>
                     </div>
-                    <div class="row mb-2">
-                        <a class="btn btn-warning " style="width: 220px" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@Model.Id">Delete view</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="row mb-2">
-                        <a class="btn btn-success " style="width: 220px" asp-area="" asp-controller="DistrictViews" asp-action="Like" asp-route-id="@Model.Id">True comment</a>
-                    </div>
-                    <div class="row mb-2">
-                        <a class="btn btn-warning " style="width: 220px" asp-area="" asp-controller="DistrictViews" asp-action="Dislike" asp-route-id="@Model.Id">False comment</a>
-                    </div>
-                }
+                                    <div class="row mb-2">
+                                        <a class="btn btn-warning " style="width: 220px" asp-area="" asp-controller="DistrictViews" asp-action="Delete" asp-route-id="@Model.Id">Delete view</a>
+                                    </div> }
+                                                else
+                                                {
+                                    <div class="row mb-2">
+                                        <a class="btn btn-success " style="width: 220px" asp-area="" asp-controller="DistrictViews" asp-action="Like" asp-route-id="@Model.Id">True comment</a>
+                                    </div>
+                                                    <div class="row mb-2">
+                                                        <a class="btn btn-warning " style="width: 220px" asp-area="" asp-controller="DistrictViews" asp-action="Dislike" asp-route-id="@Model.Id">False comment</a>
+                                                    </div>}
             </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-9" style="width:100%">
 
             <div class="row">
 
-                <div class="row d-flex justify-content-center">
-                    <div class="col md-6 justify-content-center" style="width:100%">
 
-                        <div class="col mb-4">
-                            <img src="@Model.PictureUrl" class="img-fluid rounded" style="height: 300px; width: 100%;" alt="image" />
-                        </div>
+                <div class="col-md-6" style="width:100%">
 
-                        <div class="col mb-2">
-                            <label class="text-center" asp-for="DistrictName"></label>
-                            <input type="text" readonly class="form-control" id="DistrictName" asp-for="DistrictName" value="@Model.DistrictName">
-                        </div>
+                    <div class="col mb-4">
+                        <img src="@Model.PictureUrl" class="img-fluid rounded" style="height: 300px; width: 100%;" alt="image" />
+                    </div>
 
-                        <div class="col mb-2">
-                            <label class="text-center" asp-for="ArrivalYear"></label>
-                            <input type="text" readonly class="form-control" id="DistrictName" asp-for="ArrivalYear" value="@Model.ArrivalYear">
-                        </div>
+                    <div class="col mb-2">
+                        <label class="text-center" asp-for="DistrictName"></label>
+                        <input type="text" readonly class="form-control" id="DistrictName" asp-for="DistrictName" value="@Model.DistrictName">
+                    </div>
 
-                        <div class="col mb-2">
-                            <label class="text-center" asp-for="DepartureYear"></label>
-                            @if (Model.DepartureYear != null)
-                            {
-                                <input type="text" readonly class="form-control" id="DistrictName" asp-for="DepartureYear" value="@Model.DepartureYear">
-                            }
-                            else
-                            {
-                                <input type="text" readonly class="form-control" name="DepartureYear" value="Present">
-                            }
-                        </div>
+                    <div class="col mb-2">
+                        <label class="text-center" asp-for="ArrivalYear"></label>
+                        <input type="text" readonly class="form-control" id="DistrictName" asp-for="ArrivalYear" value="@Model.ArrivalYear">
+                    </div>
 
-                        @await this.Html.PartialAsync("_ProgressDetailsPartial")
+                    <div class="col mb-2">
+                        <label class="text-center" asp-for="DepartureYear"></label>
+                        @if (Model.DepartureYear != null)
+                        {
+            <input type="text" readonly class="form-control" id="DistrictName" asp-for="DepartureYear" value="@Model.DepartureYear"> }
+                        else
+                        {
+            <input type="text" readonly class="form-control" name="DepartureYear" value="Present">}
+                    </div>
 
-                        <div class="col mb-2">
-                            <label class="text-center" asp-for="Comment"></label>
-                            <textarea asp-for="Comment" rows="4" readonly class="form-control"></textarea>
+                    @await this.Html.PartialAsync("_ProgressDetailsPartial")
 
-                            <div class="row ">
-                                <div class="col d-flex justify-content-center" style="width: 100%">
-                                    <h5 class="text-success mr-5">True: @Model.Likes</h5>
-                                    <h5 class="text-warning ml-5">False: @Model.Dislikes</h5>
-                                </div>
+                    <div class="col mb-2">
+                        <label class="text-center" asp-for="Comment"></label>
+                        <textarea asp-for="Comment" rows="4" readonly class="form-control"></textarea>
+
+                        <div class="row ">
+                            <div class="col d-flex justify-content-center" style="width: 100%">
+                                <h5 class="text-success mr-5">True: @Model.Likes</h5>
+                                <h5 class="text-warning ml-5">False: @Model.Dislikes</h5>
                             </div>
                         </div>
-
                     </div>
-                </div>
 
+                </div>
             </div>
 
         </div>
