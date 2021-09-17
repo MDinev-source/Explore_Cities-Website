@@ -1,46 +1,62 @@
 ﻿@model ExploreCities.Web.ViewModels.Pictures.AllObjectPicturesViewModel
 
-@{ ViewData["Title"] = "All Picures carousel";
-    var currentId = ""; }
+@{ ViewData["Title"] = "Picures carousel";
+    var count = Model.Pictures.Count();
+    var collectionPictures = Model.Pictures.ToList();}
 
+<input type="hidden" asp-for="@Model.ObjectId" value="@Model.ObjectId">
+<input type="hidden" runat='server' id="param1" value="@(Model.CarouselIndex+1)" />
 
-<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" @*data-ride="carousel*@>
+@if (Model.Pictures.Any())
+{
+    <div class="container">
 
-    <div class="carousel-inner">
-        @for (int i = 0; i <= Model.Pictures.Count() - 1; i++)
+        @for (int i = 0; i <= collectionPictures.Count - 1; i++)
         {
-            string Path = Model.Pictures.ToList()[i].Path;
 
-            if (i == Model.CarouselIndex)
+            @*<div class="caption-container">
+                    <p id="caption"></p>
+                </div>*@
+
+            var path = collectionPictures[i].Path;
+            var number = i + 1;
+
+            <div class="mySlides">
+                <div class="numbertext">@number / @count  </div>
+                <img src="@path" style="width:100%">
+            </div>
+
+            if (i == collectionPictures.Count - 1)
             {
-        <div class="carousel-item active col-md-6 offset-3 border-dark">
-            <img style="height: 500px; width: 30%;" class="d-block w-100" src="@Path">
-        </div> }
-        else
-        {
-        <div class="carousel-item col-md-6 offset-3 border-dark">
-            <img style="height: 500px; width: 30%;" class="d-block w-100" src="@Path">
-        </div>}
-        currentId = Model.Pictures.ToList()[i].Id;
+                <div class="row justify-content-center">
+
+                    @for (int j = 0; j <= collectionPictures.Count - 1; j++)
+                    {
+                        var thumbnailPath = collectionPictures[j].Path;
+                        var numberSlide = j + 1;
+
+                        <div class="column">
+                            <img class="demo cursor" src="@thumbnailPath" style="width:100%" onclick="currentSlide(@numberSlide)" alt="">
+                        </div>}
+
+                </div>}
         }
-    </div>
 
-    <a class="carousel-control-prev col-md-6" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next col-md-6" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-<style>
-    .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-    }
+    </div> }
 
-    .carousel-control-next-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-    }
-</style>
+else
+{
+    <div class="jumbotron">
+        <p class="text-center">
+            <em class="text-muted">No pictures added.</em>
+        </p>
+    </div>}
+
+
+<link rel="stylesheet" type="text/css" href="/ObjectPicturesGallery/Style.css">
+
+<script type="text/javascript" src="~/ObjectPicturesGallery/SlideFunction.js"></script>
+
