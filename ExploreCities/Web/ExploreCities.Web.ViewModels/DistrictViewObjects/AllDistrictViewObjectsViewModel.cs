@@ -1,6 +1,5 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViewObjects
 {
-    using System.Collections.Generic;
     using X.PagedList;
 
     public class AllDistrictViewObjectsViewModel
