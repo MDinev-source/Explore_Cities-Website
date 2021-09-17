@@ -9,6 +9,7 @@
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Mapping;
     using ExploreCities.Web.ViewModels.DistrictViewObjects;
     using Microsoft.EntityFrameworkCore;
 
@@ -120,13 +121,14 @@
             var districtViewObject = await this.districtViewObjectsRepository
             .AllAsNoTracking()
             .Where(x => x.DistrictViewId == districtViewId)
-            .Select(x => new DistrictViewObjectViewModel
-            {
-                Id = x.Id,
-                ObjectType = x.ObjectType.ToString(),
-                Name = x.Name,
-                PicturesCount = x.Pictures.Count,
-            })
+            .To<DistrictViewObjectViewModel>()
+            //.Select(x => new DistrictViewObjectViewModel
+            //{
+            //    Id = x.Id,
+            //    ObjectType = x.ObjectType.ToString(),
+            //    Name = x.Name,
+            //    PicturesCount = x.Pictures.Count,
+            //})
             .ToListAsync();
 
             return districtViewObject;
@@ -136,14 +138,15 @@
         {
             var districtViewObject = await this.districtViewObjectsRepository.AllAsNoTracking()
            .Where(d => d.Id == id)
-            .Select(x => new BaseEditDetailsDeleteModel
-            {
-                Id = id,
-                Name = x.Name,
-                ObjectType = x.ObjectType.ToString(),
-                Opinion = x.Opinion,
-                UserId = x.AddedByUserId,
-            })
+           .To<BaseEditDetailsDeleteModel>()
+            //.Select(x => new BaseEditDetailsDeleteModel
+            //{
+            //    Id = id,
+            //    Name = x.Name,
+            //    ObjectType = x.ObjectType.ToString(),
+            //    Opinion = x.Opinion,
+            //    UserId = x.AddedByUserId,
+            //})
            .FirstOrDefaultAsync();
 
             return districtViewObject;

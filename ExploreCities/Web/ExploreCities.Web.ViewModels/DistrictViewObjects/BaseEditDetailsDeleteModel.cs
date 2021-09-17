@@ -2,7 +2,11 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class BaseEditDetailsDeleteModel
+    using AutoMapper;
+    using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Mapping;
+
+    public class BaseEditDetailsDeleteModel : IHaveCustomMappings, IMapFrom<DistrictObject>
     {
         public string Id { get; set; }
 
@@ -22,5 +26,11 @@
         public string Opinion { get; set; }
 
         public string UserId { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<DistrictObject, DistrictViewObjectViewModel>()
+                .ForMember(vm => vm.UserId, o => o.MapFrom(x => x.AddedByUserId));
+        }
     }
 }

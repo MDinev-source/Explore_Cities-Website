@@ -1,12 +1,13 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using ExploreCities.Data.Models.Enums;
-    using ExploreCities.Web.ViewModels.DistrictViewObjects;
+    using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Mapping;
 
-    public class DistrictViewsDetailsViewModel
+    public class DistrictViewsDetailsViewModel : IHaveCustomMappings, IMapFrom<DistrictView>
     {
         public string Id { get; set; }
 
@@ -50,5 +51,12 @@
 
         [Display(Name = "Public transport")]
         public PublicTransportRating PublicTransportRating { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<DistrictView, DistrictViewsViewModel>()
+               .ForMember(vm => vm.DistrictName, o => o.MapFrom(x => x.District.Name))
+               .ForMember(vm => vm.UserId, o => o.MapFrom(x => x.AddedByUserId));
+        }
     }
 }

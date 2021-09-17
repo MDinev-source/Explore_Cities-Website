@@ -8,6 +8,7 @@
     using ExploreCities.Data.Common.Repositories;
     using ExploreCities.Data.Models;
     using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Mapping;
     using ExploreCities.Web.ViewModels.Cities;
     using ExploreCities.Web.ViewModels.Enums;
     using Microsoft.EntityFrameworkCore;
@@ -64,14 +65,15 @@
         {
             var cities = await this.citiesRepository
                   .All()
-                  .Select(x => new CitiesViewModel
-                  {
-                      Id = x.Id,
-                      Name = x.Name,
-                      Area = x.Area,
-                      DistrictsCount = x.Districts.Count,
-                      UsersCount = x.UserCities.Count,
-                  })
+                  .To<CitiesViewModel>()
+                  //.Select(x => new CitiesViewModel
+                  //{
+                  //    Id = x.Id,
+                  //    Name = x.Name,
+                  //    Area = x.Area,
+                  //    DistrictsCount = x.Districts.Count,
+                  //    UsersCount = x.UserCities.Count,
+                  //})
                   .ToListAsync();
 
             return cities;
@@ -88,14 +90,15 @@
             {
                 cities = this.citiesRepository
                .All()
-               .Select(x => new CitiesViewModel
-               {
-                   Id = x.Id,
-                   Name = x.Name,
-                   Area = x.Area,
-                   DistrictsCount = x.Districts.Count,
-                   UsersCount = x.UserCities.Count,
-               })
+               .To<CitiesViewModel>()
+               //.Select(x => new CitiesViewModel
+               //{
+               //    Id = x.Id,
+               //    Name = x.Name,
+               //    Area = x.Area,
+               //    DistrictsCount = x.Districts.Count,
+               //    UsersCount = x.UserCities.Count,
+               //})
                .ToList()
                 .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())))
                 .ToList();
@@ -104,14 +107,15 @@
             {
                 cities = this.citiesRepository
                .All()
-               .Select(x => new CitiesViewModel
-               {
-                   Id = x.Id,
-                   Name = x.Name,
-                   Area = x.Area,
-                   DistrictsCount = x.Districts.Count,
-                   UsersCount = x.UserCities.Count,
-               })
+               .To<CitiesViewModel>()
+               //.Select(x => new CitiesViewModel
+               //{
+               //    Id = x.Id,
+               //    Name = x.Name,
+               //    Area = x.Area,
+               //    DistrictsCount = x.Districts.Count,
+               //    UsersCount = x.UserCities.Count,
+               //})
                .ToList()
                .Where(c => escapedSearchTokens.All(t => c.Area.ToLower().Contains(t.ToLower())))
                .ToList();

@@ -11,6 +11,7 @@
     using ExploreCities.Data.Models.Enums;
     using ExploreCities.Data.Models.Location;
     using ExploreCities.Services.Data.CloudinaryServ;
+    using ExploreCities.Services.Mapping;
     using ExploreCities.Web.ViewModels.DistrictViews;
     using ExploreCities.Web.ViewModels.Enums;
     using Microsoft.EntityFrameworkCore;
@@ -102,18 +103,19 @@
             var districtViews = await this.districtViewsRepository
                 .AllAsNoTracking()
                 .Where(x => x.DistrictId == districtId)
-                .Select(x => new DistrictViewsViewModel
-                {
-                    Id = x.Id,
-                    DistrictName = this.districtService.GetDistrict(districtId).Name,
-                    DistrictId = districtId,
-                    PictureUrl = x.PictureUrl,
-                    UserId = x.AddedByUserId,
-                    Username = x.AddedByUser.UserName,
-                    CreatedOn = x.CreatedOn,
-                    ModifiedOn = x.ModifiedOn,
-                    ObjectsCount = x.DistrictObjects.Count,
-                })
+                .To<DistrictViewsViewModel>()
+                //.Select(x => new DistrictViewsViewModel
+                //{
+                //    Id = x.Id,
+                //    DistrictName = this.districtService.GetDistrict(districtId).Name,
+                //    DistrictId = districtId,
+                //    PictureUrl = x.PictureUrl,
+                //    UserId = x.AddedByUserId,
+                //    Username = x.AddedByUser.UserName,
+                //    CreatedOn = x.CreatedOn,
+                //    ModifiedOn = x.ModifiedOn,
+                //    ObjectsCount = x.DistrictObjects.Count,
+                //})
                 .ToListAsync();
 
             return districtViews;
@@ -140,23 +142,24 @@
             var districtView = await this.districtViewsRepository
                 .AllAsNoTracking()
                 .Where(d => d.Id == id)
-                 .Select(x => new DistrictViewsDetailsViewModel
-                 {
-                     Id = id,
-                     DistrictName = x.District.Name,
-                     PictureUrl = x.PictureUrl,
-                     ArrivalYear = x.ArrivalYear,
-                     DepartureYear = x.DepartureYear,
-                     Comment = x.Comment,
-                     ParkingSpacesExistence = x.ParkingSpaces,
-                     ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds,
-                     AirPollutionRating = x.AirPollution,
-                     NoiseRating = x.Noise,
-                     PublicTransportRating = x.PublicTransport,
-                     Likes = x.Likes,
-                     Dislikes = x.Dislikes,
-                     UserId = x.AddedByUserId,
-                 })
+                .To<DistrictViewsDetailsViewModel>()
+                //.Select(x => new DistrictViewsDetailsViewModel
+                //{
+                //    Id = id,
+                //    DistrictName = x.District.Name,
+                //    PictureUrl = x.PictureUrl,
+                //    ArrivalYear = x.ArrivalYear,
+                //    DepartureYear = x.DepartureYear,
+                //    Comment = x.Comment,
+                //    ParkingSpacesExistence = x.ParkingSpaces,
+                //    ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds,
+                //    AirPollutionRating = x.AirPollution,
+                //    NoiseRating = x.Noise,
+                //    PublicTransportRating = x.PublicTransport,
+                //    Likes = x.Likes,
+                //    Dislikes = x.Dislikes,
+                //    UserId = x.AddedByUserId,
+                //})
                 .FirstOrDefaultAsync();
 
             return districtView;
@@ -167,20 +170,21 @@
             var districtView = await this.districtViewsRepository
                 .AllAsNoTracking()
                 .Where(d => d.Id == id)
-                 .Select(x => new DistrictViewEditModel
-                 {
-                     Id = id,
-                     DistrictName = x.District.Name,
-                     PictureUrl = x.PictureUrl,
-                     ArrivalYear = x.ArrivalYear,
-                     DepartureYear = x.DepartureYear,
-                     Comment = x.Comment,
-                     ParkingSpacesExistence = x.ParkingSpaces.ToString(),
-                     ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds.ToString(),
-                     AirPollutionRating = x.AirPollution.ToString(),
-                     NoiseRating = x.Noise.ToString(),
-                     PublicTransportRating = x.PublicTransport.ToString(),
-                 })
+                .To<DistrictViewEditModel>()
+                //.Select(x => new DistrictViewEditModel
+                //{
+                //    Id = id,
+                //    DistrictName = x.District.Name,
+                //    PictureUrl = x.PictureUrl,
+                //    ArrivalYear = x.ArrivalYear,
+                //    DepartureYear = x.DepartureYear,
+                //    Comment = x.Comment,
+                //    ParkingSpacesExistence = x.ParkingSpaces.ToString(),
+                //    ChildrenPlaygroundsExistence = x.ChildrenPlaygrounds.ToString(),
+                //    AirPollutionRating = x.AirPollution.ToString(),
+                //    NoiseRating = x.Noise.ToString(),
+                //    PublicTransportRating = x.PublicTransport.ToString(),
+                //})
                 .FirstOrDefaultAsync();
 
             return districtView;
@@ -281,26 +285,19 @@
 
         public async Task<DistrictViewDeleteViewModel> GetDeleteViewModelByIdAsync(string id)
         {
-            var districtId = this.districtViewsRepository
-           .AllAsNoTracking()
-           .Where(x => x.Id == id).FirstOrDefault().DistrictId;
-
-            var district = this.districtService.GetDistrict(districtId);
-
-            var city = this.citiesService.GetCity(district.CityId);
-
             var districtView = await this.districtViewsRepository
                 .AllAsNoTracking()
                 .Where(d => d.Id == id)
-                .Select(x => new DistrictViewDeleteViewModel
-                {
-                    Id = id,
-                    PictureUrl = x.PictureUrl,
-                    Comment = x.Comment,
-                    DistrictId = districtId,
-                    DistrictName = x.District.Name,
-                    CityName = city.Name,
-                })
+                .To<DistrictViewDeleteViewModel>()
+                //.Select(x => new DistrictViewDeleteViewModel
+                //{
+                //    Id = id,
+                //    PictureUrl = x.PictureUrl,
+                //    Comment = x.Comment,
+                //    DistrictId = x.DistrictId,
+                //    DistrictName = x.District.Name,
+                //    CityName = x.District.City.Name,
+                //})
                 .FirstOrDefaultAsync();
 
             return districtView;
@@ -311,17 +308,18 @@
             var districtViews = await this.districtViewsRepository
                 .AllAsNoTracking()
                 .Where(x => x.AddedByUserId == userId)
-                .Select(x => new MyDistrictViewViewModel
-                {
-                    Id = x.Id,
-                    DistrictId = x.DistrictId,
-                    PictureUrl = x.PictureUrl,
-                    UserId = x.AddedByUserId,
-                    Username = x.AddedByUser.UserName,
-                    CreatedOn = x.CreatedOn,
-                    ModifiedOn = x.ModifiedOn,
-                    ObjectsCount = x.DistrictObjects.Count,
-                })
+                .To<MyDistrictViewViewModel>()
+                //.Select(x => new MyDistrictViewViewModel
+                //{
+                //    Id = x.Id,
+                //    DistrictId = x.DistrictId,
+                //    PictureUrl = x.PictureUrl,
+                //    UserId = x.AddedByUserId,
+                //    Username = x.AddedByUser.UserName,
+                //    CreatedOn = x.CreatedOn,
+                //    ModifiedOn = x.ModifiedOn,
+                //    ObjectsCount = x.DistrictObjects.Count,
+                //})
                 .ToListAsync();
 
             foreach (var view in districtViews)

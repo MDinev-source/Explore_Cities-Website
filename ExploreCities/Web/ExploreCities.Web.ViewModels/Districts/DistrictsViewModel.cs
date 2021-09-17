@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ExploreCities.Web.ViewModels.Districts
+﻿namespace ExploreCities.Web.ViewModels.Districts
 {
-    public class DistrictsViewModel
+    using System.ComponentModel.DataAnnotations;
+
+    using AutoMapper;
+    using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Mapping;
+
+    public class DistrictsViewModel : IHaveCustomMappings, IMapFrom<District>
     {
         public string Id { get; set; }
 
@@ -19,5 +23,12 @@ namespace ExploreCities.Web.ViewModels.Districts
 
         [Display(Name = "Users count")]
         public int UsersCount { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<District, DistrictsViewModel>()
+               .ForMember(vm => vm.DistrictViewsCount, o => o.MapFrom(x => x.DistrictViews.Count))
+               .ForMember(vm => vm.UsersCount, o => o.MapFrom(x => x.UserDistricts.Count));
+        }
     }
 }

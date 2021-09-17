@@ -9,6 +9,7 @@
     using ExploreCities.Data.Models;
     using ExploreCities.Data.Models.Discussions;
     using ExploreCities.Data.Models.Location;
+    using ExploreCities.Services.Mapping;
     using ExploreCities.Web.ViewModels.Districts;
     using ExploreCities.Web.ViewModels.Enums;
     using Microsoft.EntityFrameworkCore;
@@ -51,15 +52,16 @@
             var districts = await this.districtsRepository
              .AllAsNoTracking()
              .Where(x => x.CityId == cityId)
-             .Select(x => new DistrictsViewModel
-             {
-                 Id = x.Id,
-                 Name = x.Name,
-                 CityId = x.CityId,
-                 DistrictViewsCount = x.DistrictViews.Count,
-                 UsersCount = x.UserDistricts.Count,
-                 Rating = x.Raiting,
-             })
+             .To<DistrictsViewModel>()
+             //.Select(x => new DistrictsViewModel
+             //{
+             //    Id = x.Id,
+             //    Name = x.Name,
+             //    CityId = x.CityId,
+             //    DistrictViewsCount = x.DistrictViews.Count,
+             //    UsersCount = x.UserDistricts.Count,
+             //    Rating = x.Raiting,
+             //})
              .ToListAsync();
 
             return districts;
@@ -71,15 +73,16 @@
 
             var districts = this.districtsRepository
                 .AllAsNoTracking()
-                .Select(x => new DistrictsViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    CityId = x.CityId,
-                    DistrictViewsCount = x.DistrictViews.Count,
-                    UsersCount = x.UserDistricts.Count,
-                    Rating = x.Raiting,
-                })
+                .To<DistrictsViewModel>()
+                //.Select(x => new DistrictsViewModel
+                //{
+                //    Id = x.Id,
+                //    Name = x.Name,
+                //    CityId = x.CityId,
+                //    DistrictViewsCount = x.DistrictViews.Count,
+                //    UsersCount = x.UserDistricts.Count,
+                //    Rating = x.Raiting,
+                //})
                 .ToList()
                 .Where(c => escapedSearchTokens.All(t => c.Name.ToLower().Contains(t.ToLower())) && c.CityId == cityId)
                 .ToList();
