@@ -342,6 +342,11 @@
                  .AllAsNoTracking()
                  .FirstOrDefaultAsync(x => x.Id == districtViewId);
 
+            if (districtView.AddedByUserId == userId)
+            {
+                return false;
+            }
+
             var districtViewLike = this.districtViewLikes
                 .AllAsNoTracking()
                 .Any(x => x.DistrictViewId == districtView.Id && x.UserId == userId);
@@ -382,6 +387,11 @@
             var districtView = await this.districtViewsRepository
                     .AllAsNoTracking()
                     .FirstOrDefaultAsync(x => x.Id == districtViewId);
+
+            if (districtView.AddedByUserId == userId)
+            {
+                return false;
+            }
 
             var districtViewLike = this.districtViewLikes
                 .AllAsNoTracking()
