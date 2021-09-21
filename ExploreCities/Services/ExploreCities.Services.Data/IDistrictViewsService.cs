@@ -33,6 +33,6 @@
 
         string GetDistrictViewId(string userId);
 
-        DistrictView GetDistrictView(string Id);
+        DistrictView GetDistrictView(string id);
     }
 }
