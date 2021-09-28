@@ -16,7 +16,7 @@
 
         [MinLength(5)]
         [MaxLength(50)]
-        [RegularExpression(@"^[A-Z][a-z]+\s?[A-Za-z0-9]+$", ErrorMessage = "Name is incorrect.")]
+        [RegularExpression(@"^[A-Z][a-z]+\s?[A-Za-z0-9]+$")]
         [Display(Name = "Object name")]
         public string Name { get; set; }
 
