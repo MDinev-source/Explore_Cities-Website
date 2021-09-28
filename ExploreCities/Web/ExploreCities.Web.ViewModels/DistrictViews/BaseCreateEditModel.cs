@@ -1,16 +1,17 @@
 ﻿namespace ExploreCities.Web.ViewModels.DistrictViews
 {
-    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using Microsoft.AspNetCore.Http;
 
     public class BaseCreateEditModel : IValidatableObject
     {
         [Required]
         [MinLength(3)]
         [MaxLength(30)]
-        [RegularExpression(@"^[A-Z][a-z]+\s?[A-Za-z0-9]+$")]
+        [RegularExpression(@"^[A-Z][a-z]+\s?[A-Za-z0-9]+$", ErrorMessage ="Name is incorrect.")]
         [Display(Name = "District name")]
         public string DistrictName { get; set; }
 
