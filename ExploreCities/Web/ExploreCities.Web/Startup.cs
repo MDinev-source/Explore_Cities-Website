@@ -2,6 +2,7 @@
 {
     using System.Reflection;
 
+    using CloudinaryDotNet;
     using ExploreCities.Data;
     using ExploreCities.Data.Common;
     using ExploreCities.Data.Common.Repositories;
@@ -11,8 +12,8 @@
     using ExploreCities.Services.Data;
     using ExploreCities.Services.Mapping;
     using ExploreCities.Services.Messaging;
+    using ExploreCities.Web.Middlewares;
     using ExploreCities.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -21,8 +22,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using ExploreCities.Web.Middlewares;
-    using CloudinaryDotNet;
 
     public class Startup
     {
